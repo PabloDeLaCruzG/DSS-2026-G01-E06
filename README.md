@@ -24,8 +24,8 @@ El objetivo es fomentar la economía circular en el *gaming*, ofreciendo funcion
 
 ## 👥 Equipo de Desarrollo (G01-E06)
 
-| Miembro | Rol Principal | GitHub User |
-| :--- | :--- | :--- |
+| Miembro | GitHub User |
+| :--- | :--- |
 | **Pablo De La Cruz Gomez** | [@PabloDeLaCruzG](https://github.com/PabloDeLaCruzG) |
 | **Silvia Carrasco Gavilá** | []() |
 | **Marius Antonio Nica** | []() |
