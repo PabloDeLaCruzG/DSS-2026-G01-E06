@@ -21,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'wallet_balance',
+        'reputation',
+        'is_banned',
+        'isAdmin',
+        'isProfessional',
+        'canSell',
     ];
 
     /**
@@ -42,7 +49,17 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+        'is_banned' => 'boolean',
+        'isAdmin' => 'boolean',
+        'isProfessional' => 'boolean',
+        'canSell' => 'boolean',
+        'wallet_balance' => 'float',
+        'reputation' => 'float',
         ];
+    
+    }
+    // Relación: Un usuario puede ser admin
+    public function admin(){
+        return $this->hasOne(Admin::class);
     }
 }

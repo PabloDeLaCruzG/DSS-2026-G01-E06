@@ -9,33 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
-    }
+    public function up()
+{
+    Schema::create('users', function (Blueprint $table) {
+        $table->id(); // id: Long (autoincremental)
+        $table->string('name'); // name: String
+        $table->string('email')->unique(); // email: String (único)
+        $table->string('password'); // password: String
+        $table->enum('role', ['admin', 'user'])->default('user'); // role: enum
+        $table->float('wallet_balance')->default(0); // wallet_balance: Float
+        $table->float('reputation')->default(0); // reputation: Float
+        $table->boolean('is_banned')->default(false); // is_banned: Boolean
+        $table->dateTime('created_at'); // created_at: DateTime
+        $table->boolean('isAdmin')->default(false); // isAdmin(): Boolean
+        $table->boolean('isProfessional')->default(false); // isProfessional(): Boolean
+        $table->boolean('canSell')->default(true); // canSell(): Boolean
+        $table->timestamps(); // created_at y updated_at automáticos
+    });
+}
 
     /**
      * Reverse the migrations.
