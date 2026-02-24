@@ -6,27 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up()
-{
-    Schema::create('users', function (Blueprint $table) {
-        $table->id(); // id: Long (autoincremental)
-        $table->string('name'); // name: String
-        $table->string('email')->unique(); // email: String (único)
-        $table->string('password'); // password: String
-        $table->enum('role', ['admin', 'user'])->default('user'); // role: enum
-        $table->float('wallet_balance')->default(0); // wallet_balance: Float
-        $table->float('reputation')->default(0); // reputation: Float
-        $table->boolean('is_banned')->default(false); // is_banned: Boolean
-        $table->dateTime('created_at'); // created_at: DateTime
-        $table->boolean('isAdmin')->default(false); // isAdmin(): Boolean
-        $table->boolean('isProfessional')->default(false); // isProfessional(): Boolean
-        $table->boolean('canSell')->default(true); // canSell(): Boolean
-        $table->timestamps(); // created_at y updated_at automáticos
-    });
-}
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+
+            $table->enum('role', ['admin', 'user'])->default('user');
+
+            // Department del Admin
+            $table->string('department')->nullable(); 
+
+            $table->decimal('wallet_balance', 10, 2)->default(0.00);
+            $table->float('reputation')->default(5.0);
+            $table->boolean('is_banned')->default(false);
+
+            $table->rememberToken();
+            $table->timestamps(); // Añade created_at y updated_at
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -34,7 +35,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };

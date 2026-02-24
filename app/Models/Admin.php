@@ -2,26 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
-class Admin extends Model
+class Admin extends User
 {
-    protected $fillable = [
-        'department',
-        'user_id',
-    ];
+    // Esto le dice a Laravel que este modelo sigue usando la tabla 'users'
+    protected $table = 'users';
 
-    // Relación: Un admin pertenece a un usuario
-    public function user()
+    // Filtro que se aplica a todas las consultas de Admin
+    protected static function booted()
     {
-        return $this->belongsTo(User::class);
+        static::addGlobalScope('admin', function (Builder $builder) {
+            $builder->where('role', 'admin');
+        });
     }
 
-    // Método banUser
-    public function banUser($userId)
+    public function banUser(User $user)
     {
-        $user = User::find($userId);
-        if ($user) {
+        if (!$user->isAdmin()) {
             $user->is_banned = true;
             $user->save();
         }
