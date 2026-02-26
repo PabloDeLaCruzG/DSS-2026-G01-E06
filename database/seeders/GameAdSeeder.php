@@ -4,15 +4,16 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\GameAd;
 use App\Models\Game;
 
-class GameSeeder extends Seeder
+class GameAdSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Game::factory(10)->create();
+        GameAd::factory(20)->create();
     }
 }

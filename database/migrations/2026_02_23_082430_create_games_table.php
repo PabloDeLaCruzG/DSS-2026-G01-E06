@@ -14,8 +14,8 @@ return new class extends Migration
             $table->text('description');
             $table->date('release_date');
             $table->string('cover_image');
-            $table->enum('genre', ['ACTION', 'RPG', 'SPORTS', 'STRATEGY', 'ADVENTURE']);
-            $table->enum('platform', ['PC', 'PS5', 'XBOX', 'SWITCH']);
+            $table->enum('genre', ['ACTION', 'RPG', 'SPORTS']);
+            $table->enum('platform', ['PS5', 'XBOX', 'PC']);
             $table->timestamps();
         });
     }
