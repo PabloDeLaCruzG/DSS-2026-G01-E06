@@ -16,19 +16,20 @@ class UserFactory extends Factory
      */
     protected static ?string $password;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => static::$password ??= \Illuminate\Support\Facades\Hash::make('password'),
+            'remember_token' => \Illuminate\Support\Str::random(10),
+            // Nuestros campos:
+            'role' => 'user',
+            'department' => null,
+            'wallet_balance' => fake()->randomFloat(2, 0, 500),
+            'reputation' => fake()->randomFloat(1, 1, 5),
+            'is_banned' => fake()->boolean(5), // 5% de probabilidad de estar baneado
         ];
     }
 
@@ -37,7 +38,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
