@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'department',
         'wallet_balance',
         'reputation',
         'is_banned',
@@ -92,5 +93,30 @@ class User extends Authenticatable
     public function reports()
     {
         return $this->hasMany(Report::class);
+    }
+
+    /**
+     * Verifica si el usuario tiene el rol de Administrador.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Verifica si el usuario tiene un perfil profesional verificado.
+     */
+    public function isProfessional(): bool
+    {
+        // La relación 'professionalProfile' debe existir Y estar verificada
+        return $this->professionalProfile && $this->professionalProfile->is_verified;
+    }
+
+    /**
+     * Verifica si el usuario tiene permiso para vender (no está baneado).
+     */
+    public function canSell(): bool
+    {
+        return !$this->is_banned;
     }
 }
