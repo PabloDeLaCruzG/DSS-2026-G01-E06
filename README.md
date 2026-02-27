@@ -57,7 +57,66 @@ Asegúrate de tener instalado:
 *   Composer
 *   MySQL Server
 
+
 ### 2. Clonar el Repositorio
 ```bash
 git clone https://github.com/PabloDeLaCruzG/DSS-2026-G01-E06.git
 cd DSS-2026-G01-E06
+```
+
+### 3. Instalar Dependencias
+```bash
+composer install
+```
+
+### 4. Configuración del Entorno (.env)
+Copia el archivo de ejemplo y genera la clave de aplicación.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Abre el archivo `.env` y asegúrate de configurar la base de datos `dss`:
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=dss
+DB_USERNAME=dss
+DB_PASSWORD=dss
+
+SESSION_DRIVER=file
+CACHE_STORE=file
+```
+
+### 5. Base de Datos y Seeders (Datos de prueba)
+Ejecuta las migraciones para crear las tablas y los seeders para poblar la base de datos con el catálogo de juegos, usuarios, perfiles y pedidos de ejemplo.
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 6. Ejecutar el Servidor
+```bash
+php artisan serve
+```
+La aplicación estará disponible en: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 🧪 Ejecución de Tests
+
+El proyecto incluye pruebas automatizadas para verificar la integridad del Modelo de Dominio y las relaciones entre entidades. Para ejecutarlas:
+
+```bash
+php artisan test
+```
+
+---
+
+## 📅 Estado del Proyecto
+
+- [x] **Entrega 0:** Especificación de Requisitos y Alcance.
+- [x] **Entrega 1 (Actual):** Configuración de Entorno, Modelo de Dominio (UML), Migraciones, Seeders y Tests de relaciones.
+-[ ] **Entrega 2:** Lógica de Negocio (Capa de Servicios) y Controladores Base.
+- [ ] **Entrega 3:** Funcionalidades completas, Auth, Subastas y Despliegue.
+```
