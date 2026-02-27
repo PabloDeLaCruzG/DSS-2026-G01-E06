@@ -27,10 +27,10 @@ El objetivo es fomentar la economía circular en el *gaming*, ofreciendo funcion
 | Miembro | GitHub User |
 | :--- | :--- |
 | **Pablo De La Cruz Gomez** | [@PabloDeLaCruzG](https://github.com/PabloDeLaCruzG) |
-| **Silvia Carrasco Gavilá** | []() |
-| **Marius Antonio Nica** | []() |
-| **Ilyas Chourafi** | []() |
-| **Ismael Adrián G. Verdugo** | []() |
+| **Silvia Carrasco Gavilá** | [@SilviaaCG](https://github.com/SilviaaCG) |
+| **Marius Antonio Nica** | [@man31-ua](https://github.com/man31-ua) |
+| **Ilyas Chourafi** | [@ilyaschourafi](https://github.com/ilyaschourafi) |
+| **Ismael Adrián G. Verdugo** | [@iagr1-ua](https://github.com/iagr1-ua) |
 
 ---
 
@@ -110,13 +110,4 @@ El proyecto incluye pruebas automatizadas para verificar la integridad del Model
 ```bash
 php artisan test
 ```
-
 ---
-
-## 📅 Estado del Proyecto
-
-- [x] **Entrega 0:** Especificación de Requisitos y Alcance.
-- [x] **Entrega 1 (Actual):** Configuración de Entorno, Modelo de Dominio (UML), Migraciones, Seeders y Tests de relaciones.
--[ ] **Entrega 2:** Lógica de Negocio (Capa de Servicios) y Controladores Base.
-- [ ] **Entrega 3:** Funcionalidades completas, Auth, Subastas y Despliegue.
-```
