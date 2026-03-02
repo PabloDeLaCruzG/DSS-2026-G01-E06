@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->enum('condition', ['NEW', 'USED', 'DIGITAL']);
             $table->enum('format', ['PHYSICAL', 'DIGITAL_KEY']);
+            $table->json('platforms')->nullable();
             $table->string('digital_key')->nullable();
             $table->string('images')->nullable();
             $table->enum('status', ['ACTIVE', 'SOLD', 'HIDDEN'])->default('ACTIVE');

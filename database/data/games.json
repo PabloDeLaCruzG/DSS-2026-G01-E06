@@ -1,0 +1,502 @@
+[
+    {
+        "title": "Baldur's Gate 3",
+        "description": "In Baldur's Gate 3, players embark on a journey through the ruined city of Baldur's Gate and beyond. With a focus on character development and party-based combat, players engage in strategic battles, interact with a rich cast of characters, and navigate a complex narrative filled with moral dilemmas. The game utilizes a real-time with pause combat system and is set in the popular Dungeons & Dragons tabletop role-playing game universe.",
+        "year": 2023,
+        "cover_image": "https://img.gamebrain.co/games/155/baldurs_gate_3_larian_2020_66.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/FXyldfVAF9A",
+        "rating": 4.79,
+        "genres": "[\"Tactical Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Elden Ring",
+        "description": "Elden Ring Randomzier Hints is a mod for Elden Ring that generates in-game hints for item and enemy locations in randomized worlds. This mod is designed to provide more goal-directed play while still maintaining the exploration and discovery aspects of the randomized world. The hints offer information about item locations and fog gate routes, making it easier to find items useful for character builds.",
+        "year": 2022,
+        "cover_image": "https://img.gamebrain.co/games/956/elden_ring_fromsoftware_2022_83.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/bg8i4CvE74M",
+        "rating": 4.71,
+        "genres": "[\"Open World Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Clair Obscur: Expedition 33",
+        "description": "Clair Obscur: Expedition 33 is a turn-based RPG with innovative real-time mechanics set in a Belle Époque France-inspired world. Players join Expedition 33 on a final mission to stop the Paintress, who marks ages with cursed numbers that cause people to fade away. Engage in immersive battles and explore a haunting, atmospheric fantasy landscape.",
+        "year": 2025,
+        "cover_image": "https://img.gamebrain.co/games/539/clair_obscur_expedition_33_sandfall_2025_4.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/YJnjReKXrvk",
+        "rating": 4.85,
+        "genres": "[\"Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Tank Stars",
+        "description": "Tank Stars is a shooter game known for its fabulous gameplay, perfect graphics, and hilarious moments. However, it features lots of grinding, excessive advertisements, and bugs that can affect the emotional experience. As described by the game, choose the right weapon and angle to succeed in the intense tank battles.",
+        "year": 2026,
+        "cover_image": "https://img.gamebrain.co/games/108/tank_stars_storerider_2.png",
+        "trailer_url": "https://videos.crazygames.com/tank-stars-online/1/tank-stars-online.mp4",
+        "rating": 4.45,
+        "genres": "[\"Casual Shooter\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Schedule I",
+        "description": null,
+        "year": 2025,
+        "cover_image": "https://img.gamebrain.co/games/890/schedule_i_tvgs_2024_1.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/257080424/microtrailer.webm",
+        "rating": 4.9,
+        "genres": "[\"Open World Strategy\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "People Playground",
+        "description": "People Playground is a sandbox violence game where players can experiment with a variety of weapons and vehicles in a simulated environment. It offers creative freedom to build, destroy, and explore, with an emphasis on physics-based interactions and destruction. The game features detailed graphics and a range of tools to create unique and destructive scenarios. However, it contains mature content and is intended for mature audiences.",
+        "year": 2019,
+        "cover_image": "https://img.gamebrain.co/games/666/people_playground_mestiez_2019_5.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/j98IrTsoJig",
+        "rating": 4.94,
+        "genres": "[\"Simulation\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Valheim",
+        "description": "Valheim is a brutally challenging, open-world survival game set in a procedurally generated purgatory inspired by Norse mythology. Players must hunt, gather resources, and craft their way to victory against fearsome foes and harsh environments. Cooperative gameplay with friends adds another layer of strategy and camaraderie to this already immersive experience.",
+        "year": 2022,
+        "cover_image": "https://img.gamebrain.co/games/159/game_kinguin_130060_1.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/IAMPr9kytfk",
+        "rating": 4.66,
+        "genres": "[\"Open World Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "R.E.P.O.",
+        "description": "R.E.P.O. is a cooperative horror game where you and up to five friends navigate eerie environments to extract valuable items using a physics-based grabbing tool. Facing gravity-affected monsters and working under a mysterious AI, teamwork and stealth are key to safely transporting fragile and heavy cargo. Upgrade weapons and enhancements to improve your survival chances in this tense, atmospheric experience.",
+        "year": 2025,
+        "cover_image": "https://img.gamebrain.co/games/461/r_e_p_o_semiwork_2025_6.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/3241660/1884287699/bbab6854a8bc66274a77234cd49bf83f2d68076d/1761829575/dash_h264.mpd",
+        "rating": 4.84,
+        "genres": "[\"Survival Strategy\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Portal 2",
+        "description": null,
+        "year": 2011,
+        "cover_image": "https://img.gamebrain.co/games/422/portal_2_valve_2011_4.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/A0K5EXfgJnk",
+        "rating": 4.8,
+        "genres": "[\"Platformer\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Hades",
+        "description": "\"Hades\" is a single-player fantasy hack and slash game with an intriguing story, exceptional gameplay, good visuals, and delightful music. As the immortal Prince of the Underworld, players battle out of hell using mythic weapons and the powers of Olympian gods, with plenty of replayability and unique character builds to discover. The game features a fully-voiced cast of colorful characters, creating a dense and emotionally engaging atmosphere.",
+        "year": 2018,
+        "cover_image": "https://img.gamebrain.co/games/611/hades_ablex_2019_1.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/Yps6NnS2sdI",
+        "rating": 4.79,
+        "genres": "[\"Hack and Slash\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "The Witcher 3: Wild Hunt",
+        "description": "\"The Witcher 3: Wild Hunt\" is an action-packed fantasy RPG that lets you explore a vast, war-torn continent as Geralt of Rivia, a monster slayer and Söldner. Your mission is to find Ciri, the Child of Prophecy, a powerful entity that could change the world. The game features updated next-gen graphics, a new photo mode, and additional content inspired by the Netflix series. Immerse yourself in a rich story with intense combat and deep character development.",
+        "year": 2015,
+        "cover_image": "https://img.gamebrain.co/games/259/the_witcher_3_wild_hunt_cdprojektred_2016_4.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/xx8kQ4s5hCY",
+        "rating": 4.65,
+        "genres": "[\"Open World Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Tigery App Version",
+        "description": null,
+        "year": 2020,
+        "cover_image": null,
+        "trailer_url": null,
+        "rating": 4.86,
+        "genres": "[\"Survival Survival\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "DELTARUNE",
+        "description": "DELTARUNE is the next adventure in the UNDERTALE series, featuring a new story and characters, as well as familiar faces like Toriel and Sans. The game includes smooth pixel-animation, chapter-based storytelling, and creative bullet-dodging battles. Chapters 3-5 are currently in development, with only the first two chapters available for free download. The game features a massive soundtrack and only one ending, with hidden bosses adding an extra challenge.",
+        "year": 2025,
+        "cover_image": "https://img.gamebrain.co/games/193/game_itchio_deltarune_1.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/KOj87_Bte7g",
+        "rating": 4.93,
+        "genres": "[\"Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Phasmophobia",
+        "description": null,
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/681/phasmophobia_kinetic_2020_4731.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/257162354/microtrailer.webm",
+        "rating": 4.8,
+        "genres": "[\"Puzzle\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Happy Color by Numbers Game",
+        "description": "Happy Color is a calming paint-by-numbers game, offering exclusive art templates featuring nature, fashion, and Disney characters. The game caters to all ages and lifestyles, providing an easy, creative, and satisfying experience. By coloring, players can support children's charities and environmental protection organizations.",
+        "year": 2018,
+        "cover_image": "https://img.gamebrain.co/games/40/happy_color_by_numbers_game_x_flow_2018_61.png",
+        "trailer_url": null,
+        "rating": 4.56,
+        "genres": "[\"Action\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Deep Rock Galactic",
+        "description": "\"Deep Rock Galactic is a co-op first-person shooter set in a dangerous, procedurally generated underground mining universe. Players assume the role of space dwarves, working for an industrial miner corporation, facing alien enemies and natural hazards. Missions involve resource extraction, objectives, and fighting off waves of enemies. The game features class-based teamwork, gun customization, and destructible environments.\"",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/847/deep_rock_galactic_ghostship_2020_312.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/L04f8-kmC10",
+        "rating": 4.56,
+        "genres": "[\"Shooter\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Satisfactory",
+        "description": "Satisfactory is a first-person factory building game where you construct massive facilities to gather resources and automate production. Explore an alien planet, build intricate conveyor belt systems, and collect an array of resources to expand your factories. Collaborate with friends or play solo to create your own industrial empire.",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/651/satisfactory_coffeestain_2019_101.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/UxA0JJJ5LTI",
+        "rating": 4.74,
+        "genres": "[\"Open World Shooter\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Terra - A Terraria Demake",
+        "description": "\"Terra - A Terraria Demake\" is a fan-made game that recreates the popular Terraria in the PICO-8 platform, offering a smaller but still fun experience. It features 6 biomes, 4 bosses, various enemies and weapons, with a day-night cycle and lighting system. Mining, crafting, and recipe changes are also included in this demake, providing a taste of the original game's features.",
+        "year": 2022,
+        "cover_image": "https://img.gamebrain.co/games/626/game_itchio_terra_a_terraria_demake_1.png",
+        "trailer_url": null,
+        "rating": 4.9,
+        "genres": "[\"Action Adventure\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Blade & Sorcery",
+        "description": "\"Blade & Sorcery\" is a fantasy combat simulator set in a detailed sandbox environment. Use physics-based fighting techniques and magic spells to battle opponents, with a focus on realism and immersion. The game features a variety of weapons, spells, and enemy types to keep the combat fresh and challenging.",
+        "year": 2024,
+        "cover_image": "https://img.gamebrain.co/games/428/blade_and_sorcery_warpfrog_2018_4.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/02ZevA1atu4",
+        "rating": 4.86,
+        "genres": "[\"Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Rust",
+        "description": "Rust is a multiplayer-only survival game set in a harsh, open world. Gather resources, craft tools, build shelters, and form alliances with other players to survive. Conflicts arise through competition for resources and territory, and betrayal is common. The game features complex survival mechanics, including hunger, thirst, and temperature management.",
+        "year": 2021,
+        "cover_image": "https://img.gamebrain.co/games/864/rust_facepunch_2018_1.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/IQZ5HW-9WjA",
+        "rating": 4.13,
+        "genres": "[\"Open World Role Playing Shooter\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "WEBFISHING",
+        "description": "\"WEBFISHING is an 8-hour long simulation game where players can catch over 90 different creatures, upgrade and customize their gear, and socialize with friends and strangers in a relaxed online environment. Engage in various activities such as playing real guitar, punching friends, and drawing with chalk in this multiplayer fishing game.\"",
+        "year": 2024,
+        "cover_image": "https://img.gamebrain.co/games/291/game_itchio_webfishing_1.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/qkGWTm_JWwk",
+        "rating": 4.89,
+        "genres": "[\"Casual Simulation\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Slay The Spire",
+        "description": "\"Slay the Spire\" is a single-player deckbuilder that combines elements of card games and roguelikes. Each attempt at climbing the Spire offers a unique experience, with dynamic deck building, an ever-changing layout, and powerful relics to discover. Fight bizarre creatures, choose from hundreds of cards, and face different enemies and bosses each time, striving to reach the top of the Spire.",
+        "year": 2019,
+        "cover_image": "https://img.gamebrain.co/games/325/slay_the_spire_megacrit_2019_6.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/zOUJjeynZWE",
+        "rating": 4.64,
+        "genres": "[\"Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Hollow Knight",
+        "description": null,
+        "year": 2017,
+        "cover_image": "https://img.gamebrain.co/games/746/hollow_knight_teamcherry_2017_46.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/367520/80716/a0e87f2b9a544cb8bdce9397b63bc8267e41ce06/1750517667/dash_h264.mpd",
+        "rating": 4.77,
+        "genres": "[\"Hack and Slash\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Red Dead Redemption 2",
+        "description": "In Red Dead Redemption 2, players assume the role of the outlaw Arthur Morgan, surviving with the Van der Linde gang in America's heartland, 1899. With the law closing in, choices must be made, testing loyalties and personal beliefs. The game also features Red Dead Online, where players form posse's to explore, battle enemies, build a camp, and forge their own paths in the American frontier.",
+        "year": 2019,
+        "cover_image": "https://img.gamebrain.co/games/549/red_dead_redemption_2_rockstar_2018_18.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/0d-U2QL2Qvc",
+        "rating": 4.61,
+        "genres": "[\"Open World Role Playing Shooter\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Block Puzzle - Brain Test Game",
+        "description": "\"Block Puzzle - Brain Test Game\" is a simple yet addictive puzzle game where players drop blocks to create horizontal or vertical lines without gaps, which are then destroyed. The goal is to keep the board clear as things heat up. The game features easy-to-pick-up gameplay, beautiful graphics, and a calming soundtrack, making it a perfect choice for a quick brain teaser or a longer strategy session.",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/653/block_puzzle_brain_test_game_doodlemobile_2020_14.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/gAoVtF3t8SM",
+        "rating": 4.46,
+        "genres": "[\"Puzzle\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Subnautica",
+        "description": "Subnautica is an underwater alien adventure game, where you descend into an expansive ocean world filled with beauty and danger. Craft tools, build submarines, and outsmart mysterious sea creatures to explore sunken shipwrecks, deep-sea trenches, and mesmerizing underwater biomes. Stay alive by managing hunger, thirst, and oxygen levels, while uncovering the secrets of this mesmerizing aquatic world.",
+        "year": 2018,
+        "cover_image": "https://img.gamebrain.co/games/420/subnautica_unknownworlds_2018_1.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/WS54qL3GeaI",
+        "rating": 4.53,
+        "genres": "[\"Open World Action Adventure\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Totally Accurate Battle Simulator",
+        "description": "Totally Accurate Battle Simulator is a wacky physics-based warfare simulation game. Command a variety of units with unique abilities and watch as they bumble into battle, resulting in unpredictable and often hilarious outcomes. Perfect for casual players seeking a light-hearted and entertaining experience.",
+        "year": 2019,
+        "cover_image": "https://img.gamebrain.co/games/728/totally_accurate_battle_simulator_landfall_2019_1.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/jP9vYpTUOq8",
+        "rating": 4.9,
+        "genres": "[\"Strategy\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Balatro",
+        "description": "Balatro is a poker-inspired roguelike deck builder where you combine poker hands and unique Joker cards to create powerful synergies. With endless possibilities and a variety of tools at your disposal, every run is different as you aim to earn chips, beat devious blinds, and reach the final boss. The game features an in-depth campaign mode with 8 difficulties, as well as challenge, daily, and seeded runs.",
+        "year": 2024,
+        "cover_image": "https://img.gamebrain.co/games/219/balatro_localthunk_2024_26.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/d9qb_b6bErw",
+        "rating": 4.68,
+        "genres": "[\"Casual Strategy\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Cookie Clicker",
+        "description": "Cookie Clicker is a browser-based game where players bake cookies by clicking on a giant cookie, aiming to accumulate a large number of cookies and milk. As the game progresses, players can buy items with cookies to automate cookie production, resulting in an addictive and potentially endless gameplay experience. The objective is to bake cookies as quickly and efficiently as possible, with no definitive end to the game, providing countless hours of enjoyment for players.",
+        "year": 2021,
+        "cover_image": "https://img.gamebrain.co/games/547/cookie_clicker_dashnet_2021_4.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/EuPIOF0LG70",
+        "rating": 4.77,
+        "genres": "[\"Casual Strategy\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Madden NFL 24 Mobile Football",
+        "description": "\"Madden NFL 24 Mobile Football\" offers authentic sports game action and mobile-first visuals for its 10th season. Build your Ultimate Team, earn superstars, and compete in skill-based challenges, journeys, and competitions. Look forward to visual enhancements, the return of Coaches and Playbooks, and engaging in real-world events like Kickoff Weekend and the Super Bowl.",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/547/madden_nfl_24_mobile_football_electronicarts_2020_1.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/4CptKlpe1U0",
+        "rating": 4.46,
+        "genres": "[\"Sport\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Discord - Talk, Play, Hang Out",
+        "description": "Discord is a chat platform designed for gaming, allowing users to customize their own space to talk, play, and hang out with friends or build a community. It features high-quality and low-latency streaming, making it feel like you're in the same room as friends while playing games or watching shows. Discord makes it easy to join voice or text chats without needing to call or invite friends, and offers custom emoji, stickers, and soundboard effects to add personality to chats.",
+        "year": 2015,
+        "cover_image": "https://img.gamebrain.co/games/508/discord_talk_play_hang_out_discord_2015_44.png",
+        "trailer_url": null,
+        "rating": 4.46,
+        "genres": "[\"Action\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "PEAK",
+        "description": "Peak is an open-world climbing game that can be played solo or in 2-player co-op multiplayer mode. As lost nature scouts stranded on a mysterious island, you must carefully scale the central mountain, where even the smallest mistake can lead to disaster. Work together to overcome challenges and reach the ultimate summit—the PEAK.",
+        "year": 2025,
+        "cover_image": "https://img.gamebrain.co/games/21/peak_landcrab_2025_1.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/3527290/363268313/a99c1275fc3066ce7b8e634df8e47f4ec39edb3d/1754929324/dash_h264.mpd",
+        "rating": 4.77,
+        "genres": "[\"Open World Action Adventure\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Divinity: Original Sin 2 Steam Gift NORTH AMERICA",
+        "description": "Divinity: Original Sin II is a single-player and multiplayer turn-based RPG with a strong focus on strategic gameplay and a well-crafted narrative. The game boasts an intriguing story, masterful atmosphere, and plenty of humor, accompanied by outstanding game mechanics, visuals, and soundtrack. Despite some bugs and a lot of grinding, the game offers high replayability due to its pen & paper RPG-like levels of freedom.",
+        "year": 2017,
+        "cover_image": "https://img.gamebrain.co/games/953/divinity_original_sin_ii_elverils_2017_2.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/vJ4SVSm1ARQ",
+        "rating": 4.67,
+        "genres": "[\"Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Xbox",
+        "description": "The Xbox app allows you to stay connected to your gaming friends and activities wherever you go. Share game clips and screenshots, chat with voice and text, and receive notifications for game invites and messages. Additionally, play console games on your mobile device over the internet. Available for supported phones and tablets.",
+        "year": 2013,
+        "cover_image": "https://img.gamebrain.co/games/320/xbox_microsoftcorporation_2013_11.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/y-sKYLhhtoc",
+        "rating": 4.46,
+        "genres": "[\"Action\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Bloons TD 6",
+        "description": "\"Bloons TD 6\" is a strategy game that offers single-player, multi-player, and co-op modes, including local split-screen play for 2 players. The game features exciting content updates like 4-player co-op, boss events, odysseys, and a trophy store. With awesome monkey towers, heroes, and activated abilities, players craft their defense to pop invading Bloons in this engaging and replayable game, although some bugs may be encountered.",
+        "year": 2018,
+        "cover_image": "https://img.gamebrain.co/games/814/bloons_td_6_ninjakiwi_2018_7.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/256939310/microtrailer.webm",
+        "rating": 4.87,
+        "genres": "[\"Casual Strategy\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Sniper 3D: Gun Shooting Games",
+        "description": "Sniper 3D: Gun Shooting Games is a free-to-play 3d gun game that puts you in the role of a skilled sniper. With over 180 authentic weapons to unlock and upgrade, you'll complete high-intensity offline missions and show off your shooting skills in this adrenaline-pumping sniper adventure. Immerse yourself in realistic ballistics and intuitive controls, and prove you're the ultimate sniper 3d assassin.",
+        "year": 2014,
+        "cover_image": "https://img.gamebrain.co/games/319/sniper_3d_gun_shooting_games_wildlife_2014_36.png",
+        "trailer_url": null,
+        "rating": 4.46,
+        "genres": "[\"Action\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Stack Ball 3D",
+        "description": "Stack Ball 3D is an arcade game where players smash through revolving helix platforms at high speed, aiming to reach the end while avoiding black platforms that cause the ball to shatter. The game features bright graphics, simple controls, and the ability to transform the ball into a fireball for extra power, making it a fun and addictive time-killer. With its simple yet challenging gameplay, Stack Ball 3D offers a unique and exciting experience for players.",
+        "year": 2019,
+        "cover_image": "https://img.gamebrain.co/games/195/stack_ball_3d_azur_2019_22.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/2AEdOK5ULlY",
+        "rating": 4.46,
+        "genres": "[\"Action\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Crazy Kick! Fun Football game",
+        "description": "\"Crazy Kick!\" is a football game where you control the ball instead of the players, offering a unique twist on traditional soccer games. Dribble, pass, and shoot goals to advance through challenging levels and reach the World Cup Final. With easy controls and fun movements, compete against friends and show off your skills in this real football experience.",
+        "year": 2019,
+        "cover_image": "https://img.gamebrain.co/games/475/crazy_kick_fun_football_game_voodoo_2019_14.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/TWzdk0ddwbo",
+        "rating": 4.46,
+        "genres": "[\"Sport\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Black Myth: Wukong",
+        "description": "\"Black Myth: Wukong\" is an action RPG inspired by Chinese mythology and the classic novel \"Journey to the West.\" As the powerful Monkey King, players will battle enemies using a variety of weapons and equipment, with a focus on fast-paced combat and exploration. The Digital Deluxe Edition includes additional in-game items such as a special staff, masks, armor, and music tracks.",
+        "year": 2024,
+        "cover_image": "https://img.gamebrain.co/games/205/black_myth_wukong_gamescience_2024_4.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/AlU0OW7wjpQ",
+        "rating": 4.45,
+        "genres": "[\"Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Terraria",
+        "description": "Terraria is a popular action game that offers an interesting plot, compelling visuals, and a spectacular soundtrack. The game features stellar mechanics that encourage digging, fighting, exploring, and building, with high emotional moments and plenty of humor. While it can be very grinding with some bugs, its outstanding replayability and large community make it a must-play for fans of the genre. Join the fun by digging, fighting, exploring, and building in Terraria!",
+        "year": 2011,
+        "cover_image": "https://img.gamebrain.co/games/472/terraria_re_logic_2011_50.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/zLfYD2OOtsc",
+        "rating": 4.18,
+        "genres": "[\"Open World Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Woodoku - Wood Block Puzzles",
+        "description": "Woodoku is a relaxing wood block puzzle game with a sudoku grid. The objective is to place blocks on the 9x9 board, clearing rows, columns, or squares to earn points. With no time limit and a simple design, it offers a zen gameplay experience that is easy to learn but challenging to master. Featuring beautiful graphics, satisfying sound effects, and a light, portable format, it's a great choice for players who enjoy calming and engaging puzzle games.",
+        "year": 2020,
+        "cover_image": null,
+        "trailer_url": "https://www.youtube-nocookie.com/embed/VeL363S2h4U",
+        "rating": 4.46,
+        "genres": "[\"Puzzle\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Yahoo Fantasy Football, Sports",
+        "description": "Yahoo Fantasy Sports lets you compete with friends and manage all your fantasy teams in one place with real-time updates and expert analysis. Stay connected to your favorite athletes, track every play and point, and enjoy curated content to make smarter decisions. Experience an easy, fun, and dynamic way to play Fantasy Football, Baseball, Basketball, Hockey, and more.",
+        "year": 2022,
+        "cover_image": "https://img.gamebrain.co/games/643/yahoo_fantasy_football_sports_yahoo_2022_1.png",
+        "trailer_url": null,
+        "rating": 4.56,
+        "genres": "[\"Sport\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Barotrauma",
+        "description": "Barotrauma is a 2D co-op submarine simulator set in a harsh underwater environment on Jupiter's moon, Europa. Players must work together to explore and survive, with the option to sabotage and let the ship go down in fire and flood. The game features teamwork, physics-based mechanics, alien sea monsters, and multiple factions to interact with.",
+        "year": 2023,
+        "cover_image": "https://img.gamebrain.co/games/101/barotrauma_fakefish_2019_30.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/6WDjQinZOoo",
+        "rating": 4.74,
+        "genres": "[\"Survival Simulation\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Bowmasters - Multiplayer Game",
+        "description": "Bowmasters - Multiplayer Game is a free-to-play aim and shoot game with over 60 characters, online multiplayer, and various game modes. It also offers a weekly or monthly subscription for access to additional characters, ad removal, and daily rewards of coins and gems. The game features over 60 different weapons and allows for epic duels with friends.",
+        "year": 2016,
+        "cover_image": "https://img.gamebrain.co/games/579/bowmasters_multiplayer_game_playgendary_2016_13.png",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/tIuWMxZ8dag",
+        "rating": 4.28,
+        "genres": "[\"Action\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Match 3D",
+        "description": "\"Match 3D\" is a challenging 3D matching pairs game with shiny visuals and satisfying effects. It offers well-designed levels that improve memorization skills, and the option to pause at any time. The game features cute animals, yummy food, toys, and other exciting objects to pair.",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/264/match_3d_lionplus_2020_23.png",
+        "trailer_url": null,
+        "rating": 4.56,
+        "genres": "[\"Puzzle\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "It Takes Two",
+        "description": "It Takes Two is a cooperative action-adventure game where two players control a married couple who have been transformed into dolls by their daughter's wish. They must work together to navigate through various levels, solving puzzles and battling enemies to restore their relationship and return to their human forms. The game features a variety of gameplay mechanics, including platforming, shooting, and driving, and can be played both online and locally with a friend.",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/442/it_takes_two_friends_pass_ittakestwofriendspass_2021_20.jpg",
+        "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/256827093/microtrailer.webm",
+        "rating": 4.79,
+        "genres": "[\"Platformer\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Completing the Mission",
+        "description": "The Henry Stickmin Collection is a humorous, choose-your-own-path game series, where each decision you make can lead to different outcomes, including success or various fails. This 6-game saga offers multiple canon endings, resulting in a unique and entertaining experience with each playthrough. Failing is half the fun, as it showcases the game's creativity in coming up with wacky and unexpected consequences.",
+        "year": 2020,
+        "cover_image": "https://img.gamebrain.co/games/578/the_henry_stickmin_collection_puffballsunited_2020_1.png",
+        "trailer_url": "https://videos.crazygames.com/completing-the-mission/1/completing-the-mission.mp4",
+        "rating": 4.93,
+        "genres": "[\"Casual Action Adventure\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Kingdom Come: Deliverance II",
+        "description": null,
+        "year": 2024,
+        "cover_image": "https://img.gamebrain.co/games/487/kingdom_come_deliverance_2_warhorse_2025_3.jpg",
+        "trailer_url": "https://cdn.akamai.steamstatic.com/steam/apps/257029338/microtrailer.webm",
+        "rating": 4.68,
+        "genres": "[\"Open World Role Playing\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "Dead Cells",
+        "description": "Dead Cells is a RogueVania game, combining the progressive exploration of a Metroidvania with the replayability of a rogue-lite and the challenging combat of a souls-like. With over 150 weapons and spells, players will face permadeath while navigating through an interconnected world with multiple areas to explore. Nonlinear progression allows for choice in route and permanent abilities to unlock new paths.",
+        "year": 2018,
+        "cover_image": "https://img.gamebrain.co/games/619/dead_cells_motiontwin_2018_38.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/fpCX5TzsGQU",
+        "rating": 4.72,
+        "genres": "[\"Hack and Slash\"]",
+        "platforms": "[\"PC\"]"
+    },
+    {
+        "title": "The Planet Crafter",
+        "description": "\"The Planet Crafter\" is a survival and terraforming game where you are tasked with making a hostile planet habitable for humans. Gather resources, craft tools, build and upgrade your base, and use machines to heat the planet and create an oxygen-rich atmosphere. Watch as life forms begin to appear as you successfully terraform the planet.",
+        "year": 2024,
+        "cover_image": "https://img.gamebrain.co/games/139/the_planet_crafter_miju_2024_1.jpg",
+        "trailer_url": "https://www.youtube-nocookie.com/embed/CrwSsFUxMRA",
+        "rating": 4.8,
+        "genres": "[\"Action Adventure\"]",
+        "platforms": "[\"PC\"]"
+    }
+]

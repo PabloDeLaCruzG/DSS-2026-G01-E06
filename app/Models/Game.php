@@ -9,23 +9,26 @@ class Game extends Model
 {
     use HasFactory;
 
-    public const GENRE_ACTION = 'ACTION';
-    public const GENRE_RPG = 'RPG';
-    public const GENRE_SPORTS = 'SPORTS';
-
-    public const PLATFORM_PS5 = 'PS5';
-    public const PLATFORM_XBOX = 'XBOX';
-    
     protected $fillable = [
         'title',
         'description',
-        'release_date',
+        'year',
         'cover_image',
-        'genre',
-        'platform'
+        'trailer_url',
+        'rating',
+        'genres',
+        'platforms'
     ];
 
-    // Un juego del catálogo puede tener muchos anuncios de venta
+    // Mantenemos esto para que los JSON se conviertan en Arrays
+    protected function casts(): array
+    {
+        return [
+            'genres' => 'array',
+            'platforms' => 'array',
+        ];
+    }
+
     public function gameAds()
     {
         return $this->hasMany(GameAd::class);
