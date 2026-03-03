@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 class GameController extends Controller
 {
     /**
+     * Muestra el catálogo global (Home)
+     */
+    public function index()
+    {
+        // Traemos todos los juegos para mostrarlos en la Home
+        $games = Game::all(); 
+        return view('home', compact('games'));
+    }
+    /**
      * Muestra el detalle de un juego específico
      */
     public function show($id)
@@ -27,4 +36,5 @@ class GameController extends Controller
             'userAds' => $userAds
         ]);
     }
+    
 }
