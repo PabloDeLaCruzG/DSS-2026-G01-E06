@@ -11,11 +11,15 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->date('release_date');
-            $table->string('cover_image');
-            $table->enum('genre', ['ACTION', 'RPG', 'SPORTS']);
-            $table->enum('platform', ['PS5', 'XBOX', 'PC']);
+            $table->text('description')->nullable();
+            $table->integer('year')->nullable();
+            $table->string('cover_image')->nullable();
+            $table->string('trailer_url')->nullable();
+            $table->float('rating')->default(0);       
+
+            $table->json('genres')->nullable();
+            $table->json('platforms')->nullable();
+
             $table->timestamps();
         });
     }
