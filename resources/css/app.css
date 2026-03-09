@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #7c3aed;
+  --color-accent: #54a3ac;
+  --color-background: #0c2c4c;
+}

@@ -9,7 +9,7 @@
 <body class="bg-gray-900 text-white">
     
     <!-- Navbar GameLink -->
-<nav class="bg-[#0d1117] border-b border-gray-800 sticky top-0 z-50">
+<nav class="bg-primary border-b border-gray-800 sticky top-0 z-50">
     <div class="container mx-auto px-4 h-16 flex items-center justify-between">
         
         <!-- Izquierda: Logo -->
