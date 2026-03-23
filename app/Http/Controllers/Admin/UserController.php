@@ -32,7 +32,7 @@ class UserController extends Controller
             });
         }
 
-        $users = $query->latest('last_login_at')->paginate(10);
+        $users = $query->latest()->paginate(10);
         $totalUsers = User::count();
         $pendingReports = Report::where('status', 'OPEN')->count();
 
