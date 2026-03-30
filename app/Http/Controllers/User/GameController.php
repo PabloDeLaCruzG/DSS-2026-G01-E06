@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\GameAd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class GameController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id() ?? 1;//si no existe porque aun no esta la autenticacion se asume que es 1
+        $userId=GameAd::pluck('user_id')->first();//busco un usuario que si o si tenga anuncio
 
         $ads = GameAd::where('user_id', $userId)
             ->with('game')
