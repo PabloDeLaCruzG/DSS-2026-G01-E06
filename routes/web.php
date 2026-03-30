@@ -5,6 +5,9 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameAdController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\User\GameController as UserGameController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\OrderController;
 
 // Ruta para la Home (Catálogo Global)
 Route::get('/', [GameController::class, 'index'])->name('home');
@@ -19,6 +22,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
+});
+
+// Panel usuario
+Route::middleware('auth')->group(function () {
+    Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/mis-anuncios', [UserGameController::class, 'index'])->name('games.index');
+    Route::get('/mis-anuncios/create', [UserGameController::class, 'create'])->name('games.create');
+    Route::post('/mis-anuncios', [UserGameController::class, 'store'])->name('games.store');
+
+    Route::get('/mis-anuncios/{id}/edit', [UserGameController::class, 'edit'])->name('games.edit');
+    Route::put('/mis-anuncios/{id}', [UserGameController::class, 'update'])->name('games.update');
+    Route::delete('/mis-anuncios/{id}', [UserGameController::class, 'destroy'])->name('games.destroy');
+
+    Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
 });
 
 //Ruta para el panel de Admin
