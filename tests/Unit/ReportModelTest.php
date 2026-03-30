@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use App\Models\Game;
+use App\Models\GameAd;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,22 +13,31 @@ class ReportModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_report_can_be_resolved_with_valid_decision(): void
+    public function test_report_belongs_to_user(): void
     {
         $user = User::factory()->create();
-
-        $game = Game::create([
-            'title' => 'Test Game',
-            'description' => 'Test Description',
-            'release_date' => '2026-01-01',
-            'cover_image' => 'cover.jpg',
-            'genre' => 'ACTION',
-            'platform' => 'PC',
-        ]);
+        $gameAd = GameAd::factory()->create();
 
         $report = Report::create([
             'user_id' => $user->id,
-            'game_id' => $game->id,
+            'game_ad_id' => $gameAd->id,
+            'reason' => 'Inappropriate content',
+            'status' => Report::STATUS_OPEN,
+            'resolution_notes' => null,
+        ]);
+
+        $this->assertInstanceOf(User::class, $report->user);
+        $this->assertEquals($user->id, $report->user->id);
+    }
+
+    public function test_report_resolve_method_changes_status_to_resolved(): void
+    {
+        $user = User::factory()->create();
+        $gameAd = GameAd::factory()->create();
+
+        $report = Report::create([
+            'user_id' => $user->id,
+            'game_ad_id' => $gameAd->id,
             'reason' => 'Inappropriate content',
             'status' => Report::STATUS_OPEN,
             'resolution_notes' => null,
@@ -44,19 +53,11 @@ class ReportModelTest extends TestCase
     public function test_report_resolution_rejects_invalid_decision(): void
     {
         $user = User::factory()->create();
-
-        $game = Game::create([
-            'title' => 'Test Game',
-            'description' => 'Test Description',
-            'release_date' => '2026-01-01',
-            'cover_image' => 'cover.jpg',
-            'genre' => 'ACTION',
-            'platform' => 'PC',
-        ]);
+        $gameAd = GameAd::factory()->create();
 
         $report = Report::create([
             'user_id' => $user->id,
-            'game_id' => $game->id,
+            'game_ad_id' => $gameAd->id,
             'reason' => 'Spam report',
             'status' => Report::STATUS_OPEN,
             'resolution_notes' => null,
