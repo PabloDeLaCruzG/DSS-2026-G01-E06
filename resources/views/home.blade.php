@@ -91,6 +91,9 @@
                             <span class="text-white font-bold text-sm">
                                 @if($game->getLowestPrice())
                                     {{ number_format($game->getLowestPrice(), 2) }}€
+                                    <span class="text-gray-500 font-normal text-xs ml-1">
+                                        {{ $game->game_ads_count }} {{ $game->game_ads_count == 1 ? 'oferta' : 'ofertas' }}
+                                    </span>
                                 @else
                                     <span class="text-gray-500 font-normal">Sin stock</span>
                                 @endif

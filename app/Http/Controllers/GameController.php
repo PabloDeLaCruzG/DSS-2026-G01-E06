@@ -16,6 +16,7 @@ class GameController extends Controller
         $platform = $request->get('platform');
 
         $games = Game::query()
+            ->withCount('gameAds')
             ->when($platform, function ($query) use ($platform) {
                 $query->whereJsonContains('platforms', $platform);
             })
