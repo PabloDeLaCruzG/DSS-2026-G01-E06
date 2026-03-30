@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Game;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,18 +13,7 @@ class ReviewModelTest extends TestCase
 
     public function test_calculate_average_returns_average_for_game_ad_reviews(): void
     {
-        $game = Game::factory()->create();
-        $seller = User::factory()->create();
-
-        $gameAd = \App\Models\GameAd::create([
-            'game_id' => $game->id,
-            'user_id' => $seller->id,
-            'price' => 50.00,
-            'description' => 'Test GameAd',
-            'condition' => 'NEW',
-            'format' => 'PHYSICAL',
-            'status' => 'ACTIVE',
-        ]);
+        $gameAd = \App\Models\GameAd::factory()->create();
 
         $users = User::factory()->count(3)->create();
 
