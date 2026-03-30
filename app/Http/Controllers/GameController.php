@@ -20,7 +20,7 @@ class GameController extends Controller
             ->when($platform, function ($query) use ($platform) {
                 $query->whereJsonContains('platforms', $platform);
             })
-            ->get();
+            ->paginate(30)->withQueryString();
         return view('home', compact('games'));
     }
     /**

@@ -40,14 +40,14 @@
         </div>
 
         {{-- Filtros de plataforma --}}
-<div class="flex gap-2 flex-wrap">
-    <a href="{{ route('home') }}" class="text-xs px-3 py-1.5 rounded-full {{ !request('platform') ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">All Platforms</a>
-    <a href="{{ route('home', ['platform' => 'PS5']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'PS5' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">PlayStation 5</a>
-    <a href="{{ route('home', ['platform' => 'XBOX']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'XBOX' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Xbox Series X</a>
-    <a href="{{ route('home', ['platform' => 'SWITCH']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platfor') == 'SWITCH' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Nintendo Switch</a>
-    <a href="{{ route('home', ['platform' => 'PC']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'PC' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">PC Gaming</a>
-    <a href="{{ route('home', ['platform' => 'RETRO']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'RETRO' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Retro</a>
-</div>
+    <div class="flex gap-2 flex-wrap">
+        <a href="{{ route('home') }}" class="text-xs px-3 py-1.5 rounded-full {{ !request('platform') ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">All Platforms</a>
+        <a href="{{ route('home', ['platform' => 'PS5']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'PS5' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">PlayStation 5</a>
+        <a href="{{ route('home', ['platform' => 'XBOX']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'XBOX' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Xbox Series X</a>
+        <a href="{{ route('home', ['platform' => 'SWITCH']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platfor') == 'SWITCH' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Nintendo Switch</a>
+        <a href="{{ route('home', ['platform' => 'PC']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'PC' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">PC Gaming</a>
+        <a href="{{ route('home', ['platform' => 'RETRO']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'RETRO' ? 'bg-violet-600 border border-violet-600 text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Retro</a>
+    </div>
     </section>
 
     {{-- ===== TRENDING NOW ===== --}}
@@ -116,6 +116,9 @@
             @endforelse
         </div>
     </section>
+
+    {{-- links de paginación --}}
+    {{ $games->links() }}
 
     {{-- ===== CATEGORÍAS ===== --}}
     <section class="mb-10">
