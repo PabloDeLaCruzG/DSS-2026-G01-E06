@@ -240,13 +240,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const tag = el.tagName.toLowerCase();
             const type = (el.type || '').toLowerCase();
 
-            // Preserve CSRF and method hidden fields
+
             if (type === 'hidden') {
                 if (el.name === '_token' || el.name === '_method') {
-                    // leave token/method intact
+
                     return;
                 }
-                // For other hidden inputs you can clear them:
+
                 el.value = '';
                 return;
             }
