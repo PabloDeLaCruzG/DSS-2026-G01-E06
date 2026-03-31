@@ -29,7 +29,7 @@
     {{-- ===== SIDEBAR ===== --}}
     <aside class="w-56 bg-surface border-r border-border flex flex-col shrink-0 min-h-screen sticky top-0">
 
-        {{-- Logo (igual que app.blade.php) --}}
+        {{-- Logo --}}
         <div class="px-4 py-4 border-b border-border">
             <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                 <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:bg-primary-hover transition-colors">
@@ -99,7 +99,7 @@
 
         {{-- Topbar --}}
         <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
-            {{-- Breadcrumb / título --}}
+            {{-- título --}}
             <div class="flex items-center gap-2 text-sm text-text-muted">
                 <span>Admin</span>
                 <span>›</span>
