@@ -9,16 +9,11 @@ use App\Http\Controllers\User\GameController as UserGameController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\OrderController;
 
-Route::get('/login', function () {
-    return "Login no implementado";
-})->name('login');
-
 // Ruta para la Home (Catálogo Global)
 Route::get('/', [GameController::class, 'index'])->name('home');
 
 // Ruta para el detalle del juego (Comparador de precios)
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
-
 // Ruta para la venta de un juego (Creador de GameAd)
 Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
 
@@ -29,20 +24,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
 });
 
+// Panel usuario
+Route::middleware('auth')->group(function () {
+    Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
 
-Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
-Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/mis-anuncios', [UserGameController::class, 'index'])->name('games.index');
+    Route::get('/mis-anuncios/create', [UserGameController::class, 'create'])->name('games.create');
+    Route::post('/mis-anuncios', [UserGameController::class, 'store'])->name('games.store'); 
 
-Route::get('/mis-anuncios', [UserGameController::class, 'index'])->name('games.index');
-Route::get('/mis-anuncios/create', [UserGameController::class, 'create'])->name('games.create');
-Route::post('/mis-anuncios', [UserGameController::class, 'store'])->name('games.store');
+    Route::get('/mis-anuncios/{id}/edit', [UserGameController::class, 'edit'])->name('games.edit');
+    Route::put('/mis-anuncios/{id}', [UserGameController::class, 'update'])->name('games.update');
+    Route::delete('/mis-anuncios/{id}', [UserGameController::class, 'destroy'])->name('games.destroy');
 
-Route::get('/mis-anuncios/{id}/edit', [UserGameController::class, 'edit'])->name('games.edit');
-Route::put('/mis-anuncios/{id}', [UserGameController::class, 'update'])->name('games.update');
-Route::delete('/mis-anuncios/{id}', [UserGameController::class, 'destroy'])->name('games.destroy');
-
-Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
-
+    Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
+});
 
 //Ruta para el panel de Admin
 Route::prefix('admin')->group(function () {
