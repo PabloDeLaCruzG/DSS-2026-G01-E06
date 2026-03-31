@@ -118,10 +118,14 @@
 
                     {{-- Acción --}}
                     <div class="col-span-3 text-right">
-                        <button
-                            class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover">
-                            Añadir al carrito
-                        </button>
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
+                            <button type="submit"
+                                class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
+                                Añadir al carrito
+                            </button>
+                        </form>
                     </div>
                 </div>
             @empty
@@ -185,10 +189,14 @@
 
                     {{-- Acción --}}
                     <div class="col-span-3 text-right">
-                        <button
-                            class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover">
-                            Añadir al carrito
-                        </button>
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
+                            <button type="submit"
+                                class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
+                                Añadir al carrito
+                            </button>
+                        </form>
                     </div>
                 </div>
             @empty

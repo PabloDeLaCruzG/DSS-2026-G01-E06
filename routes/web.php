@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameAdController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CartController;
 
 // Ruta para la Home (Catálogo Global)
 Route::get('/', [GameController::class, 'index'])->name('home');
@@ -12,6 +13,13 @@ Route::get('/', [GameController::class, 'index'])->name('home');
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
 // Ruta para la venta de un juego (Creador de GameAd)
 Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
+
+// Rutas del Carrito (requieren autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
+});
 
 //Ruta para el panel de Admin
 Route::prefix('admin')->group(function () {
