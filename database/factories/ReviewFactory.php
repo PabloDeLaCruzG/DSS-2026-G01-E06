@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 use App\Models\GameAd;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AuctionBid>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
  */
-class AuctionBidFactory extends Factory
+class ReviewFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +19,10 @@ class AuctionBidFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::factory(),
             'game_ad_id' => GameAd::factory(),
-            'amount'     => fake()->randomFloat(2, 1, 1000),
-            'bid_time'   => fake()->dateTimeBetween('-1 month', 'now'),
+            'rating' => fake()->numberBetween(1, 5),
+            'comment' => fake()->optional()->paragraph(),
         ];
     }
 }

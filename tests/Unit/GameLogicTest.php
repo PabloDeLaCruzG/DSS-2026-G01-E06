@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,5 +37,4 @@ class GameLogicTest extends TestCase
         $game = Game::factory()->create();
         $this->assertEquals(0.0, $game->getLowestPrice());
     }
-    
 }

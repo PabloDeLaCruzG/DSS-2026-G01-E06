@@ -47,17 +47,17 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-        'is_banned' => 'boolean',
-        'isAdmin' => 'boolean',
-        'isProfessional' => 'boolean',
-        'canSell' => 'boolean',
-        'wallet_balance' => 'float',
-        'reputation' => 'float',
+            'is_banned' => 'boolean',
+            'isAdmin' => 'boolean',
+            'isProfessional' => 'boolean',
+            'canSell' => 'boolean',
+            'wallet_balance' => 'float',
+            'reputation' => 'float',
         ];
-    
     }
     // Relación: Un usuario puede ser admin
-    public function admin(){
+    public function admin()
+    {
         return $this->hasOne(Admin::class);
     }
 
@@ -85,12 +85,6 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
-    }
-
-    // Un usuario puede hacer muchas pujas
-    public function auctionBids()
-    {
-        return $this->hasMany(AuctionBid::class);
     }
 
     // Un usuario puede escribir muchas reseñas

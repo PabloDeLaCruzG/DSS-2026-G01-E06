@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -8,7 +8,6 @@ use Tests\TestCase;
 use App\Models\Game;
 use App\Models\GameAd;
 use App\Models\User;
-use App\Models\AuctionBid;
 
 class GameAdLogicTest extends TestCase
 {
@@ -32,22 +31,6 @@ class GameAdLogicTest extends TestCase
         $this->assertEquals($user->id, $gameAd->user->id);
     }
 
-    // Relación 12: GameAd tiene una AuctionBid
-    public function test_gamead_tiene_una_auctionbid(): void
-    {
-        $gameAd = GameAd::factory()->create(['type' => 'AUCTION']);
-        AuctionBid::factory()->create(['game_ad_id' => $gameAd->id]);
-
-        $this->assertNotNull($gameAd->fresh()->auctionBid);
-    }
-
-    // Método isAuction
-    public function test_is_auction_devuelve_true_si_es_subasta(): void
-    {
-        $gameAd = GameAd::factory()->create(['type' => 'AUCTION']);
-        $this->assertTrue($gameAd->isAuction());
-    }
-
     // Método markAsSold
     public function test_mark_as_sold_cambia_status_a_sold(): void
     {
@@ -56,5 +39,4 @@ class GameAdLogicTest extends TestCase
 
         $this->assertEquals('SOLD', $gameAd->fresh()->status);
     }
-    
 }

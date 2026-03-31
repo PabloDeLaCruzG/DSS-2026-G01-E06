@@ -21,9 +21,6 @@ class GameAd extends Model
     public const STATUS_SOLD = 'SOLD';
     public const STATUS_HIDDEN = 'HIDDEN';
 
-    public const TYPE_BUY_NOW = 'BUY_NOW';
-    public const TYPE_AUCTION = 'AUCTION';
-
     protected $fillable = [
         'price',
         'description',
@@ -33,7 +30,6 @@ class GameAd extends Model
         'digital_key',
         'images',
         'status',
-        'type',
         'quantity'
 
     ];
@@ -50,12 +46,6 @@ class GameAd extends Model
     public function game()
     {
         return $this->belongsTo(Game::class);
-    }
-
-    // Un anuncio puede como mucho tener una subasta
-    public function auctionBid()
-    {
-        return $this->hasOne(AuctionBid::class, 'game_ad_id');
     }
 
     // Un anuncio puede tener varias Reviews
@@ -80,11 +70,6 @@ class GameAd extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function isAuction(): bool
-    {
-        return $this->type === 'AUCTION';
     }
 
     public function markAsSold(): void

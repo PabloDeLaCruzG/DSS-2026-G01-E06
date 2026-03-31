@@ -21,7 +21,6 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
-        'game_id',
         'game_ad_id',
         'reason',
         'status',
@@ -31,11 +30,6 @@ class Report extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function game()
-    {
-        return $this->belongsTo(Game::class);
     }
 
     public function gameAd()
