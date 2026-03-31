@@ -70,19 +70,26 @@
             <!-- ESTADO -->
             <div>
                 <label class="text-xs text-text-muted">Estado</label>
+
                 <div class="flex mt-1 bg-background border border-border rounded-lg overflow-hidden">
 
-                    <label class="flex-1 text-center py-2 cursor-pointer
-                        {{ old('status', $ad->status ?? 'ACTIVE') == 'ACTIVE' ? 'bg-primary text-white' : '' }}">
-                        <input type="radio" name="status" value="ACTIVE" class="hidden"
-                            {{ old('status', $ad->status ?? 'ACTIVE') == 'ACTIVE' ? 'checked' : '' }}>
+                    <input type="radio" name="status" value="ACTIVE" id="active"
+                        class="hidden peer"
+                        {{ old('status', $ad->status ?? 'ACTIVE') == 'ACTIVE' ? 'checked' : '' }}>
+
+                    <label for="active"
+                        class="flex-1 text-center py-2 cursor-pointer
+                        peer-checked:bg-primary peer-checked:text-white">
                         Nuevo
                     </label>
 
-                    <label class="flex-1 text-center py-2 cursor-pointer
-                        {{ old('status', $ad->status ?? '') == 'SOLD' ? 'bg-primary text-white' : '' }}">
-                        <input type="radio" name="status" value="SOLD" class="hidden"
-                            {{ old('status', $ad->status ?? '') == 'SOLD' ? 'checked' : '' }}>
+                    <input type="radio" name="status" value="SOLD" id="sold"
+                        class="hidden peer"
+                        {{ old('status', $ad->status ?? '') == 'SOLD' ? 'checked' : '' }}>
+
+                    <label for="sold"
+                        class="flex-1 text-center py-2 cursor-pointer
+                        peer-checked:bg-primary peer-checked:text-white">
                         Usado
                     </label>
 
@@ -97,17 +104,23 @@
 
             <div class="flex mt-1 bg-background border border-border rounded-lg overflow-hidden">
 
-                <label class="flex-1 text-center py-2 cursor-pointer
-                    {{ old('format', $ad->format ?? 'PHYSICAL') == 'PHYSICAL' ? 'bg-primary text-white' : '' }}">
-                    <input type="radio" name="format" value="PHYSICAL" class="hidden"
-                        {{ old('format', $ad->format ?? 'PHYSICAL') == 'PHYSICAL' ? 'checked' : '' }}>
+                <input type="radio" name="format" value="PHYSICAL" id="physical"
+                    class="hidden peer"
+                    {{ old('format', $ad->format ?? 'PHYSICAL') == 'PHYSICAL' ? 'checked' : '' }}>
+
+                <label for="physical"
+                    class="flex-1 text-center py-2 cursor-pointer
+                    peer-checked:bg-primary peer-checked:text-white">
                     Físico
                 </label>
 
-                <label class="flex-1 text-center py-2 cursor-pointer
-                    {{ old('format', $ad->format ?? '') == 'DIGITAL_KEY' ? 'bg-primary text-white' : '' }}">
-                    <input type="radio" name="format" value="DIGITAL_KEY" class="hidden"
-                        {{ old('format', $ad->format ?? '') == 'DIGITAL_KEY' ? 'checked' : '' }}>
+                <input type="radio" name="format" value="DIGITAL_KEY" id="digital"
+                    class="hidden peer"
+                    {{ old('format', $ad->format ?? '') == 'DIGITAL_KEY' ? 'checked' : '' }}>
+
+                <label for="digital"
+                    class="flex-1 text-center py-2 cursor-pointer
+                    peer-checked:bg-primary peer-checked:text-white">
                     Digital
                 </label>
 

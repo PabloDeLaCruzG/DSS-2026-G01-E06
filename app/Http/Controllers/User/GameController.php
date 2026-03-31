@@ -22,7 +22,8 @@ class GameController extends Controller
                 $q->where('title', 'like', '%' . $request->search . '%');
             });
         }
-        $ads = $query->paginate(4)->withQueryString();$ads = $query->paginate(4);
+
+        $ads = $query->paginate(4)->withQueryString();
 
         $totalVentas = GameAd::where('user_id', $userId)->sum('price');
 
@@ -58,8 +59,8 @@ class GameController extends Controller
             'price' => $request->price,
             'format' => $request->format,
             'status' => 'ACTIVE',
-            'description' => $request->description,
-            'digital_key' => $request->key, 
+            'description' => $request->description ?? '', // 🔥 FIX
+            'digital_key' => $request->key,
         ]);
 
         return redirect()->route('games.index')
@@ -101,8 +102,8 @@ class GameController extends Controller
             'price' => $request->price,
             'format' => $request->format,
             'status' => $request->status,
-            'description' => $request->description,
-            'digital_key' => $request->key, 
+            'description' => $request->description ?? '', // 🔥 FIX
+            'digital_key' => $request->key,
         ]);
 
         return redirect()->route('games.index')
