@@ -53,7 +53,7 @@
     </thead>
 
     <tbody>
-    @foreach($ads as $ad)
+    @forelse($ads as $ad)
         <tr class="border-t border-border hover:bg-white/5 transition">
 
             <!-- TITULO + IMAGEN -->
@@ -87,25 +87,34 @@
             </td>
 
             <!-- ACCIONES -->
-            <td class="flex gap-3">
+            <td class="flex gap-3 items-center">
 
+                <!-- EDITAR -->
                 <a href="{{ route('games.edit', $ad->id) }}"
                    class="text-text-muted hover:text-white">
-                    ✏️
+                    <i class="bi bi-pencil"></i>
                 </a>
 
-                <form method="POST" action="{{ route('games.destroy', $ad->id) }}">
+                <!-- ELIMINAR -->
+                <form method="POST" action="{{ route('games.destroy', $ad->id) }}"
+                      onsubmit="return confirm('¿Seguro que quieres eliminar este anuncio?')">
                     @csrf
                     @method('DELETE')
                     <button class="text-text-muted hover:text-red-400">
-                        🗑️
+                        <i class="bi bi-trash"></i>
                     </button>
                 </form>
 
             </td>
 
         </tr>
-    @endforeach
+    @empty
+        <tr>
+            <td colspan="5" class="text-center py-6 text-text-muted">
+                No tienes anuncios todavía
+            </td>
+        </tr>
+    @endforelse
     </tbody>
 
 </table>
@@ -114,10 +123,11 @@
 <div class="mt-4 flex justify-between items-center">
 
     <p class="text-xs text-text-muted">
-        Mostrando {{ $ads->firstItem() }}-{{ $ads->lastItem() }} de {{ $ads->total() }} anuncios
+        Mostrando {{ $ads->firstItem() ?? 0 }}-{{ $ads->lastItem() ?? 0 }} de {{ $ads->total() }} anuncios
     </p>
 
-    {{ $ads->links('user.pagination') }}
+    <!-- 🔥 IMPORTANTE: mantener búsqueda -->
+    {{ $ads->appends(['search' => request('search')])->links('user.pagination') }}
 
 </div>
 

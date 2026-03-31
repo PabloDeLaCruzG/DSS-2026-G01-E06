@@ -9,22 +9,31 @@ use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
-    public function index()
-    {
-        $userId = Auth::id();
+    public function index(Request $request)
+{
+    $userId = Auth::id();
 
-        $ads = GameAd::where('user_id', $userId)
-            ->with('game')
-            ->paginate(4);
+    $query = GameAd::where('user_id', $userId)
+        ->with('game');
 
-        $totalVentas = GameAd::where('user_id', $userId)->sum('price');
-
-        $activos = GameAd::where('user_id', $userId)
-            ->where('status', 'ACTIVE')
-            ->count();
-
-        return view('user.games.index', compact('ads', 'totalVentas', 'activos'));
+    //buscador
+    if ($request->filled('search')) {
+        $query->whereHas('game', function ($q) use ($request) {
+            $q->where('title', 'like', '%' . $request->search . '%');
+        });
     }
+
+    $ads = $query->paginate(4);
+
+    //estadisticas
+    $totalVentas = GameAd::where('user_id', $userId)->sum('price');
+
+    $activos = GameAd::where('user_id', $userId)
+        ->where('status', 'ACTIVE')
+        ->count();
+
+    return view('user.games.index', compact('ads', 'totalVentas', 'activos'));
+}
 
     public function edit($id)
     {

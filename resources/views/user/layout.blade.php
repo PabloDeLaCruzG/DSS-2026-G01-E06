@@ -6,6 +6,9 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- ICONOS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
@@ -65,16 +68,48 @@
     <!-- MAIN -->
     <div class="flex-1 flex flex-col">
 
-        <!-- TOPBAR -->
+        <!-- HEADER NUEVO -->
         <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6">
 
-            <div class="text-sm text-text-muted">
-                Usuario › <span class="text-text-main">@yield('title')</span>
+            <!-- IZQUIERDA -->
+            <div class="flex items-center gap-4 w-1/2">
+
+                <span class="font-semibold text-lg">GameLink</span>
+
+                <!-- 🔍 BUSCADOR FUNCIONAL -->
+                <form method="GET" action="{{ route('games.index') }}" class="w-full">
+                    <input 
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        placeholder="Buscar juegos, consolas..."
+                        class="w-full bg-background border border-border px-4 py-2 rounded-lg text-sm focus:outline-none focus:border-primary"
+                    >
+                </form>
+
             </div>
 
-            <input type="text"
-                   placeholder="Buscar..."
-                   class="bg-background border border-border px-3 py-2 rounded-lg">
+            <!-- DERECHA -->
+            <div class="flex items-center gap-4">
+
+                <i class="bi bi-bell text-text-muted"></i>
+
+                <!-- 👤 USUARIO -->
+                <div class="flex items-center gap-2">
+
+                    <div class="text-right">
+                        <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
+                        <p class="text-xs text-text-muted">{{ auth()->user()->email }}</p>
+                    </div>
+
+                    <!-- Avatar -->
+                    <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+
+                </div>
+
+            </div>
 
         </header>
 

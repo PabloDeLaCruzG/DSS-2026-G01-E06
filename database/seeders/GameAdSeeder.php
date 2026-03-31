@@ -16,7 +16,7 @@ class GameAdSeeder extends Seeder
 
         if (!$game) return;
 
-        // 🔥 AÑADIDO: tu usuario del panel
+        //para panel de usuario
         $panelUser = User::where('email', 'mipanel@gamelink.com')->first();
 
         $proUser1 = User::factory()->create(['name' => 'GameStop ES', 'role' => 'user']);
@@ -68,12 +68,10 @@ class GameAdSeeder extends Seeder
             'description' => 'Entrega inmediata al correo.'
         ]);
 
-        GameAd::factory(5)->create(['game_id' => $game->id]);
-
-        // 🔥🔥 AÑADIDO: anuncios SOLO para tu usuario
+        GameAd::factory(5)->create(['game_id' => $game->id]);  //5 anuncios distintos para mostrar
         if ($panelUser) {
             GameAd::factory(5)->create([
-                'game_id' => $game->id,
+                'game_id' => Game::inRandomOrder()->first()->id,
                 'user_id' => $panelUser->id
             ]);
         }
