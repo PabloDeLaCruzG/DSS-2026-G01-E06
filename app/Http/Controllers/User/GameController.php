@@ -6,13 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\GameAd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class GameController extends Controller
 {
     public function index()
     {
-        $userId=GameAd::pluck('user_id')->first();//busco un usuario que si o si tenga anuncio
+        $userId = Auth::id();
 
         $ads = GameAd::where('user_id', $userId)
             ->with('game')
@@ -29,7 +28,7 @@ class GameController extends Controller
 
     public function edit($id)
     {
-        $userId = Auth::id() ?? 1;
+        $userId = Auth::id();
 
         $ad = GameAd::where('user_id', $userId)
             ->with('game')
@@ -40,7 +39,7 @@ class GameController extends Controller
 
     public function update(Request $request, $id)
     {
-        $userId = Auth::id() ?? 1;
+        $userId = Auth::id();
 
         $ad = GameAd::where('user_id', $userId)->findOrFail($id);
 

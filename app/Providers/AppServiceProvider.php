@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth; 
+use App\Models\User; 
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        //login fake automático
+        if (!Auth::check()) {
+            $user = User::where('email', 'mipanel@gamelink.com')->first();
+
+            if ($user) {
+                Auth::login($user);
+            }
+        }
     }
 }
