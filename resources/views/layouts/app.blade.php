@@ -54,7 +54,7 @@
                     <li><a href="{{ route('home') }}"
                             class="hover:text-text-main transition-colors {{ request()->routeIs('home') ? 'text-text-main' : '' }}">Marketplace</a>
                     </li>
-                    <li><a href="{{ route('games.sell') }}" class="hover:text-text-main transition-colors">Sell</a></li>
+                    <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Panel Admin</a>
                     <li><a href="#" class="hover:text-text-main transition-colors">Community</a></li>
                 </ul>
             </div>

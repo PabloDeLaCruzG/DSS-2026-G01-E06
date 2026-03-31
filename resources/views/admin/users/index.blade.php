@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layouts.layout')
 @section('title', 'Gestión de Usuarios')
 
 @section('content')
@@ -16,9 +16,8 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 Exportar CSV
             </a>
-            <button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover rounded-lg text-sm font-medium text-white transition shadow-lg shadow-primary/20">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Nuevo Usuario
+            <button id="openCreateUser" type="button" class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover rounded-lg text-sm font-medium text-white transition shadow-lg shadow-primary/20">
+                <svg class="w-4 h-4" ...></svg>Nuevo Usuario
             </button>
         </div>
     </div>
@@ -151,7 +150,7 @@
                 Mostrando {{ $users->firstItem() }}–{{ $users->lastItem() }} de {{ $users->total() }} usuarios
             </p>
             <div class="flex gap-1">
-                {{ $users->onEachSide(1)->links('admin.pagination') }}
+             {{ $users->onEachSide(1)->links('admin.layouts.pagination') }}
             </div>
         </div>
         @endif
@@ -186,4 +185,123 @@
     </div>
 
 </div>
+{{-- Modal Crear Usuario --}}
+<div id="createUserModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-lg">
+        <div class="bg-surface rounded-xl border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-text-main">Crear Nuevo Usuario</h3>
+                <button id="closeCreateUser" class="text-text-muted text-xl leading-none">&times;</button>
+            </div>
+
+            <form method="POST" action="{{ route('admin.users.store') }}">
+                @csrf
+                @include('admin.layouts._form')
+                <div class="flex items-center justify-end gap-3 mt-6">
+                    <button type="button" id="cancelCreateUser" class="px-4 py-2 rounded bg-surface text-text-muted border border-border hover:text-text-main transition">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-primary text-white hover:bg-primary-hover transition">+ Crear Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('createUserModal');
+    const openBtn = document.getElementById('openCreateUser');
+    const closeBtn = document.getElementById('closeCreateUser');
+    const cancelBtn = document.getElementById('cancelCreateUser');
+    const form = modal ? modal.querySelector('form') : null;
+    // Si quieres, añade meta csrf en tu layout: <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    function openCreateUserModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        const first = modal.querySelector('input[name="name"], input, select, textarea');
+        if (first) first.focus();
+        console.debug('[Admin] Modal abierto');
+    }
+
+    function clearFormErrors() {
+        if (!modal) return;
+        modal.querySelectorAll('.input-error').forEach(n => n.remove());
+        modal.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
+        modal.querySelectorAll('[aria-describedby]').forEach(el => el.removeAttribute('aria-describedby'));
+        console.debug('[Admin] Errores limpiados');
+    }
+
+    function clearFormFields() {
+        if (!form) return;
+
+        form.querySelectorAll('input, textarea, select').forEach(el => {
+            const tag = el.tagName.toLowerCase();
+            const type = (el.type || '').toLowerCase();
+
+            // Preserve CSRF and method hidden fields
+            if (type === 'hidden') {
+                if (el.name === '_token' || el.name === '_method') {
+                    // leave token/method intact
+                    return;
+                }
+                // For other hidden inputs you can clear them:
+                el.value = '';
+                return;
+            }
+
+            if (type === 'checkbox' || type === 'radio') {
+                el.checked = false;
+            } else if (tag === 'select') {
+                try { el.selectedIndex = 0; } catch(e) {}
+                Array.from(el.options).forEach(opt => opt.removeAttribute('selected'));
+            } else {
+                el.value = '';
+                // don't remove the value attribute for hidden _token (we handled that above)
+            }
+            el.classList.remove('border-red-500', 'ring-red-500');
+        });
+
+        console.debug('[Admin] Campos del formulario limpiados (preservando _token)');
+    }
+
+    function closeCreateUserModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        clearFormErrors();
+        clearFormFields();
+        console.debug('[Admin] Modal cerrado y form reseteado (limpio)');
+    }
+
+    // Listeners
+    if (openBtn) openBtn.addEventListener('click', function (e) { e.preventDefault(); openCreateUserModal(); });
+    if (closeBtn) closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeCreateUserModal(); });
+    if (cancelBtn) cancelBtn.addEventListener('click', function (e) { e.preventDefault(); closeCreateUserModal(); });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            if (!modal) return;
+            if (!modal.classList.contains('hidden')) closeCreateUserModal();
+        }
+    });
+
+    // Reabrir modal si hay errores de validación devueltos por el servidor
+    @if ($errors->any())
+        console.debug('[Admin] Errores de validación detectados — reabriendo modal');
+        openCreateUserModal();
+    @endif
+
+    // Si hay success, asegurarse de que el form quede limpio
+    @if (session('success'))
+        console.debug('[Admin] Éxito: {{ addslashes(session('success')) }}');
+        if (form) {
+            clearFormErrors();
+            clearFormFields();
+        }
+    @endif
+
+});
+</script>
 @endsection

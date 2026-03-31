@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Admin\CreateUserRequest;
 
 class UserController extends Controller
 {
+    /**
+     * Lista de roles permitidos por la aplicación (coincide con el ENUM de la BD).
+     */
+    protected array $allowedRoles = [
+        'admin' => 'Administrador',
+        'user'  => 'Usuario',
+    ];
+
     public function index(Request $request)
     {
         $query = User::query();
@@ -16,8 +26,6 @@ class UserController extends Controller
         // Filtros por tab
         if ($request->filter === 'admins') {
             $query->where('role', 'admin');
-        } elseif ($request->filter === 'moderators') {
-            $query->where('role', 'moderator');
         } elseif ($request->filter === 'active') {
             $query->where('is_banned', false);
         } elseif ($request->filter === 'banned') {
@@ -36,7 +44,11 @@ class UserController extends Controller
         $totalUsers = User::count();
         $pendingReports = Report::where('status', 'OPEN')->count();
 
-        return view('admin.users.index', compact('users', 'totalUsers', 'pendingReports'));
+        // Variables para el partial del modal
+        $roles = $this->allowedRoles;
+        $departments = ['Gerencia', 'Soporte', 'Ventas'];
+
+        return view('admin.users.index', compact('users', 'totalUsers', 'pendingReports', 'roles', 'departments'));
     }
 
     public function ban(User $user)
@@ -50,5 +62,36 @@ class UserController extends Controller
     {
         $user->update(['is_banned' => false]);
         return back()->with('success', "Usuario {$user->name} reactivado.");
+    }
+
+    public function create()
+    {
+        $roles = $this->allowedRoles;
+        $departments = ['Gerencia', 'Soporte', 'Ventas'];
+        return view('admin.users.create', compact('roles', 'departments'));
+    }
+
+    public function store(CreateUserRequest $request)
+    {
+        $data = $request->validated();
+
+        // Forzar role seguro (por si alguien intenta inyectar otro valor)
+        if (! array_key_exists($data['role'] ?? '', $this->allowedRoles)) {
+            $data['role'] = 'user';
+        }
+
+        // Hash de la contraseña
+        $data['password'] = Hash::make($data['password']);
+
+        // Crea el usuario
+        $user = User::create([
+            'name'       => $data['name'],
+            'email'      => $data['email'],
+            'role'       => $data['role'],
+            'department' => $data['department'] ?? null,
+            'password'   => $data['password'],
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', "Usuario {$user->name} creado correctamente.");
     }
 }
