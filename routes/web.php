@@ -59,4 +59,6 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/users/{user}/ban', [UserController::class, 'ban'])->name('admin.users.ban');
     Route::post('/users/{user}/unban', [UserController::class, 'unban'])->name('admin.users.unban');
+    Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
 });
