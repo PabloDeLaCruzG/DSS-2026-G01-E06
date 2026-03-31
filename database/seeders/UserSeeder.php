@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\ProfessionalProfile;
 use App\Models\Address;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Usuario Panel',
                 'role' => 'user',
+                'password' => Hash::make('123456'), //contraseña falsa
             ]
         );
 
