@@ -17,6 +17,13 @@
     </a>
 </div>
 
+<!-- MENSAJES -->
+@if(session('success'))
+    <div class="mb-4 bg-green-500/20 text-green-400 p-3 rounded">
+        {{ session('success') }}
+    </div>
+@endif
+
 <!-- CARDS -->
 <div class="grid grid-cols-3 gap-4 mb-6">
 
@@ -40,9 +47,9 @@
 <!-- TABLA -->
 <div class="bg-surface p-6 rounded-xl">
 
-<table class="w-full">
+<table class="w-full text-sm">
 
-    <thead class="text-text-muted text-sm">
+    <thead class="text-text-muted">
         <tr>
             <th class="text-left pb-3">TÍTULO</th>
             <th class="text-left pb-3">FORMATO</th>
@@ -58,18 +65,19 @@
 
             <!-- TITULO + IMAGEN -->
             <td class="py-3 flex items-center gap-3">
-                <img src="{{ $ad->game->cover_image ?? 'https://via.placeholder.com/40' }}"
+                <img src="{{ $ad->game && $ad->game->cover_image 
+                    ? $ad->game->cover_image 
+                    : asset('img/default-game.png') }}"
                      class="w-10 h-10 rounded object-cover">
-                <span>{{ $ad->game->title }}</span>
+
+                <span>{{ $ad->game->title ?? 'Juego eliminado' }}</span>
             </td>
 
             <!-- FORMATO -->
             <td>
                 <span class="px-2 py-1 rounded-full text-xs font-semibold
                     {{ $ad->format == 'PHYSICAL' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400' }}">
-                    
                     {{ $ad->format == 'PHYSICAL' ? 'Físico' : 'Digital' }}
-
                 </span>
             </td>
 
@@ -80,9 +88,7 @@
             <td>
                 <span class="px-2 py-1 rounded-full text-xs font-semibold
                     {{ $ad->status == 'ACTIVE' ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400' }}">
-                    
                     {{ $ad->status == 'ACTIVE' ? 'Activo' : 'Vendido' }}
-
                 </span>
             </td>
 
@@ -100,7 +106,7 @@
                       onsubmit="return confirm('¿Seguro que quieres eliminar este anuncio?')">
                     @csrf
                     @method('DELETE')
-                    <button class="text-text-muted hover:text-red-400">
+                    <button type="submit" class="text-text-muted hover:text-red-400">
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
@@ -126,7 +132,6 @@
         Mostrando {{ $ads->firstItem() ?? 0 }}-{{ $ads->lastItem() ?? 0 }} de {{ $ads->total() }} anuncios
     </p>
 
-    <!-- 🔥 IMPORTANTE: mantener búsqueda -->
     {{ $ads->appends(['search' => request('search')])->links('user.pagination') }}
 
 </div>
