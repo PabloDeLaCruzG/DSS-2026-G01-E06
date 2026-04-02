@@ -12,20 +12,25 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        // Filtrado por la plataforma seleccionada
         $platform = $request->get('platform');
-
-        //Filtrado por búsqueda
         $search = $request->get('search');
 
         $games = Game::query()
             ->withCount('gameAds')
+
+            //Para mostrar los juegos según el filtro
             ->when($platform, function ($query) use ($platform) {
                 $query->whereJsonContains('platforms', $platform);
             })
 
+            //Para mostrar los juegos en la barra de búsqueda
             ->when($search, function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%');
+            })
+
+            //Para mostrar los mejor valorados
+            ->when($request->get('rating'), function ($query) use ($request) {
+                $query->where('rating', '>=', $request->get('rating'));
             })
             
             ->paginate(30)->withQueryString();

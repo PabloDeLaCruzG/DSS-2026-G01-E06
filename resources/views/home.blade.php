@@ -59,7 +59,7 @@
     <section class="mb-10">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-white font-bold text-lg flex items-center gap-2">⚡ Trending Now</h2>
-            <a href="{{ route('home', ['rating' > '4.5']) }}" class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">View all →</a>
+            <a href="{{ route('home', array_filter(['platform' => request('platform'), 'rating' => '4.5'])) }}" class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">View all →</a>
         </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
