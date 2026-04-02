@@ -15,13 +15,22 @@ class GameController extends Controller
         // Filtrado por la plataforma seleccionada
         $platform = $request->get('platform');
 
+        //Filtrado por búsqueda
+        $search = $request->get('search');
+
         $games = Game::query()
             ->withCount('gameAds')
             ->when($platform, function ($query) use ($platform) {
                 $query->whereJsonContains('platforms', $platform);
             })
+
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            
             ->paginate(30)->withQueryString();
-        return view('home', compact('games'));
+            
+            return view('home', compact('games'));
     }
     /**
      * Muestra el detalle de un juego específico
