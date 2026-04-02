@@ -81,7 +81,7 @@
             {{ $game->platform }}
         </span>
 
-        <button class="absolute top-2 right-2 text-gray-400 hover:text-red-400 transition-colors">♡</button>
+        <button class="absolute top-2 right-2 text-gray-400 hover:text-red-400 transition-colors"onclick="event.stopPropagation(); event.preventDefault();">♡</button>
     </div>
 
     {{-- Info --}}
