@@ -119,22 +119,4 @@
     {{-- links de paginación --}}
     {{ $games->links() }}
 
-    {{-- ===== CATEGORÍAS ===== --}}
-    <section class="mb-10">
-        <h2 class="text-white font-bold text-lg mb-4">🗂️ Categorías</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            @foreach([
-                ['label' => 'Accesorios',    'emoji' => '🎧'],
-                ['label' => 'Hardware',      'emoji' => '🖥️'],
-                ['label' => 'Merchandising', 'emoji' => '👕'],
-                ['label' => 'VR',            'emoji' => '🥽'],
-            ] as $cat)
-                <div class="bg-gray-800 border border-gray-700 rounded-xl h-28 flex flex-col items-center justify-center gap-2 hover:border-[#009194] transition-colors cursor-pointer">
-                    <span class="text-3xl">{{ $cat['emoji'] }}</span>
-                    <span class="text-white text-sm font-semibold">{{ $cat['label'] }}</span>
-                </div>
-            @endforeach
-        </div>
-    </section>
-
 @endsection
