@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const expInput = document.getElementById('exp-input');
     const cvvInput = document.getElementById('cvv-input');
 
-    // MASK CARD
+    // ENMASCARAR TARJETA
     cardInput.addEventListener('input', function(e) {
         let val = e.target.value.replace(/\D/g, ''); 
         let formatted = '';
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.target.value = formatted.substring(0, 19);
     });
 
-    // MASK EXP
+    // ENMASCARAR EXPIRACIÓN
     expInput.addEventListener('input', function(e) {
         let val = e.target.value.replace(/\D/g, '');
         if (val.length > 2) {
@@ -277,13 +277,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // MASK CVV
+    // ENMASCARAR CVV
     cvvInput.addEventListener('input', function(e) {
         e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
     });
 
     form.addEventListener('submit', function(e) {
-        // Simple email regex validation
+        // Validación de email con regex
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailInput.value)) {
             e.preventDefault();
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Validate card roughly (just length checking for demo)
+        // Validar tarjeta (solo longitud, demo)
         let cardRaw = cardInput.value.replace(/\s/g, '');
         if (cardRaw.length < 15) {
             e.preventDefault();
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Validate expiration
+        // Validar expiración
         if (expInput.value.length < 5) {
             e.preventDefault();
             alert('Por favor, ingresa una fecha de expiración válida (MM/AA).');

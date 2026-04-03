@@ -40,7 +40,7 @@ class Report extends Model
     public function resolve(string $decision, ?string $resolutionNotes = null): void
     {
         if (! in_array($decision, self::RESOLUTION_DECISIONS, true)) {
-            throw new InvalidArgumentException('Decision must be RESOLVED or DISMISSED.');
+            throw new InvalidArgumentException('La decisión debe ser RESOLVED o DISMISSED.');
         }
 
         $this->status = $decision;

@@ -55,7 +55,7 @@
                             class="hover:text-text-main transition-colors {{ request()->routeIs('home') ? 'text-text-main' : '' }}">Marketplace</a>
                     </li>
                     <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Panel Admin</a>
-                    <li><a href="#" class="hover:text-text-main transition-colors">Community</a></li>
+                    <li><a href="#" class="hover:text-text-main transition-colors">Comunidad</a></li>
                 </ul>
             </div>
 
@@ -67,7 +67,7 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" placeholder="Search games, keys, consoles..."
+                    <input type="text" placeholder="Busca juegos, claves, consolas..."
                         class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none flex-1">
                 </div>
             </div>
@@ -143,9 +143,9 @@
                 <div>
                     <h4 class="font-bold text-text-main text-sm mb-3">Comprar</h4>
                     <ul class="space-y-2 text-xs text-text-muted">
-                        <li><a href="#" class="hover:text-text-main transition-colors">Digital Keys</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Physical Games</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Consoles</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Claves Digitales</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Juegos Físicos</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Consolas</a></li>
                         <li><a href="#" class="hover:text-text-main transition-colors">Hardware</a></li>
                     </ul>
                 </div>
@@ -154,10 +154,10 @@
                 <div>
                     <h4 class="font-bold text-text-main text-sm mb-3">Vender</h4>
                     <ul class="space-y-2 text-xs text-text-muted">
-                        <li><a href="#" class="hover:text-text-main transition-colors">Create Account</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Seller Center</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Fees & Rates</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Policies</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Crear Cuenta</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Centro de Vendedores</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Comisiones y Tarifas</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Políticas</a></li>
                     </ul>
                 </div>
 
@@ -165,10 +165,10 @@
                 <div>
                     <h4 class="font-bold text-text-main text-sm mb-3">Soporte</h4>
                     <ul class="space-y-2 text-xs text-text-muted">
-                        <li><a href="#" class="hover:text-text-main transition-colors">Help Center</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Trust & Safety</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Contact Support</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Feedback</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Centro de Ayuda</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Confianza y Seguridad</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Contactar Soporte</a></li>
+                        <li><a href="#" class="hover:text-text-main transition-colors">Comentarios</a></li>
                     </ul>
                 </div>
             </div>
@@ -178,9 +178,9 @@
                 class="border-t border-border pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-text-muted gap-3">
                 <p>&copy; 2024 GameLink. Todos los derechos reservados.</p>
                 <div class="flex gap-4">
-                    <a href="#" class="hover:text-text-main transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-text-main transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-text-main transition-colors">Cookie Settings</a>
+                    <a href="#" class="hover:text-text-main transition-colors">Política de Privacidad</a>
+                    <a href="#" class="hover:text-text-main transition-colors">Términos de Servicio</a>
+                    <a href="#" class="hover:text-text-main transition-colors">Configuración de Cookies</a>
                 </div>
             </div>
         </div>

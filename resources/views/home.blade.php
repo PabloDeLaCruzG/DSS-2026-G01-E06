@@ -11,14 +11,14 @@
                 🟣 Nuevo Plaza Live
             </span>
             <h1 class="text-4xl font-bold text-white mt-4 mb-3 leading-tight">
-                Level Up Your Collection
+                Mejora tu Colección
             </h1>
             <p class="text-gray-400 text-sm mb-6">
-                Buy, sell and trade the latest releases and rare retro finds on the world's premier gaming marketplace.
+                Compra, vende e intercambia los últimos lanzamientos y rarezas retro en el marketplace líder de videojuegos.
             </p>
             <div class="flex gap-3">
                 <a href="{{ route('games.sell') }}" class="bg-[#009194] hover:bg-[#007a7c] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
-                    Start Selling
+                    Empieza a Vender
                 </a>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     type="text"
                     name="search"
                     value="{{ request('search') }}"
-                    placeholder="Search games, consoles, or accessories..."
+                    placeholder="Busca juegos, consolas o accesorios..."
                     class="bg-transparent text-sm text-gray-300 placeholder-gray-500 outline-none flex-1"
                 />
             </div>
@@ -46,7 +46,7 @@
         {{-- Filtros de plataforma --}}
     <div class="flex gap-2 flex-wrap">
         <div class="flex gap-2 flex-wrap">
-            <a href="{{ route('home') }}" class="text-xs px-3 py-1.5 rounded-full {{ !request('platform') ? 'bg-[#009194] border border-[#009194] text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">All Platforms</a> 
+            <a href="{{ route('home') }}" class="text-xs px-3 py-1.5 rounded-full {{ !request('platform') ? 'bg-[#009194] border border-[#009194] text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Todas las Plataformas</a>
             <a href="{{ route('home', ['platform' => 'PS5']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'PS5' ? 'bg-[#009194] border border-[#009194] text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">PlayStation 5</a> 
             <a href="{{ route('home', ['platform' => 'XBOX']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'XBOX' ? 'bg-[#009194] border border-[#009194] text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Xbox Series X</a> 
             <a href="{{ route('home', ['platform' => 'SWITCH']) }}" class="text-xs px-3 py-1.5 rounded-full {{ request('platform') == 'SWITCH' ? 'bg-[#009194] border border-[#009194] text-white' : 'border border-gray-600 text-gray-400 hover:text-white transition-colors' }}">Nintendo Switch</a> 
@@ -58,8 +58,8 @@
     {{-- ===== TRENDING NOW ===== --}}
     <section class="mb-10">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-white font-bold text-lg flex items-center gap-2">⚡ Trending Now</h2>
-            <a href="{{ route('home', array_filter(['platform' => request('platform'), 'rating' => '4.5'])) }}" class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">View all →</a>
+            <h2 class="text-white font-bold text-lg flex items-center gap-2">⚡ Lo más popular</h2>
+            <a href="{{ route('home', array_filter(['platform' => request('platform'), 'rating' => '4.5'])) }}" class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">Ver todo →</a>
         </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -124,10 +124,10 @@
         <h2 class="text-white font-bold text-lg mb-4">🗂️ Categorías</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             @foreach([
-                ['label' => 'Accessories', 'emoji' => '🎧'],
-                ['label' => 'Hardware',    'emoji' => '🖥️'],
-                ['label' => 'Merch',       'emoji' => '👕'],
-                ['label' => 'VR',          'emoji' => '🥽'],
+                ['label' => 'Accesorios',    'emoji' => '🎧'],
+                ['label' => 'Hardware',      'emoji' => '🖥️'],
+                ['label' => 'Merchandising', 'emoji' => '👕'],
+                ['label' => 'VR',            'emoji' => '🥽'],
             ] as $cat)
                 <div class="bg-gray-800 border border-gray-700 rounded-xl h-28 flex flex-col items-center justify-center gap-2 hover:border-[#009194] transition-colors cursor-pointer">
                     <span class="text-3xl">{{ $cat['emoji'] }}</span>
