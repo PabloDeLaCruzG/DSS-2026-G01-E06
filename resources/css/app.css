@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* --- Colores de Fondo --- */
+  --color-background: #0d1520;    /* Fondo principal profundo */
+  --color-surface: #1a2433;       /* Fondo de tarjetas y secciones */
+  
+  /* --- Colores de Marca --- */
+  --color-primary: #009194;       /* Botones principales */
+  --color-accent: #3bb1a5;        /* Color verde */
+  
+  /* --- Colores de Contenido --- */
+  --color-text-main: #ffffff;     /* Titulos y precios */
+  --color-text-muted: #9ba4b0;    /* Descripciones, labels de tabla y footer */
+
+  /* --- Variantes para Interacción --- */
+  --color-primary-hover: #007a7c;
+  --color-border: #2a3544;        
+}

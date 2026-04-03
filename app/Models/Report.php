@@ -21,7 +21,6 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
-        'game_id',
         'game_ad_id',
         'reason',
         'status',
@@ -33,11 +32,6 @@ class Report extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function game()
-    {
-        return $this->belongsTo(Game::class);
-    }
-
     public function gameAd()
     {
         return $this->belongsTo('App\\Models\\GameAd', 'game_ad_id');
@@ -46,7 +40,7 @@ class Report extends Model
     public function resolve(string $decision, ?string $resolutionNotes = null): void
     {
         if (! in_array($decision, self::RESOLUTION_DECISIONS, true)) {
-            throw new InvalidArgumentException('Decision must be RESOLVED or DISMISSED.');
+            throw new InvalidArgumentException('La decisión debe ser RESOLVED o DISMISSED.');
         }
 
         $this->status = $decision;

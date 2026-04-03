@@ -28,7 +28,6 @@ class GameAdFactory extends Factory
             'digital_key' => fake()->boolean(30) ? fake()->uuid() : null,
             'images'      => fake()->imageUrl(640, 480),
             'status'      => 'ACTIVE',
-            'type'        => fake()->randomElement(['BUY_NOW', 'AUCTION']),
             'quantity'    => fake()->numberBetween(1, 10),
         ];
     }
