@@ -21,21 +21,21 @@ class ReviewModelTest extends TestCase
             'user_id' => $users[0]->id,
             'game_ad_id' => $gameAd->id,
             'rating' => 3,
-            'comment' => 'ok',
+            'comment' => 'bien',
         ]);
 
         Review::create([
             'user_id' => $users[1]->id,
             'game_ad_id' => $gameAd->id,
             'rating' => 4,
-            'comment' => 'good',
+            'comment' => 'bueno',
         ]);
 
         Review::create([
             'user_id' => $users[2]->id,
             'game_ad_id' => $gameAd->id,
             'rating' => 5,
-            'comment' => 'great',
+            'comment' => 'genial',
         ]);
 
         $this->assertSame(4.0, $firstReview->calculateAverage());

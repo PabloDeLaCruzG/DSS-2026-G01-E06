@@ -21,7 +21,7 @@ class ReportModelTest extends TestCase
         $report = Report::create([
             'user_id' => $user->id,
             'game_ad_id' => $gameAd->id,
-            'reason' => 'Inappropriate content',
+            'reason' => 'Contenido inapropiado',
             'status' => Report::STATUS_OPEN,
             'resolution_notes' => null,
         ]);
@@ -38,16 +38,16 @@ class ReportModelTest extends TestCase
         $report = Report::create([
             'user_id' => $user->id,
             'game_ad_id' => $gameAd->id,
-            'reason' => 'Inappropriate content',
+            'reason' => 'Contenido inapropiado',
             'status' => Report::STATUS_OPEN,
             'resolution_notes' => null,
         ]);
 
-        $report->resolve(Report::STATUS_RESOLVED, 'Checked and resolved by moderator.');
+        $report->resolve(Report::STATUS_RESOLVED, 'Revisado y resuelto por el moderador.');
         $report->refresh();
 
         $this->assertSame(Report::STATUS_RESOLVED, $report->status);
-        $this->assertSame('Checked and resolved by moderator.', $report->resolution_notes);
+        $this->assertSame('Revisado y resuelto por el moderador.', $report->resolution_notes);
     }
 
     public function test_report_resolution_rejects_invalid_decision(): void
@@ -58,7 +58,7 @@ class ReportModelTest extends TestCase
         $report = Report::create([
             'user_id' => $user->id,
             'game_ad_id' => $gameAd->id,
-            'reason' => 'Spam report',
+            'reason' => 'Reporte de spam',
             'status' => Report::STATUS_OPEN,
             'resolution_notes' => null,
         ]);

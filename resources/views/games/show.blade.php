@@ -23,8 +23,8 @@
 
             {{-- Badges --}}
             <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary text-white">NEW
-                    RELEASE</span>
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary text-white">NUEVO
+                    LANZAMIENTO</span>
                 <span
                     class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-surface text-text-muted border border-border">
                     {{ $game->year }}
@@ -57,12 +57,12 @@
             {{-- Precio y CTA --}}
             <div class="flex items-center gap-5">
                 <div>
-                    <span class="text-sm text-text-muted">Starting from</span>
+                    <span class="text-sm text-text-muted">Desde</span>
                     <p class="text-3xl font-extrabold text-accent">€{{ number_format($game->getLowestPrice(), 2) }}</p>
                 </div>
                 <a href="#offers"
                     class="inline-flex items-center px-6 py-3 rounded-lg font-bold text-white text-sm shadow-lg transition bg-primary hover:bg-primary-hover">
-                    Compare All Offers
+                    Ver Todas las Ofertas
                 </a>
             </div>
         </div>
