@@ -16,6 +16,9 @@ class GameAdSeeder extends Seeder
 
         if (!$game) return;
 
+        //para panel de usuario
+        $panelUser = User::where('email', 'user@gamelink.com')->first();
+
         $proUser1 = User::factory()->create(['name' => 'GameStop ES', 'role' => 'user']);
         ProfessionalProfile::factory()->create([
             'user_id' => $proUser1->id,
@@ -59,12 +62,18 @@ class GameAdSeeder extends Seeder
             'price' => 41.50,
             'condition' => 'NEW',
             'format' => 'DIGITAL_KEY',
-            'digital_key' => 'AAAA-BBBB-CCCC-DDDD', // Clave falsa
+            'digital_key' => 'AAAA-BBBB-CCCC-DDDD',
             'status' => 'ACTIVE',
             'quantity' => 100,
             'description' => 'Entrega inmediata al correo.'
         ]);
 
-        GameAd::factory(5)->create(['game_id' => $game->id]);
+        GameAd::factory(5)->create(['game_id' => $game->id]);  //5 anuncios distintos para mostrar
+        if ($panelUser) {
+            GameAd::factory(5)->create([
+                'game_id' => Game::inRandomOrder()->first()->id,
+                'user_id' => $panelUser->id
+            ]);
+        }
     }
 }
