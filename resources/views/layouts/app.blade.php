@@ -63,28 +63,25 @@
                 </div>
             </div>
 
-                <!-- Carrito -->
-                <a href="{{ route('cart.index') }}">
-                    🛒
-                </a>
+            <!-- Derecha: Carrito + Avatar -->
+            <div class="flex items-center gap-3">
+                <a href="{{ route('cart.index') }}">🛒</a>
 
-                <!-- Avatar -->
-                <div>
-                    @auth
-                        <a href="{{ route('games.index') }}" title="Mis anuncios">
-                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random"
-                                class="w-8 h-8 rounded-full border-2 border-border hover:border-primary cursor-pointer transition-all"
-                                alt="Avatar">
-                        </a>
-                    @else
-                        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white">
-                            U
-                        </div>
-                    @endauth
-                </div>
-
+                @auth
+                    <a href="{{ route('games.index') }}" title="Mis anuncios">
+                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random"
+                            class="w-8 h-8 rounded-full border-2 border-border hover:border-primary cursor-pointer transition-all"
+                            alt="Avatar">
+                    </a>
+                @else
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white">
+                        U
+                    </div>
+                @endauth
             </div>
+
         </div>
+    </div>
     </nav>
 
     <!-- CONTENIDO -->
