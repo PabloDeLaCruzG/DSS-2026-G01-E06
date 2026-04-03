@@ -10,11 +10,32 @@ class GameController extends Controller
     /**
      * Muestra el catálogo global (Home)
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Traemos todos los juegos para mostrarlos en la Home
-        $games = Game::all(); 
-        return view('home', compact('games'));
+        $platform = $request->get('platform');
+        $search = $request->get('search');
+
+        $games = Game::query()
+            ->withCount('gameAds')
+
+            //Para mostrar los juegos según el filtro
+            ->when($platform, function ($query) use ($platform) {
+                $query->whereJsonContains('platforms', $platform);
+            })
+
+            //Para mostrar los juegos en la barra de búsqueda
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+
+            //Para mostrar los mejor valorados
+            ->when($request->get('rating'), function ($query) use ($request) {
+                $query->where('rating', '>=', $request->get('rating'));
+            })
+            
+            ->paginate(30)->withQueryString();
+            
+            return view('home', compact('games'));
     }
     /**
      * Muestra el detalle de un juego específico
