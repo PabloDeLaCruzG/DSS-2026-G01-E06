@@ -17,7 +17,7 @@ class GameAdSeeder extends Seeder
         if (!$game) return;
 
         //para panel de usuario
-        $panelUser = User::where('email', 'mipanel@gamelink.com')->first();
+        $panelUser = User::where('email', 'user@gamelink.com')->first();
 
         $proUser1 = User::factory()->create(['name' => 'GameStop ES', 'role' => 'user']);
         ProfessionalProfile::factory()->create([

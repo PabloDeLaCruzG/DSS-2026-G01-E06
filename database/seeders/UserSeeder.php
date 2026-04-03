@@ -12,17 +12,17 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-      //para panel de usuario,ya que aun no hay autentificacion real,solo es para mostrar
+        // Usuario principal (el que usa el login automático)
         User::firstOrCreate(
-            ['email' => 'mipanel@gamelink.com'],
+            ['email' => 'user@gamelink.com'],
             [
                 'name' => 'Usuario Panel',
                 'role' => 'user',
-                'password' => Hash::make('123456'), //contraseña falsa
+                'password' => Hash::make('123456'),
             ]
         );
 
-        // Crear un Super Admin de prueba
+        // Admin de prueba
         User::factory()->create([
             'name' => 'Admin GameLink',
             'email' => 'admin@gamelink.com',
@@ -30,19 +30,19 @@ class UserSeeder extends Seeder
             'department' => 'Gerencia',
         ]);
 
-        // Crear un usuario normal de prueba
+        // Usuario normal adicional (con email distinto)
         User::factory()->create([
             'name' => 'Usuario Normal',
-            'email' => 'user@gamelink.com',
+            'email' => 'user2@gamelink.com', // 👈 cambiado para evitar duplicado
             'role' => 'user',
         ]);
 
-        // Crear 10 Usuarios normales, cada uno con 2 direcciones aleatorias
+        // 10 usuarios normales con direcciones
         User::factory(10)
             ->has(Address::factory()->count(2))
             ->create();
 
-        // Crear 5 Usuarios Profesionales (Tienen Perfil Pro y 1 dirección de la tienda)
+        // 5 usuarios profesionales
         User::factory(5)
             ->has(ProfessionalProfile::factory())
             ->has(Address::factory()->count(1))
