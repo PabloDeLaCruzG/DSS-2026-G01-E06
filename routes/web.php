@@ -6,6 +6,17 @@ use App\Http\Controllers\GameAdController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 
+// Ruta mágica de desarrollo para auto-logear al usuario de prueba al instante
+Route::get('/login', function () {
+    if (app()->environment('local')) {
+        $user = \App\Models\User::where('email', 'user@gamelink.com')->first();
+        if ($user) {
+            \Illuminate\Support\Facades\Auth::login($user);
+        }
+    }
+    return redirect()->route('home');
+})->name('login');
+
 // Ruta para la Home (Catálogo Global)
 Route::get('/', [GameController::class, 'index'])->name('home');
 
@@ -19,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
 // Ruta para el panel de Admin

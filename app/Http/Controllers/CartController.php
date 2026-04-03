@@ -87,4 +87,32 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success', '¡Artículo añadido al carrito!');
     }
+
+    /**
+     * Procesa el pago simulado.
+     */
+    public function checkout(Request $request)
+    {
+        // Puedes añadir validación básica aquí si deseas (aunque el JS ya lo frena)
+        $request->validate([
+            'email' => 'required|email',
+            'card_number' => 'required',
+            'exp_date' => 'required',
+        ]);
+
+        $order = Order::where('user_id', Auth::id())
+            ->where('status', OrderStatus::PENDING)
+            ->first();
+
+        if (!$order || $order->orderItems->isEmpty()) {
+            return back()->withErrors(['cart' => 'El carrito está vacío o no se encontró la orden.']);
+        }
+
+        // Marcar la orden como pagada
+        $order->status = OrderStatus::PAID; // Ensure OrderStatus::PAID exists or change to 'PAID' if it's a string.
+        $order->save();
+
+        // Podrías vaciar el carrito o hacer algo más complejo aquí.
+        return redirect()->route('cart.index')->with('success', '¡Pago realizado con éxito! Tu orden ha sido completada.');
+    }
 }
