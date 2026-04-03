@@ -47,7 +47,7 @@
                     @php
                         $ad = $item->gameAd;
                         $game = $ad?->game;
-                        $image = ($ad && is_array($ad->images) && count($ad->images)) ? $ad->images[0] : null;
+                        $image = $game?->cover_image ?? null;
                     @endphp
                     <div class="bg-surface border border-border rounded-xl p-5 flex gap-5 relative group">
                         {{-- Eliminar --}}
@@ -103,67 +103,70 @@
                     </div>
                 @endforeach
 
-                {{-- Datos de Envío --}}
-                <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
-                    <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-                        </svg>
-                        <span class="leading-tight">Datos de<br>Envío</span>
-                    </div>
-                    <div class="flex-1 space-y-4 w-full">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Nombre Completo</label>
-                                <input type="text" placeholder="Ej. Juan Pérez" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Email</label>
-                                <input type="email" placeholder="juan@ejemplo.com" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
-                            </div>
+                <form action="{{ route('cart.checkout') }}" method="POST" id="checkout-form">
+                    @csrf
+                    {{-- Datos de Envío --}}
+                    <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
+                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                            </svg>
+                            <span class="leading-tight">Datos de<br>Envío</span>
                         </div>
-                        <div>
-                            <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Dirección de Entrega</label>
-                            <input type="text" placeholder="Calle, Número, Depto" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Método de Pago --}}
-                <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 items-start">
-                    <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="5" width="18" height="14" rx="2" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
-                            <path d="M7 15h2M11 15h2" />
-                        </svg>
-                        <span class="leading-tight">Método de<br>Pago</span>
-                    </div>
-                    <div class="flex-1 space-y-4 w-full">
-                        <div>
-                            <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Número de Tarjeta</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                    <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                                        <rect x="2" y="5" width="20" height="14" rx="2" />
-                                        <path fill="#fff" opacity="0.2" d="M2 10h20v2H2z" />
-                                    </svg>
+                        <div class="flex-1 space-y-4 w-full">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Nombre Completo</label>
+                                    <input type="text" placeholder="Ej. Juan Pérez" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
                                 </div>
-                                <input type="text" placeholder="0000 0000 0000 0000" class="w-full bg-background border border-border rounded-lg pl-11 pr-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors tracking-widest placeholder-text-muted/40">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Fecha Expiración</label>
-                                <input type="text" placeholder="MM/YY" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors tracking-wider">
+                                <div>
+                                    <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Email</label>
+                                    <input type="email" id="email-input" name="email" required placeholder="juan@ejemplo.com" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">CVV</label>
-                                <input type="text" placeholder="123" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors tracking-widest">
+                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Dirección de Entrega</label>
+                                <input type="text" placeholder="Calle, Número, Depto" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    {{-- Método de Pago --}}
+                    <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 items-start mt-4">
+                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="5" width="18" height="14" rx="2" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <path d="M7 15h2M11 15h2" />
+                            </svg>
+                            <span class="leading-tight">Método de<br>Pago</span>
+                        </div>
+                        <div class="flex-1 space-y-4 w-full">
+                            <div>
+                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Número de Tarjeta</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                        <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                                            <path fill="#fff" opacity="0.2" d="M2 10h20v2H2z" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" id="card-input" name="card_number" required placeholder="0000 0000 0000 0000" class="w-full bg-background border border-border rounded-lg pl-11 pr-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors tracking-widest placeholder-text-muted/40">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Fecha Expiración</label>
+                                    <input type="text" id="exp-input" name="exp_date" required placeholder="MM/YY" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors tracking-wider">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">CVV</label>
+                                    <input type="text" id="cvv-input" name="cvv" required placeholder="123" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors tracking-widest">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
             </div>
 
@@ -205,7 +208,7 @@
                         </div>
                     </div>
 
-                    <button class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 transition-colors mb-5 shadow-lg shadow-primary/20">
+                    <button type="submit" form="checkout-form" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 transition-colors mb-5 shadow-lg shadow-primary/20">
                         Proceder al Pago
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -242,4 +245,71 @@
     @endif
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('checkout-form');
+    if (!form) return;
+
+    const emailInput = document.getElementById('email-input');
+    const cardInput = document.getElementById('card-input');
+    const expInput = document.getElementById('exp-input');
+    const cvvInput = document.getElementById('cvv-input');
+
+    // MASK CARD
+    cardInput.addEventListener('input', function(e) {
+        let val = e.target.value.replace(/\D/g, ''); 
+        let formatted = '';
+        for (let i = 0; i < val.length; i++) {
+            if (i > 0 && i % 4 === 0) formatted += ' ';
+            formatted += val[i];
+        }
+        e.target.value = formatted.substring(0, 19);
+    });
+
+    // MASK EXP
+    expInput.addEventListener('input', function(e) {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length > 2) {
+            e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+        } else {
+            e.target.value = val;
+        }
+    });
+
+    // MASK CVV
+    cvvInput.addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+    });
+
+    form.addEventListener('submit', function(e) {
+        // Simple email regex validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+            e.preventDefault();
+            alert('Por favor, ingresa un correo electrónico válido.');
+            emailInput.focus();
+            return;
+        }
+
+        // Validate card roughly (just length checking for demo)
+        let cardRaw = cardInput.value.replace(/\s/g, '');
+        if (cardRaw.length < 15) {
+            e.preventDefault();
+            alert('Por favor, ingresa una tarjeta de crédito válida de 16 dígitos.');
+            cardInput.focus();
+            return;
+        }
+
+        // Validate expiration
+        if (expInput.value.length < 5) {
+            e.preventDefault();
+            alert('Por favor, ingresa una fecha de expiración válida (MM/AA).');
+            expInput.focus();
+            return;
+        }
+    });
+});
+</script>
+
 @endsection
