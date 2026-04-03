@@ -40,7 +40,6 @@
                 $filters = [
                     '' => "Todos ({$totalUsers})",
                     'admins' => 'Administradores',
-                    'moderators' => 'Moderadores',
                     'active' => 'Activos',
                     'banned' => 'Baneados',
                 ];
@@ -111,29 +110,29 @@
                         {{ $user->updated_at ? $user->updated_at->diffForHumans() : '—' }}
                     </td>
                     <td class="px-5 py-4 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                            @if($user->is_banned)
-                                <form method="POST" action="{{ route('admin.users.unban', $user) }}">
-                                    @csrf
-                                    <button type="submit" class="px-3 py-1 text-xs rounded bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition">
-                                        REACTIVAR
-                                    </button>
-                                </form>
-                            @else
-                                <a href="#" class="px-3 py-1 text-xs rounded bg-surface text-text-muted border border-border hover:text-text-main hover:border-primary/30 transition">
-                                    VER PERFIL
-                                </a>
-                                @if(!$user->isAdmin())
-                                <form method="POST" action="{{ route('admin.users.ban', $user) }}">
-                                    @csrf
-                                    <button type="submit" class="px-3 py-1 text-xs rounded bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">
-                                        BANEAR
-                                    </button>
-                                </form>
-                                @endif
-                            @endif
-                        </div>
-                    </td>
+    <div class="flex items-center justify-end gap-2">
+        {{-- Ver perfil --}}
+        <a href="{{ route('admin.users.show', $user) }}" class="px-3 py-1 text-xs rounded bg-surface text-text-muted border border-border hover:text-text-main hover:border-primary/30 transition">
+            VER PERFIL
+        </a>
+
+        {{-- Editar --}}
+        <a href="{{ route('admin.users.edit', $user) }}" class="px-3 py-1 text-xs rounded bg-surface text-text-muted border border-border hover:text-text-main transition">
+            EDITAR
+        </a>
+
+        {{-- Eliminar --}}
+        @if (! $user->isAdmin()) {{-- evita eliminar admins --}}
+            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-3 py-1 text-xs rounded bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">
+                    ELIMINAR
+                </button>
+            </form>
+        @endif
+    </div>
+</td>
                 </tr>
                 @empty
                 <tr>
@@ -214,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeBtn = document.getElementById('closeCreateUser');
     const cancelBtn = document.getElementById('cancelCreateUser');
     const form = modal ? modal.querySelector('form') : null;
-    // Si quieres, añade meta csrf en tu layout: <meta name="csrf-token" content="{{ csrf_token() }}">
 
     function openCreateUserModal() {
         if (!modal) return;
@@ -258,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 Array.from(el.options).forEach(opt => opt.removeAttribute('selected'));
             } else {
                 el.value = '';
-                // don't remove the value attribute for hidden _token (we handled that above)
             }
             el.classList.remove('border-red-500', 'ring-red-500');
         });
