@@ -52,15 +52,27 @@
 
             <!-- Centro: Barra de búsqueda -->
             <div class="hidden md:flex flex-1 max-w-md">
-                <div class="flex items-center w-full bg-background border border-border rounded-lg px-3 py-2 gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-text-muted flex-shrink-0" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" placeholder="Busca juegos, claves, consolas..."
-                        class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none flex-1">
-                </div>
+                <form action="{{ route('home') }}" method="GET" class="w-full">
+                    @if(request('platform'))
+                        <input type="hidden" name="platform" value="{{ request('platform') }}">
+                    @endif
+                    <div class="flex items-center w-full bg-background border border-border rounded-lg px-3 py-2 gap-2">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-text-muted flex-shrink-0" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Busca juegos, claves, consolas..."
+                            class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none flex-1"
+                        />
+                    </div>
+                </form>
             </div>
 
             <!-- Derecha: Carrito + Avatar -->
