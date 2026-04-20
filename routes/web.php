@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameAdController;
 use App\Http\Controllers\Admin\UserController;
@@ -10,16 +11,14 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\OrderController;
 
 
-// Ruta mágica de desarrollo para auto-logear al usuario de prueba al instante
-Route::get('/login', function () {
-    if (app()->environment('local')) {
-        $user = \App\Models\User::where('email', 'user@gamelink.com')->first();
-        if ($user) {
-            \Illuminate\Support\Facades\Auth::login($user);
-        }
-    }
-    return redirect()->route('home');
-})->name('login');
+// Autenticación
+Route::middleware('guest')->group(function () {
+    Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login',   [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register',[AuthController::class, 'register']);
+});
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 
 // Ruta para la Home (Catálogo Global)
@@ -54,8 +53,8 @@ Route::middleware('auth')->group(function () {
 });
 
     
-// Ruta para el panel de Admin
-Route::prefix('admin')->group(function () {
+// Ruta para el panel de Admin (requiere auth + rol admin)
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Listado y creación
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
