@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'GameLink')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -45,7 +46,11 @@
                     <li><a href="{{ route('home') }}"
                             class="hover:text-text-main transition-colors {{ request()->routeIs('home') ? 'text-text-main' : '' }}">Marketplace</a>
                     </li>
-                    <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Panel Admin</a>
+                    @auth
+                        @if(auth()->user()->isAdmin())
+                            <li><a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Panel Admin</a></li>
+                        @endif
+                    @endauth
                     <li><a href="#" class="hover:text-text-main transition-colors">Comunidad</a></li>
                 </ul>
             </div>
@@ -63,20 +68,81 @@
                 </div>
             </div>
 
-            <!-- Derecha: Carrito + Avatar -->
+            <!-- Derecha: Carrito + Avatar / Auth -->
             <div class="flex items-center gap-3">
-                <a href="{{ route('cart.index') }}">🛒</a>
-
                 @auth
-                    <a href="{{ route('games.index') }}" title="Mis anuncios">
-                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random"
-                            class="w-8 h-8 rounded-full border-2 border-border hover:border-primary cursor-pointer transition-all"
-                            alt="Avatar">
-                    </a>
-                @else
-                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white">
-                        U
+                    <!-- Dropdown de usuario -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 focus:outline-none">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=random"
+                                class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all"
+                                alt="Avatar">
+                        </button>
+
+                        <div x-show="open"
+                             x-transition:enter="transition ease-out duration-100"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute right-0 mt-2 w-52 bg-surface border border-border rounded-xl shadow-lg py-1 z-50"
+                             style="display: none;">
+
+                            <!-- Info del usuario -->
+                            <div class="px-4 py-3 border-b border-border">
+                                <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name }}</p>
+                                <p class="text-xs text-text-muted truncate">{{ auth()->user()->email }}</p>
+                            </div>
+
+                            <!-- Panel Admin (solo admins) -->
+                            @if(auth()->user()->isAdmin())
+                                <a href="{{ route('admin.users.index') }}"
+                                   class="flex items-center gap-2 px-4 py-2.5 text-sm text-primary hover:bg-background transition-colors">
+                                    ⚙️ Panel Admin
+                                </a>
+                                <div class="border-t border-border my-1"></div>
+                            @endif
+
+                            <!-- Opciones de usuario -->
+                            <a href="{{ route('profile.index') }}"
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                                👤 Mi perfil
+                            </a>
+                            <a href="{{ route('games.index') }}"
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                                🎮 Mis anuncios
+                            </a>
+                            <a href="{{ route('orders.index') }}"
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                                📦 Mis pedidos
+                            </a>
+                            <a href="{{ route('cart.index') }}"
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                                🛒 Carrito
+                            </a>
+
+                            <!-- Logout -->
+                            <div class="border-t border-border my-1"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-400 hover:bg-background transition-colors">
+                                    🚪 Cerrar sesión
+                                </button>
+                            </form>
+                        </div>
                     </div>
+                @else
+                    <!-- Guest: links de acceso -->
+                    <a href="{{ route('login') }}"
+                        class="text-sm text-text-muted hover:text-text-main transition-colors font-medium">
+                        Iniciar sesión
+                    </a>
+                    <a href="{{ route('register') }}"
+                        class="text-sm bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg px-4 py-1.5 transition-colors">
+                        Registrarse
+                    </a>
                 @endauth
             </div>
 
