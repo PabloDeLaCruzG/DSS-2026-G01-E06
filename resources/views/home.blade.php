@@ -60,10 +60,10 @@
     </section>
 
     {{-- ===== LAYOUT PRINCIPAL: SIDEBAR + CONTENIDO ===== --}}
-    <div class="flex gap-6">
+    <div class="flex gap-7">
 
         {{-- ===== SIDEBAR IZQUIERDA ===== --}}
-        <aside class="hidden md:flex flex-col gap-6 w-52 flex-shrink-0">
+        <aside class="hidden md:flex flex-col gap-6 w-52 flex-shrink-0 sticky top-16 self-start h-fit">
 
             {{-- Plataforma --}}
             <div>
