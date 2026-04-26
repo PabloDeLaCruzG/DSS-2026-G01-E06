@@ -63,7 +63,7 @@
     <div class="flex gap-7">
 
         {{-- ===== SIDEBAR IZQUIERDA ===== --}}
-        <aside class="hidden md:flex flex-col gap-6 w-52 flex-shrink-0 sticky top-16 self-start h-fit">
+        <aside class="hidden md:flex flex-col gap-6 w-52 flex-shrink-0 sticky top-4 self-start h-fit max-h-screen overflow-y-auto">
 
             {{-- Plataforma --}}
             <div>
@@ -117,6 +117,51 @@
                 </div>
             </div>
 
+            {{-- Separador --}}
+            <div class="border-t border-gray-700"></div>
+
+            {{-- Rango de precio --}}
+            <div>
+                <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Rango de Precio</h3>
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="200" 
+                    value="{{ request('max_price', 200) }}"
+                    id="price-range"
+                    class="w-full accent-[#009194]"
+                    oninput="document.getElementById('price-value').textContent = '$' + this.value + (this.value == 200 ? '+' : '')"
+                    onchange="window.location='{{ route('home') }}?' + new URLSearchParams({...Object.fromEntries(new URLSearchParams(window.location.search)), max_price: this.value}).toString()"
+                />
+                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>$0</span>
+                    <span id="price-value">${{ request('max_price', 200) }}{{ request('max_price', 200) == 200 ? '+' : '' }}</span>
+                </div>
+            </div>
+
+            {{-- Separador --}}
+            <div class="border-t border-gray-700"></div>
+
+            {{-- Rating --}}
+            <div>
+                <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Valoración mínima</h3>
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="5" 
+                    step="0.1"
+                    value="{{ request('rating', 0) }}"
+                    id="rating-range"
+                    class="w-full accent-[#009194]"
+                    oninput="document.getElementById('rating-value').textContent = '★ ' + parseFloat(this.value).toFixed(1)"
+                    onchange="window.location='{{ route('home') }}?' + new URLSearchParams({...Object.fromEntries(new URLSearchParams(window.location.search)), rating: this.value}).toString()"
+                />
+                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>★ 0</span>
+                    <span id="rating-value">★ {{ number_format(request('rating', 0), 1) }}</span>
+                </div>
+            </div>
+
         </aside>
 
         {{-- ===== CONTENIDO PRINCIPAL ===== --}}
@@ -146,9 +191,13 @@
                             @endif
 
                             {{-- Badge plataforma --}}
-                            <span class="absolute top-2 left-2 text-xs bg-[#009194] text-white px-2 py-0.5 rounded font-medium">
-                                {{ $game->platform }}
-                            </span>
+                            @if(!empty($game->platforms))
+                                @php $platform = is_array($game->platforms) ? $game->platforms[0] : $game->platforms; @endphp
+                                <span class="absolute top-2 left-2 text-xs text-white px-2 py-0.5 rounded font-medium"
+                                    style="background-color: {{ ['PS5' => '#1a4fc4', 'XBOX' => '#107c10', 'SWITCH' => '#e4000f', 'PC' => '#111111', 'RETRO' => '#b45309'][$platform] ?? '#009194' }}">
+                                    {{ $platform }}
+                                </span>
+                            @endif
 
                             {{-- Corazón --}}
                             <button class="absolute top-2 right-2 text-gray-300 hover:text-red-400 transition-colors bg-gray-900/60 rounded-full p-1 w-4 h-4 flex items-center justify-center"
