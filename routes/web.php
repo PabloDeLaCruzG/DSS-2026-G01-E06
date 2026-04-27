@@ -1,21 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameAdController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\User\GameController as UserGameController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\OrderController;
 
-// Ruta mágica de desarrollo para auto-logear al usuario de prueba al instante
-Route::get('/login', function () {
-    if (app()->environment('local')) {
-        $user = \App\Models\User::where('email', 'user@gamelink.com')->first();
-        if ($user) {
-            \Illuminate\Support\Facades\Auth::login($user);
-        }
-    }
-    return redirect()->route('home');
-})->name('login');
+
+// Autenticación
+Route::middleware('guest')->group(function () {
+    Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login',   [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register',[AuthController::class, 'register']);
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+});
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
 
 // Ruta para la Home (Catálogo Global)
 Route::get('/', [GameController::class, 'index'])->name('home');
@@ -31,10 +39,26 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+    Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/perfil/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/perfil/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+
+    Route::get('/mis-anuncios', [UserGameController::class, 'index'])->name('games.index');
+    Route::get('/mis-anuncios/create', [UserGameController::class, 'create'])->name('games.create');
+    Route::post('/mis-anuncios', [UserGameController::class, 'store'])->name('games.store');
+
+    Route::get('/mis-anuncios/{id}/edit', [UserGameController::class, 'edit'])->name('games.edit');
+    Route::put('/mis-anuncios/{id}', [UserGameController::class, 'update'])->name('games.update');
+    Route::delete('/mis-anuncios/{id}', [UserGameController::class, 'destroy'])->name('games.destroy');
+
+    Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
 });
 
-// Ruta para el panel de Admin
-Route::prefix('admin')->group(function () {
+    
+// Ruta para el panel de Admin (requiere auth + rol admin)
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Listado y creación
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
