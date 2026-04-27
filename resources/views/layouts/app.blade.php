@@ -37,7 +37,16 @@
             <div class="flex items-center gap-6">
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group flex-shrink-0">
                     <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
-                        🎮
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="6" y1="12" x2="10" y2="12"/>
+                        <line x1="8" y1="10" x2="8" y2="14"/>
+                        <line x1="15" y1="13" x2="15.01" y2="13"/>
+                        <line x1="18" y1="11" x2="18.01" y2="11"/>
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                    </svg>
+
                     </div>
                     <span class="text-xl font-bold">GameLink</span>
                 </a>
@@ -57,15 +66,27 @@
 
             <!-- Centro: Barra de búsqueda -->
             <div class="hidden md:flex flex-1 max-w-md">
-                <div class="flex items-center w-full bg-background border border-border rounded-lg px-3 py-2 gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-text-muted flex-shrink-0" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" placeholder="Busca juegos, claves, consolas..."
-                        class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none flex-1">
-                </div>
+                <form action="{{ route('home') }}" method="GET" class="w-full">
+                    @if(request('platform'))
+                        <input type="hidden" name="platform" value="{{ request('platform') }}">
+                    @endif
+                    <div class="flex items-center w-full bg-background border border-border rounded-lg px-3 py-2 gap-2">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-text-muted flex-shrink-0" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Busca juegos, claves, consolas..."
+                            class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none flex-1"
+                        />
+                    </div>
+                </form>
             </div>
 
             <!-- Derecha: Carrito + Avatar / Auth -->
