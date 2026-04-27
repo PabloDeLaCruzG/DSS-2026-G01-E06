@@ -9,6 +9,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\GameController as UserGameController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\ProfessionalProfileController;
+use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessionalProfileController;
 
 
 // Autenticación
@@ -17,10 +19,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/login',   [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register',[AuthController::class, 'register']);
-    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
@@ -54,6 +52,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mis-anuncios/{id}', [UserGameController::class, 'destroy'])->name('games.destroy');
 
     Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
+
+    Route::get('/perfil/profesional', [ProfessionalProfileController::class, 'create'])->name('professional.create');
+    Route::post('/perfil/profesional', [ProfessionalProfileController::class, 'store'])->name('professional.store');
 });
 
     
@@ -77,4 +78,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     
     Route::post('/users/{user}/ban', [UserController::class, 'ban'])->name('admin.users.ban');
     Route::post('/users/{user}/unban', [UserController::class, 'unban'])->name('admin.users.unban');
+
+    Route::get('/professionals', [AdminProfessionalProfileController::class, 'index'])->name('admin.professionals.index');
+    Route::post('/professionals/{profile}/verify', [AdminProfessionalProfileController::class, 'verify'])->name('admin.professionals.verify');
+    Route::post('/professionals/{profile}/reject', [AdminProfessionalProfileController::class, 'reject'])->name('admin.professionals.reject');
 });

@@ -6,12 +6,23 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\ProfessionalProfile;
 use App\Models\Address;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Crear un Super Admin de prueba
+        // Usuario principal (el que usa el login automático)
+        User::firstOrCreate(
+            ['email' => 'user@gamelink.com'],
+            [
+                'name' => 'Usuario Panel',
+                'role' => 'user',
+                'password' => Hash::make('123456'),
+            ]
+        );
+
+        // Admin de prueba
         User::factory()->create([
             'name' => 'Admin GameLink',
             'email' => 'admin@gamelink.com',
@@ -19,22 +30,22 @@ class UserSeeder extends Seeder
             'department' => 'Gerencia',
         ]);
 
-        // Crear un usuario normal de prueba
+        // Usuario normal adicional (con email distinto)
         User::factory()->create([
             'name' => 'Usuario Normal',
-            'email' => 'user@gamelink.com',
+            'email' => 'user2@gamelink.com', // 👈 cambiado para evitar duplicado
             'role' => 'user',
         ]);
 
-        // Crear 10 Usuarios normales, cada uno con 2 direcciones aleatorias
+        // 10 usuarios normales con direcciones
         User::factory(10)
             ->has(Address::factory()->count(2))
             ->create();
 
-        // Crear 5 Usuarios Profesionales (Tienen Perfil Pro y 1 dirección de la tienda)
+        // 5 usuarios profesionales
         User::factory(5)
-            ->has(ProfessionalProfile::factory()) // Le crea el perfil
-            ->has(Address::factory()->count(1))   // Le crea la dirección
+            ->has(ProfessionalProfile::factory())
+            ->has(Address::factory()->count(1))
             ->create();
     }
 }

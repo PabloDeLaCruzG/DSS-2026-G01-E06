@@ -22,6 +22,8 @@ class GameAd extends Model
     public const STATUS_HIDDEN = 'HIDDEN';
 
     protected $fillable = [
+        'user_id',      // 🔥 AÑADIDO
+        'game_id',      // 🔥 AÑADIDO
         'price',
         'description',
         'condition',
@@ -31,42 +33,36 @@ class GameAd extends Model
         'images',
         'status',
         'quantity'
-
     ];
 
     protected function casts(): array
     {
         return [
-            'platforms' => 'array', // Para que lo trate como array en PHP
-            'images' => 'array',    // Ya que estamos, las fotos también son un array
+            'platforms' => 'array',
+            'images' => 'array',
         ];
     }
 
-    // Un anuncio solo puede ser de un juego
     public function game()
     {
         return $this->belongsTo(Game::class);
     }
 
-    // Un anuncio puede tener varias Reviews
     public function reviews()
     {
         return $this->hasMany(Review::class);
     }
 
-    // Un anuncio puede tener hasta 1 OrderItem
-    public function orderitems()
+    public function orderItems()
     {
-        return $this->hasOne(OrderItem::class);
+        return $this->hasMany(OrderItem::class);
     }
 
-    // Un anuncio puede tener varios reportes
     public function reports()
     {
         return $this->hasMany(Report::class);
     }
 
-    // Un anuncio tiene un usuario que lo publica
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -10,24 +10,44 @@ class GameController extends Controller
     /**
      * Muestra el catálogo global (Home)
      */
-    public function index()
+    public function index(Request $request)
     {
+        $platform = $request->get('platform');
+        $search = $request->get('search');
+
         $games = Game::query()
             ->withCount('gameAds')
-            ->when(request('search'), function ($query, $search) {
-                $query->where('title', 'like', '%' . $search . '%');
-            })
-            ->when(request('platform'), function ($query, $platform) {
+
+            //Para mostrar los juegos según el filtro
+            ->when($platform, function ($query) use ($platform) {
                 $query->whereJsonContains('platforms', $platform);
             })
-            ->when(request('rating'), function ($query, $rating) {
-                $query->where('rating', '>=', (float) $rating);
-            })
-            ->orderBy('id')
-            ->paginate(12)
-            ->withQueryString();
 
-        return view('home', compact('games'));
+            //Para mostrar los juegos en la barra de búsqueda
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+
+            //Para mostrar los mejor valorados
+            ->when($request->get('rating'), function ($query) use ($request) {
+                $query->where('rating', '>=', $request->get('rating'));
+            })
+
+            //Filtrado por género
+            ->when($request->get('genre'), function ($query) use ($request) {
+            $query->whereJsonContains('genres', $request->get('genre'));
+            })
+
+            // Filtro por precio máximo
+            ->when($request->get('max_price') && $request->get('max_price') < 200, function ($query) use ($request) {
+                $query->whereHas('gameAds', function($q) use ($request) {
+                    $q->where('price', '<=', $request->get('max_price'));
+                });
+            })
+            
+            ->paginate(30)->withQueryString();
+            
+            return view('home', compact('games'));
     }
     /**
      * Muestra el detalle de un juego específico

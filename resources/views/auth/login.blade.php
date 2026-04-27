@@ -22,12 +22,6 @@
             </div>
         @endif
 
-        @if (session('status'))
-            <div class="bg-green-500/10 border border-green-500/30 text-green-400 text-sm rounded-lg px-4 py-3 mb-6">
-                {{ session('status') }}
-            </div>
-        @endif
-
         <!-- Formulario -->
         <form method="POST" action="/login" class="space-y-5">
             @csrf
@@ -68,12 +62,6 @@
                 @error('password')
                     <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
-
-                <div class="mt-2 text-right">
-                    <a href="{{ route('password.request') }}" class="text-xs text-primary hover:text-accent transition-colors">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                </div>
             </div>
 
             <!-- Botón -->
