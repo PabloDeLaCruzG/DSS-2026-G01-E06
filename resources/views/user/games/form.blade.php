@@ -46,9 +46,9 @@
                 </select>
 
                 @if(isset($ad))
-                    <img src="{{ $ad->game && $ad->game->cover_image 
-                        ? $ad->game->cover_image 
-                        : asset('img/default-game.png') }}"
+                    <img src="{{ $ad->game && $ad->game->cover_image
+                        ? $ad->game->cover_image
+                        : 'https://placehold.co/600x800?text=Sin+imagen' }}"
                          class="w-12 h-12 rounded object-cover">
                 @endif
             </div>
