@@ -53,9 +53,9 @@ class GameAd extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function orderitems()
+    public function orderItems()
     {
-        return $this->hasOne(OrderItem::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public function reports()

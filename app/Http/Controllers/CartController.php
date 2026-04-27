@@ -78,7 +78,9 @@ class CartController extends Controller
             'unit_price' => $ad->price,
             'seller_fee' => $sellerFee,
             'net_income' => $ad->price - $sellerFee,
-            'shipping_status' => \App\Enums\ShippingStatus::PENDING,
+            'shipping_status' => $ad->format === \App\Models\GameAd::FORMAT_DIGITAL_KEY
+                ? \App\Enums\ShippingStatus::INSTANT
+                : \App\Enums\ShippingStatus::PENDING,
         ]);
 
         // 3. Recalcular total del pedido
@@ -98,6 +100,11 @@ class CartController extends Controller
             'email' => 'required|email',
             'card_number' => 'required',
             'exp_date' => 'required',
+        ], [
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Introduce un correo electrónico válido.',
+            'card_number.required' => 'El número de tarjeta es obligatorio.',
+            'exp_date.required' => 'La fecha de expiración es obligatoria.',
         ]);
 
         $order = Order::where('user_id', Auth::id())
@@ -109,10 +116,18 @@ class CartController extends Controller
         }
 
         // Marcar la orden como pagada
-        $order->status = OrderStatus::PAID; // Ensure OrderStatus::PAID exists or change to 'PAID' if it's a string.
+        $order->status = OrderStatus::PAID;
         $order->save();
 
-        // Podrías vaciar el carrito o hacer algo más complejo aquí.
-        return redirect()->route('cart.index')->with('success', '¡Pago realizado con éxito! Tu orden ha sido completada.');
+        // Decrementar stock de cada anuncio; marcar como SOLD si quantity llega a 0
+        foreach ($order->orderItems as $item) {
+            $ad = $item->gameAd;
+            $ad->decrement('quantity');
+            if ($ad->fresh()->quantity <= 0) {
+                $ad->markAsSold();
+            }
+        }
+
+        return redirect()->route('orders.index')->with('success', '¡Pago realizado con éxito! Consulta tus claves digitales en Mis Pedidos.');
     }
 }

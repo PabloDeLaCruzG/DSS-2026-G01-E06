@@ -4,6 +4,8 @@
 
 @section('content')
 
+@php $isPro = auth()->user()->isProfessional(); @endphp
+
 <div class="max-w-2xl mx-auto bg-surface rounded-xl p-6 shadow-lg">
 
     <!-- HEADER -->
@@ -67,34 +69,28 @@
                     class="w-full mt-1 bg-background border border-border px-3 py-2 rounded-lg">
             </div>
 
-            <!-- ESTADO -->
+            <!-- ESTADO DEL ANUNCIO (activo/vendido) — solo en edición -->
+            @if(isset($ad))
             <div>
-                <label class="text-xs text-text-muted">Estado</label>
-
+                <label class="text-xs text-text-muted">Estado del anuncio</label>
                 <div class="flex mt-1 bg-background border border-border rounded-lg overflow-hidden">
-
-                    <input type="radio" name="status" value="ACTIVE" id="active"
-                        class="hidden peer"
+                    <input type="radio" name="status" value="ACTIVE" id="active" class="hidden peer/active"
                         {{ old('status', $ad->status ?? 'ACTIVE') == 'ACTIVE' ? 'checked' : '' }}>
-
                     <label for="active"
-                        class="flex-1 text-center py-2 cursor-pointer
-                        peer-checked:bg-primary peer-checked:text-white">
-                        Nuevo
+                        class="flex-1 text-center py-2 cursor-pointer peer-checked/active:bg-primary peer-checked/active:text-white">
+                        Activo
                     </label>
-
-                    <input type="radio" name="status" value="SOLD" id="sold"
-                        class="hidden peer"
+                    <input type="radio" name="status" value="SOLD" id="sold" class="hidden peer/sold"
                         {{ old('status', $ad->status ?? '') == 'SOLD' ? 'checked' : '' }}>
-
                     <label for="sold"
-                        class="flex-1 text-center py-2 cursor-pointer
-                        peer-checked:bg-primary peer-checked:text-white">
-                        Usado
+                        class="flex-1 text-center py-2 cursor-pointer peer-checked/sold:bg-primary peer-checked/sold:text-white">
+                        Vendido
                     </label>
-
                 </div>
             </div>
+            @else
+            <input type="hidden" name="status" value="ACTIVE">
+            @endif
 
         </div>
 
@@ -103,38 +99,69 @@
             <label class="text-xs text-text-muted">Formato</label>
 
             <div class="flex mt-1 bg-background border border-border rounded-lg overflow-hidden">
-
                 <input type="radio" name="format" value="PHYSICAL" id="physical"
-                    class="hidden peer"
+                    class="hidden peer/physical"
                     {{ old('format', $ad->format ?? 'PHYSICAL') == 'PHYSICAL' ? 'checked' : '' }}>
-
                 <label for="physical"
-                    class="flex-1 text-center py-2 cursor-pointer
-                    peer-checked:bg-primary peer-checked:text-white">
-                    Físico
+                    class="flex-1 text-center py-2 cursor-pointer peer-checked/physical:bg-primary peer-checked/physical:text-white">
+                    📦 Físico
                 </label>
 
+                @if($isPro)
                 <input type="radio" name="format" value="DIGITAL_KEY" id="digital"
-                    class="hidden peer"
+                    class="hidden peer/digital"
                     {{ old('format', $ad->format ?? '') == 'DIGITAL_KEY' ? 'checked' : '' }}>
-
                 <label for="digital"
-                    class="flex-1 text-center py-2 cursor-pointer
-                    peer-checked:bg-primary peer-checked:text-white">
-                    Digital
+                    class="flex-1 text-center py-2 cursor-pointer peer-checked/digital:bg-primary peer-checked/digital:text-white">
+                    🔑 Clave Digital
                 </label>
-
+                @else
+                <div class="flex-1 text-center py-2 text-text-muted text-xs flex items-center justify-center gap-1 cursor-not-allowed opacity-50">
+                    🔑 Clave Digital (solo vendedores Pro)
+                </div>
+                @endif
             </div>
         </div>
 
-        <!-- CLAVE DIGITAL -->
-        <div class="mb-6">
+        <!-- CONDICIÓN (solo para anuncios físicos) -->
+        <div id="condition-block" class="mb-6 {{ old('format', $ad->format ?? 'PHYSICAL') === 'DIGITAL_KEY' ? 'hidden' : '' }}">
+            <label class="text-xs text-text-muted">Condición del producto</label>
+            <div class="flex mt-1 bg-background border border-border rounded-lg overflow-hidden">
+                <input type="radio" name="condition" value="USED" id="cond_used"
+                    class="hidden peer/cond_used"
+                    {{ old('condition', $ad->condition ?? 'USED') == 'USED' ? 'checked' : '' }}>
+                <label for="cond_used"
+                    class="flex-1 text-center py-2 cursor-pointer peer-checked/cond_used:bg-primary peer-checked/cond_used:text-white">
+                    Segunda Mano
+                </label>
+
+                <input type="radio" name="condition" value="NEW" id="cond_new"
+                    class="hidden peer/cond_new"
+                    {{ old('condition', $ad->condition ?? '') == 'NEW' ? 'checked' : '' }}>
+                <label for="cond_new"
+                    class="flex-1 text-center py-2 cursor-pointer peer-checked/cond_new:bg-primary peer-checked/cond_new:text-white">
+                    Como Nuevo
+                </label>
+            </div>
+        </div>
+
+        <!-- CLAVE DIGITAL (solo para profesionales con formato DIGITAL_KEY) -->
+        @if($isPro)
+        <div id="digital-block" class="mb-6 {{ old('format', $ad->format ?? 'PHYSICAL') !== 'DIGITAL_KEY' ? 'hidden' : '' }}">
             <label class="text-xs text-text-muted">Clave Digital</label>
             <input type="text" name="key"
                 value="{{ old('key', $ad->digital_key ?? '') }}"
                 placeholder="XXXX-XXXX-XXXX"
-                class="w-full mt-1 bg-background border border-border px-3 py-2 rounded-lg">
+                class="w-full mt-1 bg-background border border-border px-3 py-2 rounded-lg font-mono">
+
+            <div class="mt-4">
+                <label class="text-xs text-text-muted">Stock (cantidad de unidades)</label>
+                <input type="number" name="quantity" min="1"
+                    value="{{ old('quantity', $ad->quantity ?? 1) }}"
+                    class="w-full mt-1 bg-background border border-border px-3 py-2 rounded-lg">
+            </div>
         </div>
+        @endif
 
         <!-- DESCRIPCIÓN -->
         <div class="mb-6">
@@ -162,5 +189,23 @@
     </form>
 
 </div>
+
+@if($isPro)
+<script>
+    const physicalRadio = document.getElementById('physical');
+    const digitalRadio  = document.getElementById('digital');
+    const condBlock     = document.getElementById('condition-block');
+    const digitalBlock  = document.getElementById('digital-block');
+
+    function toggleBlocks() {
+        const isDigital = digitalRadio && digitalRadio.checked;
+        condBlock.classList.toggle('hidden', isDigital);
+        digitalBlock.classList.toggle('hidden', !isDigital);
+    }
+
+    physicalRadio?.addEventListener('change', toggleBlocks);
+    digitalRadio?.addEventListener('change', toggleBlocks);
+</script>
+@endif
 
 @endsection

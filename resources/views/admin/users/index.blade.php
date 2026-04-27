@@ -79,7 +79,12 @@
                                 {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
                             <div>
-                                <p class="font-medium text-text-main text-sm">{{ $user->name }}</p>
+                                <div class="flex items-center gap-1.5">
+                                    <p class="font-medium text-text-main text-sm">{{ $user->name }}</p>
+                                    @if($user->isProfessional())
+                                        <span title="Socio Verificado" class="text-blue-400 text-xs font-bold">✔</span>
+                                    @endif
+                                </div>
                                 <p class="text-xs text-text-muted">{{ $user->email }}</p>
                             </div>
                         </div>

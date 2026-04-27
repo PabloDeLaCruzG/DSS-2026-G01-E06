@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->float('total_amount');
+            $table->decimal('total_amount', 10, 2);
 
             $table->enum('status', [
                 'PENDING',
