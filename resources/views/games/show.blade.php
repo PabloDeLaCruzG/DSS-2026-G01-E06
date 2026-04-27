@@ -96,7 +96,12 @@
                             class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white bg-primary">
                             {{ strtoupper(substr($ad->user->name, 0, 2)) }}
                         </div>
-                        <span class="font-semibold text-text-main text-sm">{{ $ad->user->name }}</span>
+                        <div class="flex items-center gap-1">
+                            <span class="font-semibold text-text-main text-sm">{{ $ad->user->name }}</span>
+                            @if($ad->user->isProfessional())
+                                <span title="Socio Verificado" class="text-blue-400 text-xs font-bold">✔</span>
+                            @endif
+                        </div>
                     </div>
 
                     {{-- Plataforma --}}

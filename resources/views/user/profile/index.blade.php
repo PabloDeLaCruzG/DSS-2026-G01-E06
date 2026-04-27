@@ -18,6 +18,21 @@
         <h2 class="mt-4 text-lg font-semibold">{{ auth()->user()->name }}</h2>
         <p class="text-text-muted text-sm">{{ auth()->user()->email }}</p>
 
+        @if(auth()->user()->isProfessional())
+            <div class="mt-2 inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-400">
+                ✔ Socio Verificado
+            </div>
+        @elseif(auth()->user()->professionalProfile)
+            <div class="mt-2 inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400">
+                🕐 Verificación pendiente
+            </div>
+        @else
+            <a href="{{ route('professional.create') }}"
+               class="mt-3 inline-block text-xs text-primary hover:underline">
+                ¿Eres empresa? Solicita cuenta Pro →
+            </a>
+        @endif
+
         <button class="mt-4 bg-background border border-border px-4 py-2 rounded-lg text-sm">
             Editar Avatar
         </button>

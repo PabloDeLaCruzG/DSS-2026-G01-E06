@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::query();
+        $query = User::with('professionalProfile');
 
         // Filtros por pestañas (tabs)
         if ($request->filter === 'admins') {

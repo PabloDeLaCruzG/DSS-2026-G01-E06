@@ -8,7 +8,7 @@ class CreateUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return auth()->user()?->isAdmin() ?? false;
     }
 
     public function rules()
@@ -16,7 +16,7 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'role' => 'required|in:admin,moderator,user',
+            'role' => 'required|in:admin,user',
             'department' => 'nullable|string|max:255',
             'password' => 'required|string|min:8|confirmed',
         ];

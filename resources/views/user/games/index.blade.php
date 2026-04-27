@@ -65,9 +65,9 @@
 
             <!-- TITULO + IMAGEN -->
             <td class="py-3 flex items-center gap-3">
-                <img src="{{ $ad->game && $ad->game->cover_image 
-                    ? $ad->game->cover_image 
-                    : asset('img/default-game.png') }}"
+                <img src="{{ $ad->game && $ad->game->cover_image
+                    ? $ad->game->cover_image
+                    : 'https://placehold.co/600x800?text=Sin+imagen' }}"
                      class="w-10 h-10 rounded object-cover">
 
                 <span>{{ $ad->game->title ?? 'Juego eliminado' }}</span>
