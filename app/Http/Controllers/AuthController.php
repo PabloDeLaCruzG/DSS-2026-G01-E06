@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,6 +109,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role'     => 'user',
         ]);
+
+        $user->notify(new WelcomeNotification());
 
         Auth::login($user);
 

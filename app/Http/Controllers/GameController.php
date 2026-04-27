@@ -12,8 +12,21 @@ class GameController extends Controller
      */
     public function index()
     {
-        // Traemos todos los juegos para mostrarlos en la Home
-        $games = Game::all(); 
+        $games = Game::query()
+            ->withCount('gameAds')
+            ->when(request('search'), function ($query, $search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->when(request('platform'), function ($query, $platform) {
+                $query->whereJsonContains('platforms', $platform);
+            })
+            ->when(request('rating'), function ($query, $rating) {
+                $query->where('rating', '>=', (float) $rating);
+            })
+            ->orderBy('id')
+            ->paginate(12)
+            ->withQueryString();
+
         return view('home', compact('games'));
     }
     /**

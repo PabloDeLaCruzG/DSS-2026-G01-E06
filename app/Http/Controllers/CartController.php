@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\GameAd;
 use App\Enums\OrderStatus;
+use App\Notifications\OrderConfirmedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -111,6 +112,8 @@ class CartController extends Controller
         // Marcar la orden como pagada
         $order->status = OrderStatus::PAID; // Ensure OrderStatus::PAID exists or change to 'PAID' if it's a string.
         $order->save();
+
+        $order->user->notify(new OrderConfirmedNotification($order));
 
         // Podrías vaciar el carrito o hacer algo más complejo aquí.
         return redirect()->route('cart.index')->with('success', '¡Pago realizado con éxito! Tu orden ha sido completada.');
