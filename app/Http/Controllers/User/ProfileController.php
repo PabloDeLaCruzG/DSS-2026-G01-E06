@@ -31,4 +31,44 @@ class ProfileController extends Controller
 
         return back()->with('success', 'Perfil actualizado');
     }
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!\Illuminate\Support\Facades\Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'La contraseña actual no es correcta.']);
+        }
+
+        $user->update([
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Contraseña actualizada correctamente.');
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        if ($user->avatar_path) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar_path);
+        }
+
+        $path = $request->file('avatar')->store('avatars', 'public');
+
+        $user->update([
+            'avatar_path' => $path,
+        ]);
+
+        return back()->with('success', 'Avatar actualizado correctamente.');
+    }
 }

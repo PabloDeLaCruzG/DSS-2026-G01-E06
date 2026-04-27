@@ -129,6 +129,8 @@ class CartController extends Controller
             }
         }
 
+        $order->user->notify(new OrderConfirmedNotification($order));
+
         return redirect()->route('orders.index')->with('success', '¡Pago realizado con éxito! Consulta tus claves digitales en Mis Pedidos.');
     }
 }
