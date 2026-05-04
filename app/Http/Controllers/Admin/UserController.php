@@ -197,6 +197,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user->loadCount(['gameAds', 'orders', 'reviews', 'reports']);
+        $user->load('professionalProfile');
+
         return view('admin.users.show', compact('user'));
     }
 
