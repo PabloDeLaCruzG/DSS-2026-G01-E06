@@ -106,7 +106,8 @@
 
                 <form action="{{ route('cart.checkout') }}" method="POST" id="checkout-form">
                     @csrf
-                    {{-- Datos de Envío --}}
+                    {{-- Datos de Envío (solo si hay productos físicos) --}}
+                    @if($needsShipping)
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
                         <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -118,7 +119,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Nombre Completo</label>
-                                    <input type="text" placeholder="Ej. Juan Pérez" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                                    <input type="text" name="shipping_name" placeholder="Ej. Juan Pérez" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Email</label>
@@ -127,10 +128,27 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Dirección de Entrega</label>
-                                <input type="text" placeholder="Calle, Número, Depto" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                                <input type="text" name="shipping_address" placeholder="Calle, Número, Depto" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
                             </div>
                         </div>
                     </div>
+                    @else
+                    {{-- Solo digitales: el email va aquí --}}
+                    <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
+                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span class="leading-tight">Entrega<br>Digital</span>
+                        </div>
+                        <div class="flex-1 space-y-4 w-full">
+                            <div>
+                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Email</label>
+                                <input type="email" id="email-input" name="email" required placeholder="juan@ejemplo.com" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                            </div>
+                        </div>
+                    </div>
+                    @endif
 
                     {{-- Método de Pago --}}
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 items-start mt-4">

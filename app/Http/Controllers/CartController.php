@@ -27,10 +27,11 @@ class CartController extends Controller
             ->latest()
             ->first();
 
-        $items  = $order ? $order->orderItems : collect();
-        $coupon = session('coupon');
+        $items         = $order ? $order->orderItems : collect();
+        $coupon        = session('coupon');
+        $needsShipping = $items->contains(fn($item) => $item->gameAd?->format === 'PHYSICAL');
 
-        return view('cart.index', compact('order', 'items', 'coupon'));
+        return view('cart.index', compact('order', 'items', 'coupon', 'needsShipping'));
     }
 
     /**
@@ -125,20 +126,34 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         // Puedes añadir validación básica aquí si deseas (aunque el JS ya lo frena)
-        $request->validate([
-            'email' => 'required|email',
-            'card_number' => 'required',
-            'exp_date' => 'required',
-        ], [
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'Introduce un correo electrónico válido.',
-            'card_number.required' => 'El número de tarjeta es obligatorio.',
-            'exp_date.required' => 'La fecha de expiración es obligatoria.',
-        ]);
-
-        $order = Order::where('user_id', Auth::id())
+        $order = Order::with('orderItems.gameAd')
+            ->where('user_id', Auth::id())
             ->where('status', OrderStatus::PENDING)
             ->first();
+
+        $needsShipping = $order && $order->orderItems->contains(
+            fn($item) => $item->gameAd?->format === 'PHYSICAL'
+        );
+
+        $rules = [
+            'email'       => 'required|email',
+            'card_number' => 'required',
+            'exp_date'    => 'required',
+        ];
+
+        if ($needsShipping) {
+            $rules['shipping_name']    = 'required|string|max:255';
+            $rules['shipping_address'] = 'required|string|max:255';
+        }
+
+        $request->validate($rules, [
+            'email.required'            => 'El correo electrónico es obligatorio.',
+            'email.email'               => 'Introduce un correo electrónico válido.',
+            'card_number.required'      => 'El número de tarjeta es obligatorio.',
+            'exp_date.required'         => 'La fecha de expiración es obligatoria.',
+            'shipping_name.required'    => 'El nombre de entrega es obligatorio.',
+            'shipping_address.required' => 'La dirección de entrega es obligatoria.',
+        ]);
 
         if (!$order || $order->orderItems->isEmpty()) {
             return back()->withErrors(['cart' => 'El carrito está vacío o no se encontró la orden.']);
