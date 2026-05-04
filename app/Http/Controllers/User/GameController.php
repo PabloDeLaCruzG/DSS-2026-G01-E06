@@ -25,13 +25,19 @@ class GameController extends Controller
 
         $ads = $query->paginate(4)->withQueryString();
 
-        $totalVentas = GameAd::where('user_id', $userId)->sum('price');
+        $pendiente = GameAd::where('user_id', $userId)
+            ->where('status', 'ACTIVE')
+            ->sum('price');
+
+        $totalVendido = GameAd::where('user_id', $userId)
+            ->where('status', 'SOLD')
+            ->sum('price');
 
         $activos = GameAd::where('user_id', $userId)
             ->where('status', 'ACTIVE')
             ->count();
 
-        return view('user.games.index', compact('ads', 'totalVentas', 'activos'));
+        return view('user.games.index', compact('ads', 'pendiente', 'totalVendido', 'activos'));
     }
 
     public function create()
