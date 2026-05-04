@@ -128,7 +128,8 @@
 
         {{-- Eliminar --}}
         @if (! $user->isAdmin()) {{-- evita eliminar admins --}}
-            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.');">
+            <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
+                  data-confirm="¿Eliminar a {{ addslashes($user->name) }}? Esta acción no se puede deshacer.">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="px-3 py-1 text-xs rounded bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">

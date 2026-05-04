@@ -72,7 +72,7 @@
                         </form>
                     @else
                         <form method="POST" action="{{ route('admin.users.ban', $user) }}"
-                              onsubmit="return confirm('¿Banear a {{ addslashes($user->name) }}?')">
+                              data-confirm="¿Banear a {{ addslashes($user->name) }}? El usuario perderá acceso a la plataforma.">
                             @csrf
                             <button type="submit"
                                     class="px-4 py-2 text-sm rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 transition">
@@ -82,7 +82,7 @@
                     @endif
 
                     <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
-                          onsubmit="return confirm('¿Eliminar a {{ addslashes($user->name) }}? Esta acción no se puede deshacer.')">
+                          data-confirm="¿Eliminar a {{ addslashes($user->name) }}? Esta acción no se puede deshacer.">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

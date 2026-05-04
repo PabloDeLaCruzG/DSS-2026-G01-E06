@@ -103,7 +103,7 @@
 
                 <!-- ELIMINAR -->
                 <form method="POST" action="{{ route('games.destroy', $ad->id) }}"
-                      onsubmit="return confirm('¿Seguro que quieres eliminar este anuncio?')">
+                      data-confirm="¿Seguro que quieres eliminar este anuncio? Esta acción no se puede deshacer.">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-text-muted hover:text-red-400">

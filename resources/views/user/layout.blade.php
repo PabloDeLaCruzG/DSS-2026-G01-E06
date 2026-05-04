@@ -191,5 +191,6 @@
         </main>
     </div>
 
+@include('partials._confirm-modal')
 </body>
 </html>

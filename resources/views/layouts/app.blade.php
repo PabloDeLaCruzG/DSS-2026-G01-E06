@@ -256,5 +256,6 @@
         </div>
     </footer>
 
+@include('partials._confirm-modal')
 </body>
 </html>
