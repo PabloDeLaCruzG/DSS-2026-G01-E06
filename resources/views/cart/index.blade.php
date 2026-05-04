@@ -177,10 +177,18 @@
                 <div class="bg-surface border border-border rounded-xl p-6 sticky top-20">
                     <h2 class="text-base font-bold text-text-main mb-6">Resumen de Pedido</h2>
 
+                    @php
+                        $subtotal  = $items->sum('unit_price');
+                        $comision  = $items->sum('seller_fee') ?: ($subtotal * 0.02);
+                        $baseTotal = $subtotal + $comision;
+                        $descuento = $coupon ? round($baseTotal * $coupon['rate'], 2) : 0;
+                        $totalF    = $baseTotal - $descuento;
+                    @endphp
+
                     <div class="space-y-4 text-sm font-medium">
                         <div class="flex justify-between text-text-muted">
                             <span>Subtotal ({{ $items->count() }} productos)</span>
-                            <span class="text-text-main">${{ number_format($items->sum('unit_price'), 2) }}</span>
+                            <span class="text-text-main">${{ number_format($subtotal, 2) }}</span>
                         </div>
                         <div class="flex justify-between text-text-muted">
                             <span>Gastos de envío</span>
@@ -188,8 +196,14 @@
                         </div>
                         <div class="flex justify-between text-text-muted">
                             <span>Comisión GameLink (2%)</span>
-                            <span class="text-text-main">${{ number_format($items->sum('seller_fee') ?? ($items->sum('unit_price') * 0.02), 2) }}</span>
+                            <span class="text-text-main">${{ number_format($comision, 2) }}</span>
                         </div>
+                        @if($coupon)
+                        <div class="flex justify-between text-green-400 font-semibold">
+                            <span>Descuento ({{ $coupon['code'] }} −{{ $coupon['rate'] * 100 }}%)</span>
+                            <span>−${{ number_format($descuento, 2) }}</span>
+                        </div>
+                        @endif
                     </div>
 
                     <div class="border-t border-border/70 border-dashed my-6"></div>
@@ -198,12 +212,7 @@
                         <div class="flex justify-between items-end">
                             <span class="text-base font-bold text-text-main pb-1">Total Final</span>
                             <div class="text-right">
-                                @php
-                                    $subtotal = $items->sum('unit_price');
-                                    $comision = $items->sum('seller_fee') ?? ($subtotal * 0.02);
-                                    $totalF = $subtotal + $comision;
-                                @endphp
-                                <span class="text-[32px] font-black text-primary leading-none">${{ number_format($order?->total_amount ?? $totalF, 2) }}</span>
+                                <span class="text-[32px] font-black text-primary leading-none">${{ number_format($totalF, 2) }}</span>
                                 <span class="text-[10px] text-text-muted block mt-1 uppercase tracking-wide">IVA incluido</span>
                             </div>
                         </div>
@@ -232,12 +241,46 @@
                         </svg>
                         <span>¿Tienes un código de descuento?</span>
                     </div>
-                    <div class="flex gap-3">
-                        <input type="text" placeholder="Código" class="w-full bg-background border border-border rounded-lg px-4 text-sm text-text-main focus:outline-none focus:border-primary transition-colors placeholder-text-muted/60">
-                        <button class="bg-primary hover:bg-primary-hover text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-colors flex-shrink-0 shadow-md shadow-primary/20">
-                            Aplicar
-                        </button>
+
+                    {{-- Banner con el código visible --}}
+                    <div class="flex items-center gap-3 bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 mb-3">
+                        <svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        <p class="text-xs text-text-muted flex-1">Usa el código <span class="font-mono font-bold text-primary tracking-wider">GAMELINK20</span> y obtén un <strong class="text-primary">20% de descuento</strong> en tu compra.</p>
                     </div>
+
+                    {{-- Feedback --}}
+                    @if(session('coupon_success'))
+                        <p class="text-xs text-green-400 mb-2">✔ {{ session('coupon_success') }}</p>
+                    @endif
+                    @if(session('coupon_error'))
+                        <p class="text-xs text-red-400 mb-2">✖ {{ session('coupon_error') }}</p>
+                    @endif
+
+                    @if($coupon)
+                        {{-- Cupón ya aplicado --}}
+                        <div class="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-2.5">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span class="text-sm font-mono font-bold text-green-400">{{ $coupon['code'] }}</span>
+                                <span class="text-xs text-green-400">— {{ $coupon['rate'] * 100 }}% aplicado</span>
+                            </div>
+                            <form method="POST" action="{{ route('cart.coupon.remove') }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-text-muted hover:text-red-400 transition-colors text-xs">✕ Quitar</button>
+                            </form>
+                        </div>
+                    @else
+                        {{-- Formulario para aplicar cupón --}}
+                        <form method="POST" action="{{ route('cart.coupon') }}" class="flex gap-3">
+                            @csrf
+                            <input type="text" name="coupon_code" placeholder="Código" value="{{ old('coupon_code') }}"
+                                   class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors placeholder-text-muted/60 uppercase tracking-wider">
+                            <button type="submit" class="bg-primary hover:bg-primary-hover text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-colors flex-shrink-0 shadow-md shadow-primary/20">
+                                Aplicar
+                            </button>
+                        </form>
+                    @endif
                 </div>
 
             </div>
