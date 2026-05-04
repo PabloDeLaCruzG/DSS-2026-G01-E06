@@ -110,17 +110,6 @@
                 <span class="text-text-main font-medium">@yield('title', 'Panel')</span>
             </div>
 
-            {{-- Buscador funcional (redirige a games.index con query) --}}
-            <div class="hidden md:flex items-center bg-background border border-border rounded-lg px-3 py-2 gap-2 w-72">
-                <svg class="w-4 h-4 text-text-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <form method="GET" action="{{ route('games.index') }}" class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar juegos, consolas..."
-                        class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none w-full">
-                </form>
-            </div>
-
             {{-- Acciones --}}
             <div class="flex items-center gap-3">
                 <button class="relative p-2 text-text-muted hover:text-text-main hover:bg-background rounded-lg transition-all">
