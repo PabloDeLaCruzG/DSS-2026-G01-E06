@@ -113,11 +113,42 @@ class UserController extends Controller
         $totalUsers = User::count();
         $pendingReports = Report::where('status', 'OPEN')->count();
 
+        // --- Crecimiento mensual ---
+        $thisMonthUsers = User::whereYear('created_at', now()->year)
+            ->whereMonth('created_at', now()->month)
+            ->count();
+        $lastMonthUsers = User::whereYear('created_at', now()->subMonthNoOverflow()->year)
+            ->whereMonth('created_at', now()->subMonthNoOverflow()->month)
+            ->count();
+        if ($lastMonthUsers > 0) {
+            $growthRate = round((($thisMonthUsers - $lastMonthUsers) / $lastMonthUsers) * 100, 1);
+        } else {
+            $growthRate = $thisMonthUsers > 0 ? 100.0 : 0.0;
+        }
+
+        // --- Tasa de retención (últimos 90 días) ---
+        // Usuarios registrados hace más de 90 días (base elegible)
+        $eligibleUsers = User::where('created_at', '<=', now()->subDays(90))->count();
+        // De esos, cuántos han realizado algún pedido, reseña o anuncio en los últimos 90 días
+        $retainedUsers = User::where('created_at', '<=', now()->subDays(90))
+            ->where(function ($q) {
+                $q->whereHas('orders', fn($r) => $r->where('created_at', '>=', now()->subDays(90)))
+                  ->orWhereHas('reviews', fn($r) => $r->where('created_at', '>=', now()->subDays(90)))
+                  ->orWhereHas('gameAds', fn($r) => $r->where('created_at', '>=', now()->subDays(90)));
+            })
+            ->count();
+        $retentionRate = $eligibleUsers > 0
+            ? round(($retainedUsers / $eligibleUsers) * 100, 1)
+            : 0.0;
+
         // Datos para partials / modales
         $roles = $this->allowedRoles;
         $departments = ['Gerencia', 'Soporte', 'Ventas'];
 
-        return view('admin.users.index', compact('users', 'totalUsers', 'pendingReports', 'roles', 'departments'));
+        return view('admin.users.index', compact(
+            'users', 'totalUsers', 'pendingReports', 'roles', 'departments',
+            'thisMonthUsers', 'growthRate', 'retentionRate', 'eligibleUsers', 'retainedUsers'
+        ));
     }
 
     /**
