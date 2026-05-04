@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\GameAd;
 use App\Enums\OrderStatus;
+use App\Notifications\OrderConfirmedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -127,6 +128,8 @@ class CartController extends Controller
                 $ad->markAsSold();
             }
         }
+
+        $order->user->notify(new OrderConfirmedNotification($order));
 
         return redirect()->route('orders.index')->with('success', '¡Pago realizado con éxito! Consulta tus claves digitales en Mis Pedidos.');
     }

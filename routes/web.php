@@ -19,6 +19,10 @@ Route::middleware('guest')->group(function () {
     Route::post('/login',   [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register',[AuthController::class, 'register']);
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
@@ -52,7 +56,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mis-anuncios/{id}', [UserGameController::class, 'destroy'])->name('games.destroy');
 
     Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
-
     Route::get('/perfil/profesional', [ProfessionalProfileController::class, 'create'])->name('professional.create');
     Route::post('/perfil/profesional', [ProfessionalProfileController::class, 'store'])->name('professional.store');
 });

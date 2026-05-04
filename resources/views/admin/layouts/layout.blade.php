@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameLink Admin - @yield('title')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -83,14 +84,14 @@
 
         {{-- Usuario logueado --}}
         <div class="px-3 py-4 border-t border-border">
-            <div class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-background transition-all cursor-pointer">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=009194&color=fff"
+            <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-background transition-all">
+                 <img src="{{ auth()->user()->avatar_url }}"
                      class="w-8 h-8 rounded-full border border-border" alt="Avatar">
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name ?? 'Root Admin' }}</p>
                     <p class="text-xs text-text-muted truncate">{{ auth()->user()->email ?? '' }}</p>
                 </div>
-            </div>
+            </a>
         </div>
     </aside>
 
@@ -101,9 +102,15 @@
         <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
             {{-- título --}}
             <div class="flex items-center gap-2 text-sm text-text-muted">
-                <span>Admin</span>
+                <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Admin</a>
                 <span>›</span>
-                <span class="text-text-main font-medium">@yield('title', 'Panel')</span>
+                @php
+                    $currentAdminBreadcrumbRoute = match (true) {
+                        request()->routeIs('admin.users.*') => route('admin.users.index'),
+                        default => url()->current(),
+                    };
+                @endphp
+                <a href="{{ $currentAdminBreadcrumbRoute }}" class="text-text-main font-medium hover:text-primary transition-colors">@yield('title', 'Panel')</a>
             </div>
 
             {{-- Buscador --}}
@@ -123,8 +130,51 @@
                     </svg>
                     <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface"></span>
                 </button>
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=009194&color=fff"
-                     class="w-8 h-8 rounded-full border-2 border-border hover:border-primary cursor-pointer transition-all" alt="Avatar">
+
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 focus:outline-none">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-sm font-medium">{{ auth()->user()->name ?? '' }}</p>
+                            <p class="text-xs text-text-muted">{{ auth()->user()->email ?? '' }}</p>
+                        </div>
+                            <img src="{{ auth()->user()->avatar_url }}"
+                             class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all" alt="Avatar">
+                    </button>
+
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-100"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-75"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute right-0 mt-2 w-56 bg-surface border border-border rounded-xl shadow-lg py-1 z-50"
+                         style="display: none;">
+
+                        <div class="px-4 py-3 border-b border-border">
+                            <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name }}</p>
+                            <p class="text-xs text-text-muted truncate">{{ auth()->user()->email }}</p>
+                        </div>
+
+                        <a href="{{ route('admin.users.index') }}"
+                           class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                            Gestionar usuarios
+                        </a>
+                        <a href="{{ route('home') }}"
+                           class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                            Ir al marketplace
+                        </a>
+
+                        <div class="border-t border-border my-1"></div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-400 hover:bg-background transition-colors">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </header>
 
