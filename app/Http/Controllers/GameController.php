@@ -15,7 +15,7 @@ class GameController extends Controller
         $platform = $request->get('platform');
         $search = $request->get('search');
 
-        $games = Game::query()
+        $games = Game::published()
             ->withCount('gameAds')
 
             //Para mostrar los juegos según el filtro

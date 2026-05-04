@@ -17,16 +17,22 @@ class Game extends Model
         'trailer_url',
         'rating',
         'genres',
-        'platforms'
+        'platforms',
+        'is_published',
     ];
 
-    // Mantenemos esto para que los JSON se conviertan en Arrays
     protected function casts(): array
     {
         return [
-            'genres' => 'array',
-            'platforms' => 'array',
+            'genres'       => 'array',
+            'platforms'    => 'array',
+            'is_published' => 'boolean',
         ];
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
     }
 
     public function gameAds()
