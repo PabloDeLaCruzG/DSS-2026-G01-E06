@@ -88,8 +88,8 @@
         {{-- Usuario logueado --}}
         <div class="px-3 py-4 border-t border-border">
             <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-background transition-all cursor-pointer">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}&background=009194&color=fff"
-                     class="w-8 h-8 rounded-full border border-border" alt="Avatar">
+                <img src="{{ auth()->user()->avatar_url }}"
+                     class="w-8 h-8 rounded-full border border-border object-cover" alt="Avatar">
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name ?? 'Usuario' }}</p>
                     <p class="text-xs text-text-muted truncate">{{ auth()->user()->email ?? '' }}</p>
@@ -110,17 +110,6 @@
                 <span class="text-text-main font-medium">@yield('title', 'Panel')</span>
             </div>
 
-            {{-- Buscador funcional (redirige a games.index con query) --}}
-            <div class="hidden md:flex items-center bg-background border border-border rounded-lg px-3 py-2 gap-2 w-72">
-                <svg class="w-4 h-4 text-text-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <form method="GET" action="{{ route('games.index') }}" class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar juegos, consolas..."
-                        class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none w-full">
-                </form>
-            </div>
-
             {{-- Acciones --}}
             <div class="flex items-center gap-3">
                 <button class="relative p-2 text-text-muted hover:text-text-main hover:bg-background rounded-lg transition-all">
@@ -136,7 +125,7 @@
                             <p class="text-sm font-medium">{{ auth()->user()->name ?? '' }}</p>
                             <p class="text-xs text-text-muted">{{ auth()->user()->email ?? '' }}</p>
                         </div>
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}&background=009194&color=fff"
+                        <img src="{{ auth()->user()->avatar_url }}"
                              class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all object-cover" alt="Avatar">
                     </button>
 
@@ -191,5 +180,6 @@
         </main>
     </div>
 
+@include('partials._confirm-modal')
 </body>
 </html>

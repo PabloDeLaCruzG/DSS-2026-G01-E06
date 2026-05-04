@@ -86,7 +86,7 @@
                                         </button>
                                     </form>
                                     <form action="{{ route('admin.professionals.reject', $profile) }}" method="POST"
-                                          onsubmit="return confirm('¿Rechazar y eliminar la solicitud de {{ addslashes($profile->company_name) }}?')">
+                                          data-confirm="¿Rechazar y eliminar la solicitud de {{ addslashes($profile->company_name) }}?">
                                         @csrf
                                         <button type="submit"
                                             class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition">
@@ -162,7 +162,7 @@
                             </td>
                             <td class="px-5 py-4 text-right">
                                 <form action="{{ route('admin.professionals.reject', $profile) }}" method="POST"
-                                      onsubmit="return confirm('¿Revocar la verificación de {{ addslashes($profile->company_name) }}?')">
+                                      data-confirm="¿Revocar la verificación de {{ addslashes($profile->company_name) }}?">
                                     @csrf
                                     <button type="submit"
                                         class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition">

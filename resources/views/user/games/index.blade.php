@@ -25,11 +25,16 @@
 @endif
 
 <!-- CARDS -->
-<div class="grid grid-cols-3 gap-4 mb-6">
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
 
     <div class="bg-surface p-4 rounded-xl">
-        <p class="text-text-muted text-sm">Total Ventas</p>
-        <h2 class="text-xl font-bold">{{ number_format($totalVentas, 2) }}€</h2>
+        <p class="text-text-muted text-sm">Pendiente</p>
+        <h2 class="text-xl font-bold text-yellow-400">{{ number_format($pendiente, 2) }}€</h2>
+    </div>
+
+    <div class="bg-surface p-4 rounded-xl">
+        <p class="text-text-muted text-sm">Total Vendido</p>
+        <h2 class="text-xl font-bold text-accent">{{ number_format($totalVendido, 2) }}€</h2>
     </div>
 
     <div class="bg-surface p-4 rounded-xl">
@@ -103,7 +108,7 @@
 
                 <!-- ELIMINAR -->
                 <form method="POST" action="{{ route('games.destroy', $ad->id) }}"
-                      onsubmit="return confirm('¿Seguro que quieres eliminar este anuncio?')">
+                      data-confirm="¿Seguro que quieres eliminar este anuncio? Esta acción no se puede deshacer.">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-text-muted hover:text-red-400">

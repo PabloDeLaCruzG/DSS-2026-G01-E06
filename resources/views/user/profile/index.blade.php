@@ -163,12 +163,17 @@
     <h2 class="text-red-400 font-semibold mb-2">Zona de Peligro</h2>
 
     <p class="text-sm text-text-muted mb-4">
-        Una vez elimines tu cuenta, no hay vuelta atrás.
+        Una vez elimines tu cuenta, no hay vuelta atrás. Se borrarán todos tus datos permanentemente.
     </p>
 
-    <button class="text-red-400 hover:underline">
-        Eliminar mi cuenta definitivamente →
-    </button>
+    <form method="POST" action="{{ route('profile.destroy') }}"
+          data-confirm="¿Eliminar tu cuenta definitivamente? Esta acción no se puede deshacer y perderás todos tus datos.">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="text-red-400 hover:underline text-sm">
+            Eliminar mi cuenta definitivamente →
+        </button>
+    </form>
 
 </div>
 

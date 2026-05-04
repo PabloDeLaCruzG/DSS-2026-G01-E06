@@ -39,13 +39,16 @@ Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-    Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/coupon', [CartController::class, 'applyCoupon'])->name('cart.coupon');
+    Route::delete('/cart/coupon', [CartController::class, 'removeCoupon'])->name('cart.coupon.remove');
+    Route::delete('/cart/{orderItem}', [CartController::class, 'remove'])->name('cart.remove');
 
     Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/perfil/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/perfil/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    Route::delete('/perfil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/mis-anuncios', [UserGameController::class, 'index'])->name('games.index');
     Route::get('/mis-anuncios/create', [UserGameController::class, 'create'])->name('games.create');

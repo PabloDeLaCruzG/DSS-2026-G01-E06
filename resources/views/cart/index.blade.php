@@ -51,10 +51,11 @@
                     @endphp
                     <div class="bg-surface border border-border rounded-xl p-5 flex gap-5 relative group">
                         {{-- Eliminar --}}
-                        <form action="{{ route('cart.remove', $item) }}" method="POST" class="absolute top-5 right-5">
+                        <form action="{{ route('cart.remove', $item) }}" method="POST" class="absolute top-5 right-5"
+                              data-confirm="¿Eliminar este artículo del carrito?">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-text-muted hover:text-red-400 transition-colors" title="Eliminar del carrito" onclick="return confirm('¿Eliminar este artículo del carrito?')">
+                            <button type="submit" class="text-text-muted hover:text-red-400 transition-colors" title="Eliminar del carrito">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
@@ -105,7 +106,8 @@
 
                 <form action="{{ route('cart.checkout') }}" method="POST" id="checkout-form">
                     @csrf
-                    {{-- Datos de Envío --}}
+                    {{-- Datos de Envío (solo si hay productos físicos) --}}
+                    @if($needsShipping)
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
                         <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -117,7 +119,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Nombre Completo</label>
-                                    <input type="text" placeholder="Ej. Juan Pérez" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                                    <input type="text" name="shipping_name" placeholder="Ej. Juan Pérez" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Email</label>
@@ -126,10 +128,27 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Dirección de Entrega</label>
-                                <input type="text" placeholder="Calle, Número, Depto" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                                <input type="text" name="shipping_address" placeholder="Calle, Número, Depto" required class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
                             </div>
                         </div>
                     </div>
+                    @else
+                    {{-- Solo digitales: el email va aquí --}}
+                    <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
+                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span class="leading-tight">Entrega<br>Digital</span>
+                        </div>
+                        <div class="flex-1 space-y-4 w-full">
+                            <div>
+                                <label class="block text-xs font-medium text-text-muted mb-1.5 ml-1">Email</label>
+                                <input type="email" id="email-input" name="email" required placeholder="juan@ejemplo.com" class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors">
+                            </div>
+                        </div>
+                    </div>
+                    @endif
 
                     {{-- Método de Pago --}}
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 items-start mt-4">
@@ -176,10 +195,18 @@
                 <div class="bg-surface border border-border rounded-xl p-6 sticky top-20">
                     <h2 class="text-base font-bold text-text-main mb-6">Resumen de Pedido</h2>
 
+                    @php
+                        $subtotal  = $items->sum('unit_price');
+                        $comision  = $items->sum('seller_fee') ?: ($subtotal * 0.02);
+                        $baseTotal = $subtotal + $comision;
+                        $descuento = $coupon ? round($baseTotal * $coupon['rate'], 2) : 0;
+                        $totalF    = $baseTotal - $descuento;
+                    @endphp
+
                     <div class="space-y-4 text-sm font-medium">
                         <div class="flex justify-between text-text-muted">
                             <span>Subtotal ({{ $items->count() }} productos)</span>
-                            <span class="text-text-main">${{ number_format($items->sum('unit_price'), 2) }}</span>
+                            <span class="text-text-main">${{ number_format($subtotal, 2) }}</span>
                         </div>
                         <div class="flex justify-between text-text-muted">
                             <span>Gastos de envío</span>
@@ -187,8 +214,14 @@
                         </div>
                         <div class="flex justify-between text-text-muted">
                             <span>Comisión GameLink (2%)</span>
-                            <span class="text-text-main">${{ number_format($items->sum('seller_fee') ?? ($items->sum('unit_price') * 0.02), 2) }}</span>
+                            <span class="text-text-main">${{ number_format($comision, 2) }}</span>
                         </div>
+                        @if($coupon)
+                        <div class="flex justify-between text-green-400 font-semibold">
+                            <span>Descuento ({{ $coupon['code'] }} −{{ $coupon['rate'] * 100 }}%)</span>
+                            <span>−${{ number_format($descuento, 2) }}</span>
+                        </div>
+                        @endif
                     </div>
 
                     <div class="border-t border-border/70 border-dashed my-6"></div>
@@ -197,12 +230,7 @@
                         <div class="flex justify-between items-end">
                             <span class="text-base font-bold text-text-main pb-1">Total Final</span>
                             <div class="text-right">
-                                @php
-                                    $subtotal = $items->sum('unit_price');
-                                    $comision = $items->sum('seller_fee') ?? ($subtotal * 0.02);
-                                    $totalF = $subtotal + $comision;
-                                @endphp
-                                <span class="text-[32px] font-black text-primary leading-none">${{ number_format($order?->total_amount ?? $totalF, 2) }}</span>
+                                <span class="text-[32px] font-black text-primary leading-none">${{ number_format($totalF, 2) }}</span>
                                 <span class="text-[10px] text-text-muted block mt-1 uppercase tracking-wide">IVA incluido</span>
                             </div>
                         </div>
@@ -231,12 +259,46 @@
                         </svg>
                         <span>¿Tienes un código de descuento?</span>
                     </div>
-                    <div class="flex gap-3">
-                        <input type="text" placeholder="Código" class="w-full bg-background border border-border rounded-lg px-4 text-sm text-text-main focus:outline-none focus:border-primary transition-colors placeholder-text-muted/60">
-                        <button class="bg-primary hover:bg-primary-hover text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-colors flex-shrink-0 shadow-md shadow-primary/20">
-                            Aplicar
-                        </button>
+
+                    {{-- Banner con el código visible --}}
+                    <div class="flex items-center gap-3 bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 mb-3">
+                        <svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        <p class="text-xs text-text-muted flex-1">Usa el código <span class="font-mono font-bold text-primary tracking-wider">GAMELINK20</span> y obtén un <strong class="text-primary">20% de descuento</strong> en tu compra.</p>
                     </div>
+
+                    {{-- Feedback --}}
+                    @if(session('coupon_success'))
+                        <p class="text-xs text-green-400 mb-2">✔ {{ session('coupon_success') }}</p>
+                    @endif
+                    @if(session('coupon_error'))
+                        <p class="text-xs text-red-400 mb-2">✖ {{ session('coupon_error') }}</p>
+                    @endif
+
+                    @if($coupon)
+                        {{-- Cupón ya aplicado --}}
+                        <div class="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-2.5">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span class="text-sm font-mono font-bold text-green-400">{{ $coupon['code'] }}</span>
+                                <span class="text-xs text-green-400">— {{ $coupon['rate'] * 100 }}% aplicado</span>
+                            </div>
+                            <form method="POST" action="{{ route('cart.coupon.remove') }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-text-muted hover:text-red-400 transition-colors text-xs">✕ Quitar</button>
+                            </form>
+                        </div>
+                    @else
+                        {{-- Formulario para aplicar cupón --}}
+                        <form method="POST" action="{{ route('cart.coupon') }}" class="flex gap-3">
+                            @csrf
+                            <input type="text" name="coupon_code" placeholder="Código" value="{{ old('coupon_code') }}"
+                                   class="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-text-main focus:outline-none focus:border-primary transition-colors placeholder-text-muted/60 uppercase tracking-wider">
+                            <button type="submit" class="bg-primary hover:bg-primary-hover text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-colors flex-shrink-0 shadow-md shadow-primary/20">
+                                Aplicar
+                            </button>
+                        </form>
+                    @endif
                 </div>
 
             </div>
