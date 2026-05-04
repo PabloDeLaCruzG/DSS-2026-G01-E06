@@ -88,8 +88,8 @@
         {{-- Usuario logueado --}}
         <div class="px-3 py-4 border-t border-border">
             <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-background transition-all cursor-pointer">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}&background=009194&color=fff"
-                     class="w-8 h-8 rounded-full border border-border" alt="Avatar">
+                <img src="{{ auth()->user()->avatar_url }}"
+                     class="w-8 h-8 rounded-full border border-border object-cover" alt="Avatar">
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name ?? 'Usuario' }}</p>
                     <p class="text-xs text-text-muted truncate">{{ auth()->user()->email ?? '' }}</p>
@@ -125,7 +125,7 @@
                             <p class="text-sm font-medium">{{ auth()->user()->name ?? '' }}</p>
                             <p class="text-xs text-text-muted">{{ auth()->user()->email ?? '' }}</p>
                         </div>
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}&background=009194&color=fff"
+                        <img src="{{ auth()->user()->avatar_url }}"
                              class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all object-cover" alt="Avatar">
                     </button>
 

@@ -71,8 +71,8 @@
                     <!-- Dropdown de usuario -->
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 focus:outline-none">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=random"
-                                class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all"
+                            <img src="{{ auth()->user()->avatar_url }}"
+                                class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all object-cover"
                                 alt="Avatar">
                         </button>
 
