@@ -45,17 +45,39 @@
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                     <input
+                        id="hero-search-input"
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
                         placeholder="¿Qué quieres jugar hoy?"
                         class="bg-transparent text-sm text-white placeholder-gray-400 outline-none flex-1"
+                        autocomplete="off"
                     />
-                    <button type="submit" class="bg-[#009194] hover:bg-[#007a7c] text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors flex-shrink-0">
-                        Buscar
-                    </button>
                 </div>
             </form>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('hero-search-input');
+                const gameGrid = document.querySelector('.grid');
+                if (!searchInput || !gameGrid) return;
+                const allGames = Array.from(gameGrid.children);
+                searchInput.addEventListener('input', function() {
+                    const value = this.value.trim().toLowerCase();
+                    if (value === '') {
+                        allGames.forEach(el => el.style.display = '');
+                        return;
+                    }
+                    allGames.forEach(el => {
+                        const title = el.querySelector('h3')?.textContent?.toLowerCase() || '';
+                        if (title.includes(value)) {
+                            el.style.display = '';
+                        } else {
+                            el.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            </script>
         </div>
     </section>
 
