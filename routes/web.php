@@ -11,6 +11,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProfessionalProfileController;
 use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessionalProfileController;
+use App\Http\Controllers\Admin\GameController as AdminGameController;
 
 
 // Autenticación
@@ -88,4 +89,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/professionals', [AdminProfessionalProfileController::class, 'index'])->name('admin.professionals.index');
     Route::post('/professionals/{profile}/verify', [AdminProfessionalProfileController::class, 'verify'])->name('admin.professionals.verify');
     Route::post('/professionals/{profile}/reject', [AdminProfessionalProfileController::class, 'reject'])->name('admin.professionals.reject');
+
+    // Catálogo de juegos
+    Route::get('/games', [AdminGameController::class, 'index'])->name('admin.games.index');
+    Route::get('/games/create', [AdminGameController::class, 'create'])->name('admin.games.create');
+    Route::post('/games', [AdminGameController::class, 'store'])->name('admin.games.store');
+    Route::get('/games/{game}/edit', [AdminGameController::class, 'edit'])->name('admin.games.edit');
+    Route::put('/games/{game}', [AdminGameController::class, 'update'])->name('admin.games.update');
+    Route::delete('/games/{game}', [AdminGameController::class, 'destroy'])->name('admin.games.destroy');
+    Route::post('/games/{game}/toggle-publish', [AdminGameController::class, 'togglePublish'])->name('admin.games.toggle-publish');
 });
