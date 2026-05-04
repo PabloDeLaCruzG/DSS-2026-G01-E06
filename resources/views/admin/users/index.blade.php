@@ -28,10 +28,34 @@
             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z"/></svg>
             <form method="GET">
                 <input type="hidden" name="filter" value="{{ request('filter') }}">
-                <input type="text" name="search" value="{{ request('search') }}"
+                <input id="admin-search-input" type="text" name="search" value="{{ request('search') }}"
                     placeholder="Buscar por nombre o email..."
-                    class="w-full bg-surface border border-border rounded-lg pl-9 pr-4 py-2 text-sm text-text-main placeholder-text-muted focus:outline-none focus:border-primary transition">
+                    class="w-full bg-surface border border-border rounded-lg pl-9 pr-4 py-2 text-sm text-text-main placeholder-text-muted focus:outline-none focus:border-primary transition" autocomplete="off">
             </form>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('admin-search-input');
+                const tableRows = document.querySelectorAll('table tbody tr');
+                if (!searchInput || !tableRows.length) return;
+                const allRows = Array.from(tableRows);
+                searchInput.addEventListener('input', function() {
+                    const value = this.value.trim().toLowerCase();
+                    if (value === '') {
+                        allRows.forEach(row => row.style.display = '');
+                        return;
+                    }
+                    allRows.forEach(row => {
+                        const name = row.querySelector('p.font-medium')?.textContent?.toLowerCase() || '';
+                        const email = row.querySelector('p.text-xs.text-text-muted')?.textContent?.toLowerCase() || '';
+                        if (name.includes(value) || email.includes(value)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            </script>
         </div>
 
         {{-- Tabs --}}
