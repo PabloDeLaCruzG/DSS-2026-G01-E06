@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/perfil/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/perfil/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    Route::delete('/perfil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/mis-anuncios', [UserGameController::class, 'index'])->name('games.index');
     Route::get('/mis-anuncios/create', [UserGameController::class, 'create'])->name('games.create');

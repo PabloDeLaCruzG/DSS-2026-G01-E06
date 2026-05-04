@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -70,5 +71,23 @@ class ProfileController extends Controller
         ]);
 
         return back()->with('success', 'Avatar actualizado correctamente.');
+    }
+
+    public function destroy()
+    {
+        $user = Auth::user();
+
+        Auth::logout();
+
+        if ($user->avatar_path) {
+            Storage::disk('public')->delete($user->avatar_path);
+        }
+
+        $user->delete();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('home')->with('success', 'Tu cuenta ha sido eliminada.');
     }
 }
