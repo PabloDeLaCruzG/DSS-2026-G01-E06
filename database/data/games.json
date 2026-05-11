@@ -7,7 +7,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/FXyldfVAF9A",
         "rating": 4.79,
         "genres": "[\"Tactical Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\"]"
     },
     {
         "title": "Elden Ring",
@@ -17,7 +17,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/bg8i4CvE74M",
         "rating": 4.71,
         "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Clair Obscur: Expedition 33",
@@ -27,7 +27,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/YJnjReKXrvk",
         "rating": 4.85,
         "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Tank Stars",
@@ -67,7 +67,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/IAMPr9kytfk",
         "rating": 4.66,
         "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"Xbox\"]"
     },
     {
         "title": "R.E.P.O.",
@@ -87,7 +87,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/A0K5EXfgJnk",
         "rating": 4.8,
         "genres": "[\"Platformer\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"Retro\"]"
     },
     {
         "title": "Hades",
@@ -97,7 +97,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/Yps6NnS2sdI",
         "rating": 4.79,
         "genres": "[\"Hack and Slash\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "The Witcher 3: Wild Hunt",
@@ -107,7 +107,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/xx8kQ4s5hCY",
         "rating": 4.65,
         "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Tigery App Version",
@@ -127,7 +127,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/KOj87_Bte7g",
         "rating": 4.93,
         "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"Nintendo Switch\"]"
     },
     {
         "title": "Phasmophobia",
@@ -157,7 +157,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/L04f8-kmC10",
         "rating": 4.56,
         "genres": "[\"Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Satisfactory",
@@ -167,7 +167,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/UxA0JJJ5LTI",
         "rating": 4.74,
         "genres": "[\"Open World Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Terra - A Terraria Demake",
@@ -197,7 +197,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/IQZ5HW-9WjA",
         "rating": 4.13,
         "genres": "[\"Open World Role Playing Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "WEBFISHING",
@@ -210,14 +210,14 @@
         "platforms": "[\"PC\"]"
     },
     {
-        "title": "Slay The Spire",
+        "title": "Slay The Spire",
         "description": "\"Slay the Spire\" is a single-player deckbuilder that combines elements of card games and roguelikes. Each attempt at climbing the Spire offers a unique experience, with dynamic deck building, an ever-changing layout, and powerful relics to discover. Fight bizarre creatures, choose from hundreds of cards, and face different enemies and bosses each time, striving to reach the top of the Spire.",
         "year": 2019,
         "cover_image": "https://img.gamebrain.co/games/325/slay_the_spire_megacrit_2019_6.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/zOUJjeynZWE",
         "rating": 4.64,
         "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Hollow Knight",
@@ -227,7 +227,7 @@
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/367520/80716/a0e87f2b9a544cb8bdce9397b63bc8267e41ce06/1750517667/dash_h264.mpd",
         "rating": 4.77,
         "genres": "[\"Hack and Slash\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Red Dead Redemption 2",
@@ -237,7 +237,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/0d-U2QL2Qvc",
         "rating": 4.61,
         "genres": "[\"Open World Role Playing Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Block Puzzle - Brain Test Game",
@@ -257,7 +257,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/WS54qL3GeaI",
         "rating": 4.53,
         "genres": "[\"Open World Action Adventure\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Totally Accurate Battle Simulator",
@@ -267,7 +267,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/jP9vYpTUOq8",
         "rating": 4.9,
         "genres": "[\"Strategy\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Balatro",
@@ -277,7 +277,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/d9qb_b6bErw",
         "rating": 4.68,
         "genres": "[\"Casual Strategy\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Cookie Clicker",
@@ -297,7 +297,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/4CptKlpe1U0",
         "rating": 4.46,
         "genres": "[\"Sport\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Discord - Talk, Play, Hang Out",
@@ -327,7 +327,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/vJ4SVSm1ARQ",
         "rating": 4.67,
         "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Xbox",
@@ -337,7 +337,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/y-sKYLhhtoc",
         "rating": 4.46,
         "genres": "[\"Action\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"Xbox\"]"
     },
     {
         "title": "Bloons TD 6",
@@ -347,7 +347,7 @@
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/256939310/microtrailer.webm",
         "rating": 4.87,
         "genres": "[\"Casual Strategy\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Sniper 3D: Gun Shooting Games",
@@ -387,7 +387,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/AlU0OW7wjpQ",
         "rating": 4.45,
         "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\"]"
     },
     {
         "title": "Terraria",
@@ -397,7 +397,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/zLfYD2OOtsc",
         "rating": 4.18,
         "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\", \"Retro\"]"
     },
     {
         "title": "Woodoku - Wood Block Puzzles",
@@ -457,7 +457,7 @@
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/256827093/microtrailer.webm",
         "rating": 4.79,
         "genres": "[\"Platformer\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Completing the Mission",
@@ -477,7 +477,7 @@
         "trailer_url": "https://cdn.akamai.steamstatic.com/steam/apps/257029338/microtrailer.webm",
         "rating": 4.68,
         "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Dead Cells",
@@ -487,7 +487,7 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/fpCX5TzsGQU",
         "rating": 4.72,
         "genres": "[\"Hack and Slash\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "The Planet Crafter",
@@ -497,6 +497,6 @@
         "trailer_url": "https://www.youtube-nocookie.com/embed/CrwSsFUxMRA",
         "rating": 4.8,
         "genres": "[\"Action Adventure\"]",
-        "platforms": "[\"PC\"]"
+        "platforms": "[\"PC\", \"Xbox\"]"
     }
 ]
