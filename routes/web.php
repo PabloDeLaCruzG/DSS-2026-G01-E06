@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameAdController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\GameController as UserGameController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProfessionalProfileController;
 use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessionalProfileController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
 
 
 // Autenticación
@@ -62,6 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/perfil/profesional', [ProfessionalProfileController::class, 'create'])->name('professional.create');
     Route::post('/perfil/profesional', [ProfessionalProfileController::class, 'store'])->name('professional.store');
+
+    Route::get('/reports/{gameAd}/create', [ReportController::class, 'create'])->name('reports.create');
+    Route::post('/reports/{gameAd}', [ReportController::class, 'store'])->name('reports.store');
 });
 
     
@@ -98,4 +103,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::put('/games/{game}', [AdminGameController::class, 'update'])->name('admin.games.update');
     Route::delete('/games/{game}', [AdminGameController::class, 'destroy'])->name('admin.games.destroy');
     Route::post('/games/{game}/toggle-publish', [AdminGameController::class, 'togglePublish'])->name('admin.games.toggle-publish');
+
+    Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('/reports/{report}', [AdminReportController::class, 'show'])->name('admin.reports.show');
+    Route::post('/reports/{report}/resolve', [AdminReportController::class, 'resolve'])->name('admin.reports.resolve');
 });

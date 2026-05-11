@@ -4,6 +4,18 @@
 
 @section('content')
 
+    @if(session('success'))
+        <div class="mb-6 bg-green-500/20 border border-green-500/30 text-green-400 px-4 py-3 rounded-lg text-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="mb-6 bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-3 rounded-lg text-sm">
+            {{ session('error') }}
+        </div>
+    @endif
+
     {{-- PORTADA + INFO --}}
     <section class="flex flex-col md:flex-row gap-8 mb-10 mt-4">
 
@@ -123,14 +135,22 @@
 
                     {{-- Acción --}}
                     <div class="col-span-3 text-right">
-                        <form action="{{ route('cart.add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
-                            <button type="submit"
-                                class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
-                                Añadir al carrito
-                            </button>
-                        </form>
+                        <div class="flex items-center justify-end gap-2">
+                            @auth
+                                <a href="{{ route('reports.create', $ad) }}"
+                                   class="px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition">
+                                    Reportar
+                                </a>
+                            @endauth
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
+                                <button type="submit"
+                                    class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
+                                    Añadir al carrito
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             @empty
@@ -194,14 +214,22 @@
 
                     {{-- Acción --}}
                     <div class="col-span-3 text-right">
-                        <form action="{{ route('cart.add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
-                            <button type="submit"
-                                class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
-                                Añadir al carrito
-                            </button>
-                        </form>
+                        <div class="flex items-center justify-end gap-2">
+                            @auth
+                                <a href="{{ route('reports.create', $ad) }}"
+                                   class="px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition">
+                                    Reportar
+                                </a>
+                            @endauth
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
+                                <button type="submit"
+                                    class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
+                                    Añadir al carrito
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             @empty
