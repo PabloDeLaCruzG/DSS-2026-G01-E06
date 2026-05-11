@@ -37,10 +37,11 @@
             <label class="text-xs text-text-muted mb-2 block">JUEGO</label>
 
             <div class="flex gap-3 items-center">
-                <select name="game_id"
+                <select name="game_id" id="game-select"
                     class="w-full bg-background border border-border px-4 py-2 rounded-lg">
                     @foreach($games as $game)
                         <option value="{{ $game->id }}"
+                            data-platforms="{{ json_encode($game->platforms ?? ['PC']) }}"
                             {{ old('game_id', $ad->game_id ?? '') == $game->id ? 'selected' : '' }}>
                             {{ $game->title }}
                         </option>
@@ -54,6 +55,23 @@
                          class="w-12 h-12 rounded object-cover">
                 @endif
             </div>
+        </div>
+
+        <!-- PLATAFORMA -->
+        <div class="mb-6">
+            <label class="text-xs text-text-muted mb-2 block">PLATAFORMA</label>
+            <select name="platform" id="platform-select"
+                class="w-full bg-background border border-border px-4 py-2 rounded-lg">
+                @php
+                    $selectedGameId = old('game_id', $ad->game_id ?? $games->first()?->id);
+                    $selectedGame   = $games->find($selectedGameId);
+                    $availablePlatforms = $selectedGame?->platforms ?? ['PC'];
+                    $currentPlatform = old('platform', $ad->platforms[0] ?? null);
+                @endphp
+                @foreach($availablePlatforms as $p)
+                    <option value="{{ $p }}" {{ $currentPlatform === $p ? 'selected' : '' }}>{{ $p }}</option>
+                @endforeach
+            </select>
         </div>
 
         <!-- DETALLES -->
@@ -189,6 +207,24 @@
     </form>
 
 </div>
+
+<script>
+    const gameSelect     = document.getElementById('game-select');
+    const platformSelect = document.getElementById('platform-select');
+
+    gameSelect.addEventListener('change', function () {
+        const selected  = this.options[this.selectedIndex];
+        const platforms = JSON.parse(selected.dataset.platforms || '["PC"]');
+
+        platformSelect.innerHTML = '';
+        platforms.forEach(function (p) {
+            const opt = document.createElement('option');
+            opt.value       = p;
+            opt.textContent = p;
+            platformSelect.appendChild(opt);
+        });
+    });
+</script>
 
 @if($isPro)
 <script>

@@ -122,7 +122,7 @@
                             @if($ad->platforms && count($ad->platforms) > 0)
                                 {{ implode(' / ', $ad->platforms) }}
                             @else
-                                Steam / PC
+                                —
                             @endif
                         </p>
                         <p class="text-xs text-text-muted">Global</p>
@@ -175,8 +175,9 @@
             <div
                 class="grid grid-cols-12 gap-4 px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border">
                 <div class="col-span-4">Vendedor</div>
-                <div class="col-span-3">Estado</div>
-                <div class="col-span-2 text-center">Precio</div>
+                <div class="col-span-2">Plataforma</div>
+                <div class="col-span-2">Estado</div>
+                <div class="col-span-1 text-center">Precio</div>
                 <div class="col-span-3 text-right">Acción</div>
             </div>
 
@@ -198,8 +199,19 @@
                         </div>
                     </div>
 
+                    {{-- Plataforma --}}
+                    <div class="col-span-2">
+                        <p class="text-sm text-text-main font-medium">
+                            @if($ad->platforms && count($ad->platforms) > 0)
+                                {{ implode(' / ', $ad->platforms) }}
+                            @else
+                                —
+                            @endif
+                        </p>
+                    </div>
+
                     {{-- Estado --}}
-                    <div class="col-span-3">
+                    <div class="col-span-2">
                         @if($ad->condition === 'NEW')
                             <span class="text-xs font-bold px-3 py-1 rounded-full text-accent">Como nuevo</span>
                         @else
@@ -208,7 +220,7 @@
                     </div>
 
                     {{-- Precio --}}
-                    <div class="col-span-2 text-center">
+                    <div class="col-span-1 text-center">
                         <span class="text-text-main font-bold text-lg">€{{ number_format($ad->price, 2) }}</span>
                     </div>
 

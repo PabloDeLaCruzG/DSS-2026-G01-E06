@@ -25,26 +25,29 @@ class GameAdSeeder extends Seeder
             'is_verified' => true
         ]);
 
+        $firstGamePlatforms = $game->platforms ?? ['PC'];
         GameAd::create([
-            'game_id' => $game->id,
-            'user_id' => $proUser1->id,
-            'price' => 49.90,
+            'game_id'   => $game->id,
+            'user_id'   => $proUser1->id,
+            'price'     => 49.90,
             'condition' => 'NEW',
-            'format' => 'PHYSICAL',
-            'status' => 'ACTIVE',
-            'quantity' => 50,
+            'format'    => 'PHYSICAL',
+            'platforms' => [$firstGamePlatforms[array_rand($firstGamePlatforms)]],
+            'status'    => 'ACTIVE',
+            'quantity'  => 50,
             'description' => 'Edición estándar precintada. Envío 24h.'
         ]);
 
         $normalUser = User::factory()->create(['name' => 'RetroX_Gamer', 'reputation' => 4.8]);
 
         GameAd::create([
-            'game_id' => $game->id,
-            'user_id' => $normalUser->id,
-            'price' => 35.00,
+            'game_id'   => $game->id,
+            'user_id'   => $normalUser->id,
+            'price'     => 35.00,
             'condition' => 'USED',
-            'format' => 'PHYSICAL',
-            'status' => 'ACTIVE',
+            'format'    => 'PHYSICAL',
+            'platforms' => [$firstGamePlatforms[array_rand($firstGamePlatforms)]],
+            'status'    => 'ACTIVE',
             'description' => 'Como nuevo, solo usado una vez.'
         ]);
 
@@ -56,14 +59,15 @@ class GameAdSeeder extends Seeder
         ]);
 
         GameAd::create([
-            'game_id' => $game->id,
-            'user_id' => $proUser2->id,
-            'price' => 41.50,
-            'condition' => 'NEW',
-            'format' => 'DIGITAL_KEY',
+            'game_id'     => $game->id,
+            'user_id'     => $proUser2->id,
+            'price'       => 41.50,
+            'condition'   => 'NEW',
+            'format'      => 'DIGITAL_KEY',
+            'platforms'   => [$firstGamePlatforms[array_rand($firstGamePlatforms)]],
             'digital_key' => 'AAAA-BBBB-CCCC-DDDD',
-            'status' => 'ACTIVE',
-            'quantity' => 100,
+            'status'      => 'ACTIVE',
+            'quantity'    => 100,
             'description' => 'Entrega inmediata al correo.'
         ]);
 
@@ -115,12 +119,16 @@ class GameAdSeeder extends Seeder
                     $basePrice = round($basePrice * (1 - rand(20, 35) / 100), 2);
                 }
 
+                $gamePlatforms = $g->platforms ?? ['PC'];
+                $platform = $gamePlatforms[array_rand($gamePlatforms)];
+
                 GameAd::create([
                     'game_id'   => $g->id,
                     'user_id'   => $seller->id,
                     'price'     => $basePrice,
                     'condition' => $condition,
                     'format'    => $format,
+                    'platforms' => [$platform],
                     'status'    => 'ACTIVE',
                     'quantity'  => rand(1, 20),
                     'description' => $condition === 'USED'

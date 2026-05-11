@@ -4,21 +4,6 @@
 
 @section('content')
 
-    {{-- Aviso entrega --}}
-    <div id="delivery-warning" class="flex items-start gap-3 p-4 rounded-lg text-sm mb-6 mt-4" style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.35);color:#fde047;">
-        <svg class="w-5 h-5 mt-0.5 shrink-0" style="color:#facc15;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-        </svg>
-        <div class="flex-1">
-            <span class="font-semibold">Aviso de entrega:</span>
-            algunos botones y funciones de esta página están sin acción o pueden comportarse de forma incorrecta, ya que no estaban planificados para la entrega actual.
-        </div>
-        <button onclick="document.getElementById('delivery-warning').remove()" style="color:#facc15;">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-    </div>
 
     {{-- ===== HERO BANNER ===== --}}
     <section class="relative rounded-xl overflow-hidden mb-10 mt-4" style="background: linear-gradient(135deg, #0d1520 0%, #1a2433 50%, #0d2030 100%); min-height: 320px;">
