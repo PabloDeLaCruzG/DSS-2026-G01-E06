@@ -138,4 +138,8 @@ class User extends Authenticatable
     {
         $this->notify(new CustomResetPasswordNotification($token));
     }
+
+    public function favorites(){
+    return $this->belongsToMany(Game::class, 'favorites');
+    }
 }
