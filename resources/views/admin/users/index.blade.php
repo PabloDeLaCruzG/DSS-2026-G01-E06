@@ -28,10 +28,34 @@
             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z"/></svg>
             <form method="GET">
                 <input type="hidden" name="filter" value="{{ request('filter') }}">
-                <input type="text" name="search" value="{{ request('search') }}"
+                <input id="admin-search-input" type="text" name="search" value="{{ request('search') }}"
                     placeholder="Buscar por nombre o email..."
-                    class="w-full bg-surface border border-border rounded-lg pl-9 pr-4 py-2 text-sm text-text-main placeholder-text-muted focus:outline-none focus:border-primary transition">
+                    class="w-full bg-surface border border-border rounded-lg pl-9 pr-4 py-2 text-sm text-text-main placeholder-text-muted focus:outline-none focus:border-primary transition" autocomplete="off">
             </form>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('admin-search-input');
+                const tableRows = document.querySelectorAll('table tbody tr');
+                if (!searchInput || !tableRows.length) return;
+                const allRows = Array.from(tableRows);
+                searchInput.addEventListener('input', function() {
+                    const value = this.value.trim().toLowerCase();
+                    if (value === '') {
+                        allRows.forEach(row => row.style.display = '');
+                        return;
+                    }
+                    allRows.forEach(row => {
+                        const name = row.querySelector('p.font-medium')?.textContent?.toLowerCase() || '';
+                        const email = row.querySelector('p.text-xs.text-text-muted')?.textContent?.toLowerCase() || '';
+                        if (name.includes(value) || email.includes(value)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            </script>
         </div>
 
         {{-- Tabs --}}
@@ -79,7 +103,12 @@
                                 {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
                             <div>
-                                <p class="font-medium text-text-main text-sm">{{ $user->name }}</p>
+                                <div class="flex items-center gap-1.5">
+                                    <p class="font-medium text-text-main text-sm">{{ $user->name }}</p>
+                                    @if($user->isProfessional())
+                                        <span title="Socio Verificado" class="text-blue-400 text-xs font-bold">✔</span>
+                                    @endif
+                                </div>
                                 <p class="text-xs text-text-muted">{{ $user->email }}</p>
                             </div>
                         </div>
@@ -123,7 +152,8 @@
 
         {{-- Eliminar --}}
         @if (! $user->isAdmin()) {{-- evita eliminar admins --}}
-            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.');">
+            <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
+                  data-confirm="¿Eliminar a {{ addslashes($user->name) }}? Esta acción no se puede deshacer.">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="px-3 py-1 text-xs rounded bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">
@@ -160,18 +190,23 @@
         <div class="bg-surface rounded-xl border border-border p-5">
             <p class="text-xs text-text-muted uppercase tracking-wide mb-3">Crecimiento Mensual</p>
             <div class="flex items-end justify-between">
-                <p class="text-2xl font-bold text-text-main">+14.2%</p>
-                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                @if($growthRate >= 0)
+                    <p class="text-2xl font-bold text-accent">+{{ $growthRate }}%</p>
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                @else
+                    <p class="text-2xl font-bold text-red-400">{{ $growthRate }}%</p>
+                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17H5m0 0V9m0 8l8-8 4 4 6-6"/></svg>
+                @endif
             </div>
-            <p class="text-xs text-text-muted mt-1">196 nuevos registros este mes</p>
+            <p class="text-xs text-text-muted mt-1">{{ $thisMonthUsers }} nuevos registros este mes</p>
         </div>
         <div class="bg-surface rounded-xl border border-border p-5">
             <p class="text-xs text-text-muted uppercase tracking-wide mb-3">Tasa de Retención</p>
             <div class="flex items-end justify-between">
-                <p class="text-2xl font-bold text-text-main">68.5%</p>
+                <p class="text-2xl font-bold text-text-main">{{ $retentionRate }}%</p>
                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
             </div>
-            <p class="text-xs text-text-muted mt-1">Calculado sobre últimos 90 días</p>
+            <p class="text-xs text-text-muted mt-1">{{ $retainedUsers }} de {{ $eligibleUsers }} usuarios activos (90 días)</p>
         </div>
         <div class="bg-surface rounded-xl border border-border p-5">
             <p class="text-xs text-text-muted uppercase tracking-wide mb-3">Reportes Pendientes</p>

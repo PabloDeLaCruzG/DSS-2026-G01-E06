@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameLink Admin - @yield('title')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -58,7 +59,9 @@
                 Resumen
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:bg-background hover:text-text-main transition-all text-sm">
+            <a href="{{ route('admin.games.index') }}"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all
+               {{ request()->routeIs('admin.games.*') ? 'bg-primary/10 text-primary font-semibold border-l-2 border-primary' : 'text-text-muted hover:bg-background hover:text-text-main' }}">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                 </svg>
@@ -66,7 +69,8 @@
             </a>
 
             <a href="{{ route('admin.users.index') }}"
-               class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold text-sm border-l-2 border-primary">
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all
+               {{ request()->routeIs('admin.users.*') ? 'bg-primary/10 text-primary font-semibold border-l-2 border-primary' : 'text-text-muted hover:bg-background hover:text-text-main' }}">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                 </svg>
@@ -83,14 +87,14 @@
 
         {{-- Usuario logueado --}}
         <div class="px-3 py-4 border-t border-border">
-            <div class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-background transition-all cursor-pointer">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=009194&color=fff"
+            <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-background transition-all">
+                 <img src="{{ auth()->user()->avatar_url }}"
                      class="w-8 h-8 rounded-full border border-border" alt="Avatar">
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name ?? 'Root Admin' }}</p>
                     <p class="text-xs text-text-muted truncate">{{ auth()->user()->email ?? '' }}</p>
                 </div>
-            </div>
+            </a>
         </div>
     </aside>
 
@@ -101,18 +105,15 @@
         <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
             {{-- título --}}
             <div class="flex items-center gap-2 text-sm text-text-muted">
-                <span>Admin</span>
+                <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Admin</a>
                 <span>›</span>
-                <span class="text-text-main font-medium">@yield('title', 'Panel')</span>
-            </div>
-
-            {{-- Buscador --}}
-            <div class="hidden md:flex items-center bg-background border border-border rounded-lg px-3 py-2 gap-2 w-72">
-                <svg class="w-4 h-4 text-text-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input type="text" placeholder="Buscar usuarios, IDs o correos..."
-                    class="bg-transparent text-sm text-text-main placeholder-text-muted outline-none flex-1">
+                @php
+                    $currentAdminBreadcrumbRoute = match (true) {
+                        request()->routeIs('admin.users.*') => route('admin.users.index'),
+                        default => url()->current(),
+                    };
+                @endphp
+                <a href="{{ $currentAdminBreadcrumbRoute }}" class="text-text-main font-medium hover:text-primary transition-colors">@yield('title', 'Panel')</a>
             </div>
 
             {{-- Acciones --}}
@@ -123,8 +124,51 @@
                     </svg>
                     <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface"></span>
                 </button>
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'Admin') }}&background=009194&color=fff"
-                     class="w-8 h-8 rounded-full border-2 border-border hover:border-primary cursor-pointer transition-all" alt="Avatar">
+
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 focus:outline-none">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-sm font-medium">{{ auth()->user()->name ?? '' }}</p>
+                            <p class="text-xs text-text-muted">{{ auth()->user()->email ?? '' }}</p>
+                        </div>
+                            <img src="{{ auth()->user()->avatar_url }}"
+                             class="w-8 h-8 rounded-full border-2 border-border hover:border-primary transition-all" alt="Avatar">
+                    </button>
+
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-100"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-75"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute right-0 mt-2 w-56 bg-surface border border-border rounded-xl shadow-lg py-1 z-50"
+                         style="display: none;">
+
+                        <div class="px-4 py-3 border-b border-border">
+                            <p class="text-sm font-semibold text-text-main truncate">{{ auth()->user()->name }}</p>
+                            <p class="text-xs text-text-muted truncate">{{ auth()->user()->email }}</p>
+                        </div>
+
+                        <a href="{{ route('admin.users.index') }}"
+                           class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                            Gestionar usuarios
+                        </a>
+                        <a href="{{ route('home') }}"
+                           class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                            Ir al marketplace
+                        </a>
+
+                        <div class="border-t border-border my-1"></div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-400 hover:bg-background transition-colors">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -134,5 +178,6 @@
         </main>
     </div>
 
+@include('partials._confirm-modal')
 </body>
 </html>

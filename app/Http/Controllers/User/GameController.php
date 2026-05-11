@@ -25,16 +25,21 @@ class GameController extends Controller
 
         $ads = $query->paginate(4)->withQueryString();
 
-        $totalVentas = GameAd::where('user_id', $userId)->sum('price');
+        $pendiente = GameAd::where('user_id', $userId)
+            ->where('status', 'ACTIVE')
+            ->sum('price');
+
+        $totalVendido = GameAd::where('user_id', $userId)
+            ->where('status', 'SOLD')
+            ->sum('price');
 
         $activos = GameAd::where('user_id', $userId)
             ->where('status', 'ACTIVE')
             ->count();
 
-        return view('user.games.index', compact('ads', 'totalVentas', 'activos'));
+        return view('user.games.index', compact('ads', 'pendiente', 'totalVendido', 'activos'));
     }
 
-    // CREAR
     public function create()
     {
         $games = Game::all();
@@ -42,24 +47,41 @@ class GameController extends Controller
         return view('user.games.form', compact('games'));
     }
 
-    // GUARDAR NUEVO
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
-            'game_id' => 'required|exists:games,id',
-            'price' => 'required|numeric|min:0',
-            'format' => 'required|in:PHYSICAL,DIGITAL_KEY',
+            'game_id'     => 'required|exists:games,id',
+            'price'       => 'required|numeric|min:0',
+            'format'      => 'required|in:PHYSICAL,DIGITAL_KEY',
             'description' => 'nullable|string',
-            'key' => 'nullable|string',
+            'key'         => 'required_if:format,DIGITAL_KEY|nullable|string',
+            'quantity'    => 'required_if:format,DIGITAL_KEY|nullable|integer|min:1',
+            'condition'   => 'required_if:format,PHYSICAL|nullable|in:USED,NEW',
         ]);
 
+        if ($request->format === GameAd::FORMAT_DIGITAL_KEY && !$user->isProfessional()) {
+            return back()->withErrors(['format' => 'Solo los vendedores profesionales verificados pueden publicar claves digitales.'])->withInput();
+        }
+
+        if ($request->format === GameAd::FORMAT_DIGITAL_KEY) {
+            $condition = GameAd::CONDITION_NEW;
+            $quantity  = (int) $request->quantity;
+        } else {
+            $condition = $request->condition;
+            $quantity  = 1;
+        }
+
         GameAd::create([
-            'user_id' => Auth::id(),
-            'game_id' => $request->game_id,
-            'price' => $request->price,
-            'format' => $request->format,
-            'status' => 'ACTIVE',
-            'description' => $request->description ?? '', // 🔥 FIX
+            'user_id'     => $user->id,
+            'game_id'     => $request->game_id,
+            'price'       => $request->price,
+            'format'      => $request->format,
+            'condition'   => $condition,
+            'quantity'    => $quantity,
+            'status'      => 'ACTIVE',
+            'description' => $request->description ?? '',
             'digital_key' => $request->key,
         ]);
 
@@ -67,7 +89,6 @@ class GameController extends Controller
             ->with('success', 'Anuncio creado correctamente');
     }
 
-    // EDITAR
     public function edit($id)
     {
         $userId = Auth::id();
@@ -81,28 +102,43 @@ class GameController extends Controller
         return view('user.games.form', compact('ad', 'games'));
     }
 
-    // ACTUALIZAR
     public function update(Request $request, $id)
     {
-        $userId = Auth::id();
+        $user = Auth::user();
 
-        $ad = GameAd::where('user_id', $userId)->findOrFail($id);
+        $ad = GameAd::where('user_id', $user->id)->findOrFail($id);
 
         $request->validate([
-            'game_id' => 'required|exists:games,id',
-            'price' => 'required|numeric|min:0',
-            'format' => 'required|in:PHYSICAL,DIGITAL_KEY',
-            'status' => 'required|in:ACTIVE,SOLD',
+            'game_id'     => 'required|exists:games,id',
+            'price'       => 'required|numeric|min:0',
+            'format'      => 'required|in:PHYSICAL,DIGITAL_KEY',
+            'status'      => 'required|in:ACTIVE,SOLD',
             'description' => 'nullable|string',
-            'key' => 'nullable|string',
+            'key'         => 'required_if:format,DIGITAL_KEY|nullable|string',
+            'quantity'    => 'required_if:format,DIGITAL_KEY|nullable|integer|min:1',
+            'condition'   => 'required_if:format,PHYSICAL|nullable|in:USED,NEW',
         ]);
 
+        if ($request->format === GameAd::FORMAT_DIGITAL_KEY && !$user->isProfessional()) {
+            return back()->withErrors(['format' => 'Solo los vendedores profesionales verificados pueden publicar claves digitales.'])->withInput();
+        }
+
+        if ($request->format === GameAd::FORMAT_DIGITAL_KEY) {
+            $condition = GameAd::CONDITION_NEW;
+            $quantity  = (int) $request->quantity;
+        } else {
+            $condition = $request->condition;
+            $quantity  = 1;
+        }
+
         $ad->update([
-            'game_id' => $request->game_id,
-            'price' => $request->price,
-            'format' => $request->format,
-            'status' => $request->status,
-            'description' => $request->description ?? '', // 🔥 FIX
+            'game_id'     => $request->game_id,
+            'price'       => $request->price,
+            'format'      => $request->format,
+            'condition'   => $condition,
+            'quantity'    => $quantity,
+            'status'      => $request->status,
+            'description' => $request->description ?? '',
             'digital_key' => $request->key,
         ]);
 
@@ -110,7 +146,6 @@ class GameController extends Controller
             ->with('success', 'Anuncio actualizado correctamente');
     }
 
-    // ELIMINAR
     public function destroy($id)
     {
         $ad = GameAd::where('user_id', Auth::id())->findOrFail($id);

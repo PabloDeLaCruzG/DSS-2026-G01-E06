@@ -6,11 +6,15 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\GameAd;
 use App\Enums\OrderStatus;
+use App\Notifications\OrderConfirmedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    const COUPON_CODE     = 'GAMELINK20';
+    const COUPON_DISCOUNT = 0.20;
+
     /**
      * Muestra el carrito del usuario autenticado.
      * Busca o crea un Order PENDING para el usuario.
@@ -23,9 +27,11 @@ class CartController extends Controller
             ->latest()
             ->first();
 
-        $items = $order ? $order->orderItems : collect();
+        $items         = $order ? $order->orderItems : collect();
+        $coupon        = session('coupon');
+        $needsShipping = $items->contains(fn($item) => $item->gameAd?->format === 'PHYSICAL');
 
-        return view('cart.index', compact('order', 'items'));
+        return view('cart.index', compact('order', 'items', 'coupon', 'needsShipping'));
     }
 
     /**
@@ -78,7 +84,9 @@ class CartController extends Controller
             'unit_price' => $ad->price,
             'seller_fee' => $sellerFee,
             'net_income' => $ad->price - $sellerFee,
-            'shipping_status' => \App\Enums\ShippingStatus::PENDING,
+            'shipping_status' => $ad->format === \App\Models\GameAd::FORMAT_DIGITAL_KEY
+                ? \App\Enums\ShippingStatus::INSTANT
+                : \App\Enums\ShippingStatus::PENDING,
         ]);
 
         // 3. Recalcular total del pedido
@@ -89,30 +97,90 @@ class CartController extends Controller
     }
 
     /**
+     * Aplica un cupón de descuento y lo guarda en sesión.
+     */
+    public function applyCoupon(Request $request)
+    {
+        $code = strtoupper(trim($request->input('coupon_code', '')));
+
+        if ($code === self::COUPON_CODE) {
+            session(['coupon' => ['code' => self::COUPON_CODE, 'rate' => self::COUPON_DISCOUNT]]);
+            return back()->with('coupon_success', '¡Código aplicado! Tienes un 20% de descuento.');
+        }
+
+        return back()->with('coupon_error', 'Código de descuento inválido.');
+    }
+
+    /**
+     * Elimina el cupón de descuento de la sesión.
+     */
+    public function removeCoupon()
+    {
+        session()->forget('coupon');
+        return back()->with('coupon_success', 'Código de descuento eliminado.');
+    }
+
+    /**
      * Procesa el pago simulado.
      */
     public function checkout(Request $request)
     {
         // Puedes añadir validación básica aquí si deseas (aunque el JS ya lo frena)
-        $request->validate([
-            'email' => 'required|email',
-            'card_number' => 'required',
-            'exp_date' => 'required',
-        ]);
-
-        $order = Order::where('user_id', Auth::id())
+        $order = Order::with('orderItems.gameAd')
+            ->where('user_id', Auth::id())
             ->where('status', OrderStatus::PENDING)
             ->first();
+
+        $needsShipping = $order && $order->orderItems->contains(
+            fn($item) => $item->gameAd?->format === 'PHYSICAL'
+        );
+
+        $rules = [
+            'email'       => 'required|email',
+            'card_number' => 'required',
+            'exp_date'    => 'required',
+        ];
+
+        if ($needsShipping) {
+            $rules['shipping_name']    = 'required|string|max:255';
+            $rules['shipping_address'] = 'required|string|max:255';
+        }
+
+        $request->validate($rules, [
+            'email.required'            => 'El correo electrónico es obligatorio.',
+            'email.email'               => 'Introduce un correo electrónico válido.',
+            'card_number.required'      => 'El número de tarjeta es obligatorio.',
+            'exp_date.required'         => 'La fecha de expiración es obligatoria.',
+            'shipping_name.required'    => 'El nombre de entrega es obligatorio.',
+            'shipping_address.required' => 'La dirección de entrega es obligatoria.',
+        ]);
 
         if (!$order || $order->orderItems->isEmpty()) {
             return back()->withErrors(['cart' => 'El carrito está vacío o no se encontró la orden.']);
         }
 
+        // Aplicar cupón de descuento si existe en sesión
+        if ($coupon = session('coupon')) {
+            $order->total_amount = round($order->total_amount * (1 - $coupon['rate']), 2);
+        }
+
         // Marcar la orden como pagada
-        $order->status = OrderStatus::PAID; // Ensure OrderStatus::PAID exists or change to 'PAID' if it's a string.
+        $order->status = OrderStatus::PAID;
         $order->save();
 
-        // Podrías vaciar el carrito o hacer algo más complejo aquí.
-        return redirect()->route('cart.index')->with('success', '¡Pago realizado con éxito! Tu orden ha sido completada.');
+        // Decrementar stock de cada anuncio; marcar como SOLD si quantity llega a 0
+        foreach ($order->orderItems as $item) {
+            $ad = $item->gameAd;
+            $ad->decrement('quantity');
+            if ($ad->fresh()->quantity <= 0) {
+                $ad->markAsSold();
+            }
+        }
+
+        session()->forget('coupon');
+
+        $order->user->notify(new OrderConfirmedNotification($order));
+
+        return redirect()->route('orders.index')->with('success', '¡Pago realizado con éxito! Consulta tus claves digitales en Mis Pedidos.');
     }
 }

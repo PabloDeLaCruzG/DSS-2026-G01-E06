@@ -15,7 +15,7 @@ class GameController extends Controller
         $platform = $request->get('platform');
         $search = $request->get('search');
 
-        $games = Game::query()
+        $games = Game::published()
             ->withCount('gameAds')
 
             //Para mostrar los juegos según el filtro
@@ -31,6 +31,18 @@ class GameController extends Controller
             //Para mostrar los mejor valorados
             ->when($request->get('rating'), function ($query) use ($request) {
                 $query->where('rating', '>=', $request->get('rating'));
+            })
+
+            //Filtrado por género
+            ->when($request->get('genre'), function ($query) use ($request) {
+            $query->whereJsonContains('genres', $request->get('genre'));
+            })
+
+            // Filtro por precio máximo
+            ->when($request->get('max_price') && $request->get('max_price') < 200, function ($query) use ($request) {
+                $query->whereHas('gameAds', function($q) use ($request) {
+                    $q->where('price', '<=', $request->get('max_price'));
+                });
             })
             
             ->paginate(30)->withQueryString();

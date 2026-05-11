@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Game;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
@@ -36,8 +37,10 @@ class OrderSeeder extends Seeder
             $totalAmount = 0.0;
 
             for ($j = 0; $j < $itemCount; $j++) {
-                // Crear un GameAd (con vendedor diferente)
-                $gameAd = GameAd::factory()->create();
+                // Crear un GameAd (con vendedor diferente) sobre un juego real
+                $gameAd = GameAd::factory()->create([
+                    'game_id' => Game::inRandomOrder()->value('id'),
+                ]);
 
                 $unitPrice = $gameAd->price;
                 $sellerFee = round($unitPrice * 0.1, 2); // 10% de comisión
