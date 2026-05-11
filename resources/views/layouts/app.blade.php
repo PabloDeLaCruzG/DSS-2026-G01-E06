@@ -51,17 +51,6 @@
                     <span class="text-xl font-bold">GameLink</span>
                 </a>
 
-                <ul class="hidden md:flex items-center gap-6 text-sm font-medium text-text-muted">
-                    <li><a href="{{ route('home') }}"
-                            class="hover:text-text-main transition-colors {{ request()->routeIs('home') ? 'text-text-main' : '' }}">Marketplace</a>
-                    </li>
-                    @auth
-                        @if(auth()->user()->isAdmin())
-                            <li><a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Panel Admin</a></li>
-                        @endif
-                    @endauth
-                    <li><a href="#" class="hover:text-text-main transition-colors">Comunidad</a></li>
-                </ul>
             </div>
 
 
@@ -233,5 +222,6 @@
     </footer>
 
 @include('partials._confirm-modal')
+@stack('scripts')
 </body>
 </html>
