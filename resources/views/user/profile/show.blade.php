@@ -139,7 +139,7 @@
         <h2 class="text-text-main font-bold text-lg flex items-center gap-2">
             Reviews & Ratings
             <span class="flex items-center gap-1 text-xs bg-[#009194]/20 text-[#3bb1a5] px-2 py-0.5 rounded-full">
-                ⭐ 4.9 · 86 reviews
+                ⭐ {{ number_format($reviews->avg('rating'), 1) }} · {{ $reviews->count() }} reviews
             </span>
         </h2>
         <a href="#" class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">View All Reviews →</a>
@@ -147,28 +147,30 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {{-- Review placeholder --}}
-        @forelse([] as $review)
-            {{-- aquí irían las reviews reales --}}
-        @empty
-            @for($i = 0; $i < 4; $i++)
-                <div class="bg-surface border border-border rounded-xl p-4">
-                    <div class="flex items-start gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-gray-700 flex-shrink-0 flex items-center justify-center text-lg">👤</div>
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <p class="text-text-main text-sm font-semibold">Usuario{{ $i + 1 }}</p>
-                                <span class="text-xs text-text-muted">Jan 01, 2025</span>
-                            </div>
-                            <div class="flex items-center gap-1 mt-0.5">
-                                @for($s = 0; $s < 5; $s++)
-                                    <span class="text-yellow-400 text-xs">★</span>
-                                @endfor
-                            </div>
+        @forelse($reviews as $review)
+            <div class="bg-surface border border-border rounded-xl p-4">
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-700 flex-shrink-0 overflow-hidden">
+                        <img src="{{ $review->user->avatar_url }}" alt="{{ $review->user->name }}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                            <a href="{{ route('users.show', $review->user) }}" class="text-text-main text-sm font-semibold hover:text-[#3bb1a5] transition-colors">{{ $review->user->name }}</a>
+                            <span class="text-xs text-text-muted">{{ $review->created_at->format('M d, Y') }}</span>
+                        </div>
+                        <div class="flex items-center gap-0.5 mt-0.5">
+                            @for($s = 1; $s <= 5; $s++)
+                                <span class="{{ $s <= $review->rating ? 'text-yellow-400' : 'text-gray-600' }} text-xs">★</span>
+                            @endfor
                         </div>
                     </div>
-                    <p class="text-text-muted text-sm">Excelente vendedor, muy rápido y de confianza.</p>
                 </div>
-            @endfor
+                <p class="text-text-muted text-sm">{{ $review->comment }}</p>
+            </div>
+        @empty
+            <div class="col-span-2 text-center text-text-muted py-8">
+                <p>Este usuario aún no tiene reseñas.</p>
+            </div>
         @endforelse
     </div>
 </section>

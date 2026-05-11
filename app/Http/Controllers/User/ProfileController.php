@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Review;
 
 class ProfileController extends Controller
 {
@@ -94,6 +95,14 @@ class ProfileController extends Controller
     public function show(\App\Models\User $user)
     {
         $ads = $user->gameAds()->with('game')->latest()->get();
-        return view('user.profile.show', compact('user', 'ads'));
+        $reviews = Review::whereHas('gameAd', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })
+            ->with('user')
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('user.profile.show', compact('user', 'ads', 'reviews'));
     }
 }
