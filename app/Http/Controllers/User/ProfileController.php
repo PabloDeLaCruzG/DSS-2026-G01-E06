@@ -90,4 +90,10 @@ class ProfileController extends Controller
 
         return redirect()->route('home')->with('success', 'Tu cuenta ha sido eliminada.');
     }
+
+    public function show(\App\Models\User $user)
+    {
+        $ads = $user->gameAds()->with('game')->latest()->get();
+        return view('user.profile.show', compact('user', 'ads'));
+    }
 }

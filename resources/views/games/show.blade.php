@@ -97,7 +97,7 @@
                             {{ strtoupper(substr($ad->user->name, 0, 2)) }}
                         </div>
                         <div class="flex items-center gap-1">
-                            <span class="font-semibold text-text-main text-sm">{{ $ad->user->name }}</span>
+                            <a href="{{ route('users.show', $ad->user) }}" class="font-semibold text-text-main text-sm hover:text-[#3bb1a5] transition-colors">{{ $ad->user->name }}</a>
                             @if($ad->user->isProfessional())
                                 <span title="Socio Verificado" class="text-blue-400 text-xs font-bold">✔</span>
                             @endif
@@ -171,7 +171,7 @@
                                 alt="{{ $ad->user->name }}" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <span class="font-semibold text-text-main text-sm">{{ $ad->user->name }}</span>
+                            <a href="{{ route('users.show', $ad->user) }}" class="font-semibold text-text-main text-sm hover:text-[#3bb1a5] transition-colors">{{ $ad->user->name }}</a>
                             <p class="text-xs text-accent">
                                 ★ {{ number_format(rand(40, 50) / 10, 1) }} ({{ rand(5, 30) }} ventas)
                             </p>

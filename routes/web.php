@@ -33,6 +33,8 @@ Route::get('/', [GameController::class, 'index'])->name('home');
 
 // Ruta para el detalle del juego (Comparador de precios)
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
+// Ruta para el perfil público de un usuario
+Route::get('/users/{user}', [App\Http\Controllers\User\ProfileController::class, 'show'])->name('users.show');
 // Ruta para la venta de un juego (Creador de GameAd)
 Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
 
