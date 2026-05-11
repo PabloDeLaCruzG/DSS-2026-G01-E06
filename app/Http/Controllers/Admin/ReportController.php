@@ -11,11 +11,12 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = Report::with(['user', 'gameAd.game', 'gameAd.user'])
-            ->latest()
-            ->paginate(10);
+    $reports = Report::with(['user', 'gameAd.game', 'gameAd.user'])
+        ->where('status', '!=', 'DISMISSED')
+        ->latest()
+        ->paginate(10);
 
-        return view('admin.reports.index', compact('reports'));
+    return view('admin.reports.index', compact('reports'));
     }
 
     public function show(Report $report)
