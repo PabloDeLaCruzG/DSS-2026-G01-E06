@@ -21,8 +21,12 @@
             <div class="flex items-center gap-3 mb-1">
                 <h1 class="text-2xl font-bold text-text-main">{{ $user->name }}</h1>
                 @if($user->isProfessional())
-                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-[#009194]/20 text-[#3bb1a5] border border-[#009194]/30">
-                        ✔ Vendedor Verificado
+                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-[#009194]/20 text-[#3bb1a5] border border-[#009194]/30 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                        </svg>
+                        Vendedor Verificado
                     </span>
                 @endif
             </div>
@@ -123,9 +127,6 @@
                         <span class="text-text-main font-bold text-sm">{{ number_format($ad->price, 2) }}€</span>
                         <button class="text-text-muted hover:text-[#009194] transition-colors"
                                 onclick="event.stopPropagation(); event.preventDefault();">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
                         </button>
                     </div>
                 </div>
@@ -133,7 +134,16 @@
             </a>
         @empty
             <div class="col-span-4 text-center text-text-muted py-16">
-                <p class="text-5xl mb-4">🎮</p>
+                <p class="text-5xl mb-4 flex justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="6" y1="12" x2="10" y2="12"/>
+                        <line x1="8" y1="10" x2="8" y2="14"/>
+                        <line x1="15" y1="13" x2="15.01" y2="13"/>
+                        <line x1="18" y1="11" x2="18.01" y2="11"/>
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                    </svg>
+                </p>
                 <p class="text-sm">Este usuario no tiene anuncios activos.</p>
             </div>
         @endforelse
