@@ -94,6 +94,10 @@ class ProfileController extends Controller
 
     public function show(\App\Models\User $user)
     {
+        $avg = Review::whereHas('gameAd', fn($q) => $q->where('user_id', $user->id))
+                    ->avg('rating') ?? 0;
+        $user->update(['reputation' => round($avg, 2)]);
+
         $ads = $user->gameAds()->with('game')->latest()->paginate(12);
         $reviews = Review::whereHas('gameAd', function($q) use ($user) {
                 $q->where('user_id', $user->id);

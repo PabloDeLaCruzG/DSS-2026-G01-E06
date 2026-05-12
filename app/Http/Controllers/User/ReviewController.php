@@ -40,17 +40,32 @@ class ReviewController extends Controller
             'comment'    => $request->comment,
         ]);
 
+        $this->updateReputation($ad->user_id);
+
         return back()->with('success', 'Reseña enviada correctamente.');
     }
 
     public function destroy(Review $review)
-{
-    if (auth()->id() !== $review->user_id) {
-        abort(403);
+    {
+        if (auth()->id() !== $review->user_id) {
+            abort(403);
+        }
+
+        $sellerId = $review->gameAd->user_id;
+        $review->delete();
+
+        $this->updateReputation($sellerId);
+
+        return back()->with('success', 'Reseña eliminada correctamente.');
     }
 
-    $review->delete();
+    private function updateReputation(int $userId): void
+    {
+        $avg = Review::whereHas('gameAd', fn($q) => $q->where('user_id', $userId))
+                    ->avg('rating') ?? 0;
 
-    return back()->with('success', 'Reseña eliminada correctamente.');
-}
+        \App\Models\User::where('id', $userId)->update([
+            'reputation' => round($avg, 2)
+        ]);
+    }
 }
