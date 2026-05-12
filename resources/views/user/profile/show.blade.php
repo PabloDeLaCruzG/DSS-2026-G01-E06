@@ -22,11 +22,10 @@
                 <h1 class="text-2xl font-bold text-text-main">{{ $user->name }}</h1>
                 @if($user->isProfessional())
                     <span class="text-xs font-bold px-3 py-1 rounded-full bg-[#009194]/20 text-[#3bb1a5] border border-[#009194]/30">
-                        ✔ VERIFIED MERCHANT
+                        ✔ Vendedor Verificado
                     </span>
                 @endif
             </div>
-            <p class="text-text-muted text-sm mb-4 max-w-md">{{ $user->bio ?? 'Este usuario no ha añadido una biografía.' }}</p>
 
             {{-- Stats --}}
             <div class="flex gap-3">
@@ -39,25 +38,20 @@
                     <p class="font-bold text-sm mt-0.5 text-text-main">{{ $ads->count() }}</p>
                 </div>
                 <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
-                    <p class="text-xs text-text-muted uppercase tracking-wide">Vel. Media</p>
-                    <p class="font-bold text-sm mt-0.5 text-[#3bb1a5]">~15m</p>
-                </div>
-                <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
                     <p class="text-xs text-text-muted uppercase tracking-wide">Miembro desde</p>
                     <p class="font-bold text-sm mt-0.5 text-text-main">{{ $user->created_at->format('M Y') }}</p>
                 </div>
             </div>
         </div>
 
-        {{-- Botones + denunciar --}}
+        {{-- Boton denunciar --}}
         <div class="flex flex-col gap-2 flex-shrink-0 w-44">
-            <p class="text-red-400 text-xs text-right hover:underline cursor-pointer mb-2">⚠ Denunciar usuario</p>
-            <button class="bg-[#009194] hover:bg-[#007a7c] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors text-center">
-                Send Message
-            </button>
-            <button class="bg-background border border-border hover:bg-surface text-text-main text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors text-center">
-                Follow Shop
-            </button>
+            <a class="flex items-center gap-1 text-red-400 text-xs text-right hover:underline cursor-pointer mb-2">
+                <svg class="w-4 h-4 shrink-0" style="color:#facc15;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                </svg>
+                Denunciar usuario
+            </a>
         </div>
 
     </div>
@@ -67,7 +61,7 @@
 <section class="mb-10">
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-text-main font-bold text-lg flex items-center gap-2">
-            Active Listings
+            Ofertas Actuales
             <span class="text-xs text-[#3bb1a5] font-normal">{{ $ads->count() }} total</span>
         </h2>
     </div>
@@ -103,7 +97,11 @@
                     {{-- Badge instant --}}
                     @if($ad->format === 'DIGITAL_KEY')
                         <span class="absolute bottom-2 right-2 text-xs bg-[#009194] text-white px-2 py-0.5 rounded font-medium">
-                            INSTANT
+                            Digital
+                        </span>
+                    @else
+                        <span class="absolute bottom-2 right-2 text-xs bg-[#009194] text-white px-2 py-0.5 rounded font-medium">
+                            Físico
                         </span>
                     @endif
                 </div>
@@ -118,7 +116,9 @@
                         <span class="text-text-main font-bold text-sm">{{ number_format($ad->price, 2) }}€</span>
                         <button class="text-text-muted hover:text-[#009194] transition-colors"
                                 onclick="event.stopPropagation(); event.preventDefault();">
-                            🛒
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
                         </button>
                     </div>
                 </div>
@@ -137,16 +137,15 @@
 <section>
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-text-main font-bold text-lg flex items-center gap-2">
-            Reviews & Ratings
+            Reviews y Reseñas
             <span class="flex items-center gap-1 text-xs bg-[#009194]/20 text-[#3bb1a5] px-2 py-0.5 rounded-full">
-                ⭐ {{ number_format($reviews->avg('rating'), 1) }} · {{ $reviews->count() }} reviews
+                ⭐ {{ number_format($reviews->avg('rating'), 1) }} · {{ $reviews->count() }} reseñas
             </span>
         </h2>
-        <a href="#" class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">View All Reviews →</a>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {{-- Review placeholder --}}
+        {{-- Reviews --}}
         @forelse($reviews as $review)
             <div class="bg-surface border border-border rounded-xl p-4">
                 <div class="flex items-start gap-3 mb-3">
@@ -156,7 +155,7 @@
                     <div class="flex-1">
                         <div class="flex items-center justify-between">
                             <a href="{{ route('users.show', $review->user) }}" class="text-text-main text-sm font-semibold hover:text-[#3bb1a5] transition-colors">{{ $review->user->name }}</a>
-                            <span class="text-xs text-text-muted">{{ $review->created_at->format('M d, Y') }}</span>
+                            <span class="text-xs text-text-muted">{{ $review->created_at->format('d M, Y') }}</span>
                         </div>
                         <div class="flex items-center gap-0.5 mt-0.5">
                             @for($s = 1; $s <= 5; $s++)
