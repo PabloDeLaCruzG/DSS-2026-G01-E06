@@ -94,7 +94,7 @@ class ProfileController extends Controller
 
     public function show(\App\Models\User $user)
     {
-        $ads = $user->gameAds()->with('game')->latest()->get();
+        $ads = $user->gameAds()->with('game')->latest()->paginate(12);
         $reviews = Review::whereHas('gameAd', function($q) use ($user) {
                 $q->where('user_id', $user->id);
             })

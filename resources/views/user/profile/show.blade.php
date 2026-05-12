@@ -138,6 +138,12 @@
             </div>
         @endforelse
     </div>
+    {{-- Paginación --}}
+    @if($ads->hasPages())
+        <div class="mt-8">
+            {{ $ads->links() }}
+        </div>
+    @endif
 </section>
 
 {{-- ===== REVIEWS ===== --}}
