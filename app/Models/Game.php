@@ -44,4 +44,8 @@ class Game extends Model
     {
         return $this->gameAds()->min('price') ?? 0.0;
     }
+
+    public function favoritedBy(){
+    return $this->belongsToMany(User::class, 'favorites');
+    }
 }
