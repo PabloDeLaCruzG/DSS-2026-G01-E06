@@ -98,7 +98,7 @@ class ProfileController extends Controller
         $reviews = Review::whereHas('gameAd', function($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
-            ->with('user')
+            ->with('user', 'gameAd.game')
             ->latest()
             ->take(4)
             ->get();

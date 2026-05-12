@@ -31,7 +31,12 @@
             <div class="flex gap-3">
                 <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
                     <p class="text-xs text-text-muted uppercase tracking-wide">Reputación</p>
-                    <p class="font-bold text-sm mt-0.5 text-text-main">⭐ {{ number_format($user->reputation ?? 0, 1) }} <span class="text-text-muted font-normal">/5.0</span></p>
+                    <p class="font-bold text-sm mt-0.5 text-text-main flex items-center justify-center gap-1">
+                        <svg viewBox="0 0 12 12" fill="currentColor" class="w-3 h-3 text-yellow-400">
+                            <path d="M2.23125 11.0833L3.17917 6.98542L0 4.22917L4.2 3.86458L5.83333 0L7.46667 3.86458L11.6667 4.22917L8.4875 6.98542L9.43542 11.0833L5.83333 8.91042L2.23125 11.0833Z"/>
+                        </svg>
+                        {{ number_format($user->reputation ?? 0, 1) }} <span class="text-text-muted font-normal">/5.0</span>
+                    </p>
                 </div>
                 <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
                     <p class="text-xs text-text-muted uppercase tracking-wide"> Ofertas Activas</p>
@@ -139,7 +144,10 @@
         <h2 class="text-text-main font-bold text-lg flex items-center gap-2">
             Reviews y Reseñas
             <span class="flex items-center gap-1 text-xs bg-[#009194]/20 text-[#3bb1a5] px-2 py-0.5 rounded-full">
-                ⭐ {{ number_format($reviews->avg('rating'), 1) }} · {{ $reviews->count() }} reseñas
+                <svg viewBox="0 0 12 12" fill="currentColor" class="w-3 h-3 text-yellow-400">
+                    <path d="M2.23125 11.0833L3.17917 6.98542L0 4.22917L4.2 3.86458L5.83333 0L7.46667 3.86458L11.6667 4.22917L8.4875 6.98542L9.43542 11.0833L5.83333 8.91042L2.23125 11.0833Z"/>
+                </svg>
+                {{ number_format($reviews->avg('rating'), 1) }} · {{ $reviews->count() }} reseñas
             </span>
         </h2>
     </div>
@@ -153,9 +161,12 @@
                         <img src="{{ $review->user->avatar_url }}" alt="{{ $review->user->name }}" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1">
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
                             <a href="{{ route('users.show', $review->user) }}" class="text-text-main text-sm font-semibold hover:text-[#3bb1a5] transition-colors">{{ $review->user->name }}</a>
-                            <span class="text-xs text-text-muted">{{ $review->created_at->format('d M, Y') }}</span>
+                            <span class="text-xs bg-surface border border-border text-text-muted px-2 py-0.5 rounded-full">
+                                {{ $review->gameAd->game->title ?? '' }}
+                            </span>
+                            <span class="text-xs text-text-muted ml-auto">{{ $review->created_at->format('d M, Y') }}</span>
                         </div>
                         <div class="flex items-center gap-0.5 mt-0.5">
                             @for($s = 1; $s <= 5; $s++)
