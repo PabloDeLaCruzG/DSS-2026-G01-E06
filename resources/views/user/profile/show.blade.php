@@ -40,7 +40,7 @@
                 </div>
                 <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
                     <p class="text-xs text-text-muted uppercase tracking-wide"> Ofertas Activas</p>
-                    <p class="font-bold text-sm mt-0.5 text-text-main">{{ $ads->count() }}</p>
+                    <p class="font-bold text-sm mt-0.5 text-text-main">{{ $ads->total() }}</p>
                 </div>
                 <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
                     <p class="text-xs text-text-muted uppercase tracking-wide">Miembro desde</p>
@@ -69,7 +69,7 @@
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-text-main font-bold text-lg flex items-center gap-2">
             Ofertas Actuales
-            <span class="text-xs text-[#3bb1a5] font-normal">{{ $ads->count() }} total</span>
+            <span class="text-xs text-[#3bb1a5] font-normal">{{ $ads->total() }} total</span>
         </h2>
     </div>
 
@@ -184,6 +184,24 @@
                     </div>
                 </div>
                 <p class="text-text-muted text-sm">{{ $review->comment }}</p>
+                @auth
+                    @if(auth()->id() === $review->user_id)
+                        <form action="{{ route('reviews.destroy', $review) }}" method="POST"
+                            onsubmit="return confirm('¿Seguro que quieres eliminar esta reseña?')"
+                            class="mt-3 flex justify-end">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="flex items-center gap-1 text-xs text-red-400 hover:text-red-300 transition-colors">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                Eliminar reseña
+                            </button>
+                        </form>
+                    @endif
+                @endauth
             </div>
         @empty
             <div class="col-span-2 text-center text-text-muted py-8">
