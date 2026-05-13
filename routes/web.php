@@ -14,6 +14,7 @@ use App\Http\Controllers\User\ProfessionalProfileController;
 use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessionalProfileController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\FavoriteController;
 
 
 // Autenticación
@@ -37,6 +38,9 @@ Route::get('/', [GameController::class, 'index'])->name('home');
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
 // Ruta para la venta de un juego (Creador de GameAd)
 Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
+// Ruta para los juegos favoritos
+Route::get('/mis-favoritos', [FavoriteController::class, 'index'])->name('favorites.index');
+Route::post('/favorites/{game}/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
 // Rutas del Carrito (requieren autenticación)
 Route::middleware('auth')->group(function () {

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'GameLink')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -141,85 +142,75 @@
         @yield('content')
     </main>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="border-t border-border mt-auto bg-surface">
-        <div class="container mx-auto px-4 py-10">
-            {{-- Columnas principales --}}
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+   <!-- ==== FOOTER ==== -->
+<footer class="bg-surface border-t border-border mt-auto">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-                {{-- GameLink --}}
-                <div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <div class="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <line x1="6" y1="12" x2="10" y2="12"></line>
-                                <line x1="8" y1="10" x2="8" y2="14"></line>
-                                <line x1="15" y1="13" x2="15.01" y2="13"></line>
-                                <line x1="18" y1="11" x2="18.01" y2="11"></line>
-                                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
-                            </svg>
-                        </div>
-                        <span class="font-bold text-text-main">GameLink</span>
+            {{-- Columna 1: GameLink --}}
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="6" y1="12" x2="10" y2="12"/>
+                            <line x1="8" y1="10" x2="8" y2="14"/>
+                            <line x1="15" y1="13" x2="15.01" y2="13"/>
+                            <line x1="18" y1="11" x2="18.01" y2="11"/>
+                            <rect x="2" y="6" width="20" height="12" rx="2"/>
+                        </svg>
                     </div>
-                    <p class="text-xs text-text-muted leading-relaxed mb-4">
-                        La plataforma líder en el mercado de videojuegos digitales y físicos. Encuentra las mejores
-                        ofertas y conecta con la comunidad.
-                    </p>
-                    <div class="flex gap-3 text-text-muted">
-                        <a href="#" class="hover:text-text-main transition-colors">𝕏</a>
-                        <a href="#" class="hover:text-text-main transition-colors">@</a>
-                        <a href="#" class="hover:text-text-main transition-colors">▶</a>
+                    <span class="text-xl font-bold text-text-main">GameLink</span>
+                </div>
+                <p class="text-sm text-text-muted leading-relaxed">
+                    La plataforma líder para conectar a jugadores de todo el mundo. Compra, vende e intercambia con total seguridad.
+                </p>
+
+                <!-- ICONOS (NO LINKS, solo elementos decorativos) -->
+                <div class="flex gap-3">
+                    <div class="w-9 h-9 rounded-full bg-background flex items-center justify-center text-text-muted border border-border"
+                         role="img" aria-label="icono web">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
                     </div>
-                </div>
 
-                {{-- Comprar --}}
-                <div>
-                    <h4 class="font-bold text-text-main text-sm mb-3">Comprar</h4>
-                    <ul class="space-y-2 text-xs text-text-muted">
-                        <li><a href="#" class="hover:text-text-main transition-colors">Claves Digitales</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Juegos Físicos</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Consolas</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Hardware</a></li>
-                    </ul>
-                </div>
+                    <div class="w-9 h-9 rounded-full bg-background flex items-center justify-center text-text-muted border border-border"
+                         role="img" aria-label="icono correo">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M2 6v12h20V6l-10 6L2 6z"/></svg>
+                    </div>
 
-                {{-- Vender --}}
-                <div>
-                    <h4 class="font-bold text-text-main text-sm mb-3">Vender</h4>
-                    <ul class="space-y-2 text-xs text-text-muted">
-                        <li><a href="#" class="hover:text-text-main transition-colors">Crear Cuenta</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Centro de Vendedores</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Comisiones y Tarifas</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Políticas</a></li>
-                    </ul>
-                </div>
-
-                {{-- Soporte --}}
-                <div>
-                    <h4 class="font-bold text-text-main text-sm mb-3">Soporte</h4>
-                    <ul class="space-y-2 text-xs text-text-muted">
-                        <li><a href="#" class="hover:text-text-main transition-colors">Centro de Ayuda</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Confianza y Seguridad</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Contactar Soporte</a></li>
-                        <li><a href="#" class="hover:text-text-main transition-colors">Comentarios</a></li>
-                    </ul>
+                    <div class="w-9 h-9 rounded-full bg-background flex items-center justify-center text-text-muted border border-border"
+                         role="img" aria-label="icono juego">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 10v4a2 2 0 002 2h1m5 0h1a2 2 0 002-2v-4M8 12h.01M10 10h4"/></svg>
+                    </div>
                 </div>
             </div>
 
-            {{-- Barra inferior --}}
-            <div
-                class="border-t border-border pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-text-muted gap-3">
-                <p>&copy; 2024 GameLink. Todos los derechos reservados.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="hover:text-text-main transition-colors">Política de Privacidad</a>
-                    <a href="#" class="hover:text-text-main transition-colors">Términos de Servicio</a>
-                    <a href="#" class="hover:text-text-main transition-colors">Configuración de Cookies</a>
-                </div>
+            {{-- Columna 2: Marketplace --}}
+            <div class="space-y-4">
+                <h4 class="text-text-main font-semibold">Marketplace</h4>
+                <p class="text-sm text-text-muted leading-relaxed">
+                    Busca y encuentra las mejores ofertas de tus juegos favoritos en cualquier momento.
+                </p>
+            </div>
+
+            {{-- Columna 3: Soporte (no interactivo, solo icono) --}}
+            <div class="space-y-4">
+                <h4 class="text-text-main font-semibold">Soporte</h4>
+                <p class="text-sm text-text-muted">Contáctanos para cualquier incidencia.</p>
             </div>
         </div>
-    </footer>
+
+        {{-- Pie inferior --}}
+        <div class="border-t border-border mt-12 pt-8 flex flex-col items-center gap-2">
+            <p class="text-xs text-text-muted">© GameLink 2026. Todos los derechos reservados.</p>
+            <div class="flex gap-4 text-xs font-medium">
+                <span class="text-text-muted">Español (ES)</span>
+                <span class="text-text-muted">Privacidad</span>
+                <span class="text-text-muted">Cookies</span>
+            </div>
+        </div>
+    </div>
+</footer>
 
 @include('partials._confirm-modal')
 @stack('scripts')
