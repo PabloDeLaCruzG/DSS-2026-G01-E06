@@ -254,11 +254,15 @@
 
                                 {{-- Badge plataforma --}}
                                 @if(!empty($game->platforms))
-                                    @php $platform = is_array($game->platforms) ? $game->platforms[0] : $game->platforms; @endphp
-                                    <span class="absolute top-2 left-2 text-xs text-white px-2 py-0.5 rounded font-medium"
-                                          style="background-color: {{ ['PS5' => '#1a4fc4', 'Xbox' => '#107c10', 'Nintendo Switch' => '#e4000f', 'PC' => '#111111', 'Retro' => '#b45309'][$platform] ?? '#009194' }}">
-                                        {{ $platform }}
-                                    </span>
+                                    @php $platforms = is_array($game->platforms) ? $game->platforms : [$game->platforms]; @endphp
+                                    <div class="absolute top-2 left-2 flex flex-wrap gap-1 pr-8">
+                                        @foreach($platforms as $platform)
+                                            <span class="text-xs text-white px-2 py-0.5 rounded font-medium inline-block"
+                                                style="background-color: {{ ['PS5' => '#1a4fc4', 'Xbox' => '#107c10', 'Nintendo Switch' => '#e4000f', 'PC' => '#111111', 'Retro' => '#b45309'][$platform] ?? '#009194' }}">
+                                                {{ $platform }}
+                                            </span>
+                                        @endforeach
+                                    </div>
                                 @endif
                             </div>
 
