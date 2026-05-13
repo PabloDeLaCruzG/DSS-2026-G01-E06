@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Review;
 
 class ProfileController extends Controller
 {
@@ -89,5 +90,23 @@ class ProfileController extends Controller
         request()->session()->regenerateToken();
 
         return redirect()->route('home')->with('success', 'Tu cuenta ha sido eliminada.');
+    }
+
+    public function show(\App\Models\User $user)
+    {
+        $avg = Review::whereHas('gameAd', fn($q) => $q->where('user_id', $user->id))
+                    ->avg('rating') ?? 0;
+        $user->update(['reputation' => round($avg, 2)]);
+
+        $ads = $user->gameAds()->with('game')->latest()->paginate(12);
+        $reviews = Review::whereHas('gameAd', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })
+            ->with('user', 'gameAd.game')
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('user.profile.show', compact('user', 'ads', 'reviews'));
     }
 }

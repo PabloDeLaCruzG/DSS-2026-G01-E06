@@ -81,6 +81,11 @@
                         <div class="flex-1 min-w-0 pr-8 flex flex-col justify-between py-1">
                             <div>
                                 <h3 class="font-bold text-text-main text-lg">{{ $game?->title ?? 'Juego desconocido' }}</h3>
+                                @if ($ad?->platforms && count($ad->platforms) > 0)
+                                    <p class="text-xs text-text-muted mt-1">
+                                        Plataforma: <span class="font-semibold text-text-main">{{ implode(', ', $ad->platforms) }}</span>
+                                    </p>
+                                @endif
                                 @if ($ad?->user)
                                     <p class="text-sm text-primary font-medium mt-1">
                                         Vendedor: {{ $ad->user->name }}

@@ -35,8 +35,15 @@ class GameController extends Controller
         })
 
         // Filtrado por género
-        ->when($request->get('genre'), function ($q) use ($request) {
-            $q->whereJsonContains('genres', $request->get('genre'));
+        ->when($request->get('genre'), function ($query) use ($request) {
+            $genreMap = [
+                'ACTION'   => 'Action',
+                'RPG'      => 'Role Playing',
+                'SPORTS'   => 'Sport',
+                'STRATEGY' => 'Strategy',
+            ];
+            $keyword = $genreMap[$request->get('genre')] ?? $request->get('genre');
+            $query->where('genres', 'like', '%' . $keyword . '%');
         })
 
         // Filtro por precio máximo

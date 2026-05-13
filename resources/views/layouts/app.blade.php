@@ -52,17 +52,6 @@
                     <span class="text-xl font-bold">GameLink</span>
                 </a>
 
-                <ul class="hidden md:flex items-center gap-6 text-sm font-medium text-text-muted">
-                    <li><a href="{{ route('home') }}"
-                            class="hover:text-text-main transition-colors {{ request()->routeIs('home') ? 'text-text-main' : '' }}">Marketplace</a>
-                    </li>
-                    @auth
-                        @if(auth()->user()->isAdmin())
-                            <li><a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Panel Admin</a></li>
-                        @endif
-                    @endauth
-                    <li><a href="#" class="hover:text-text-main transition-colors">Comunidad</a></li>
-                </ul>
             </div>
 
 
@@ -103,7 +92,7 @@
                             @endif
 
                             <!-- Opciones de usuario -->
-                            <a href="{{ route('profile.index') }}"
+                            <a href="{{ route('users.show', auth()->user()) }}"
                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
                                 👤 Mi perfil
                             </a>
@@ -224,5 +213,6 @@
 </footer>
 
 @include('partials._confirm-modal')
+@stack('scripts')
 </body>
 </html>
