@@ -4,22 +4,6 @@
 
 @section('content')
 
-    {{-- Aviso entrega --}}
-    <div id="delivery-warning" class="flex items-start gap-3 p-4 rounded-lg text-sm mb-6 mt-4" style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.35);color:#fde047;">
-        <svg class="w-5 h-5 mt-0.5 shrink-0" style="color:#facc15;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-        </svg>
-        <div class="flex-1">
-            <span class="font-semibold">Aviso de entrega:</span>
-            algunos botones y funciones de esta página están sin acción o pueden comportarse de forma incorrecta, ya que no estaban planificados para la entrega actual.
-        </div>
-        <button onclick="document.getElementById('delivery-warning').remove()" style="color:#facc15;">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-    </div>
-
     {{-- ===== HERO BANNER ===== --}}
     <section class="relative rounded-xl overflow-hidden mb-10 mt-4" style="background: linear-gradient(135deg, #0d1520 0%, #1a2433 50%, #0d2030 100%); min-height: 320px;">
         <div class="absolute inset-0 opacity-50" style="background: url('https://plus.unsplash.com/premium_vector-1725298133648-3ab96f885592?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;"></div>
@@ -224,10 +208,30 @@
 
             {{-- Cabecera sección --}}
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-white font-bold text-lg">Explorar Juegos</h2>
-                <a href="{{ route('home', array_filter(['platform' => request('platform'), 'rating' => '4.5'])) }}"
-                   class="text-xs text-[#3bb1a5] hover:text-[#009194] transition-colors">Ver todo →</a>
-            </div>
+    <h2 class="text-white font-bold text-lg">Explorar Juegos</h2>
+
+    <form id="sort-form" action="{{ route('home') }}" method="GET" class="flex items-center gap-3">
+        {{-- Mantener los filtros actuales como inputs ocultos --}}
+        @foreach(request()->except('sort') as $k => $v)
+            @if(is_array($v))
+                @foreach($v as $vv)
+                    <input type="hidden" name="{{ $k }}[]" value="{{ $vv }}">
+                @endforeach
+            @else
+                <input type="hidden" name="{{ $k }}" value="{{ $v }}">
+            @endif
+        @endforeach
+
+        <label class="text-sm text-gray-400 mr-2">Ordenar por:</label>
+        <select name="sort" onchange="document.getElementById('sort-form').submit()"
+                class="bg-gray-800 border border-gray-700 text-xs text-white px-3 py-2 rounded">
+            <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>Más populares</option>
+            <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Más barato</option>
+            <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Más caro</option>
+            <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Nombre</option>
+        </select>
+    </form>
+</div>
 
             {{-- Grid de juegos --}}
             <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
