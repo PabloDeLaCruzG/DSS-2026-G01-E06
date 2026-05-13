@@ -204,7 +204,7 @@
                 </p>
             </div>
 
-            {{-- Columna 3: Soporte (no interactivo, solo icono) --}}
+            {{-- Columna 3: Soporte --}}
             <div class="space-y-4">
                 <h4 class="text-text-main font-semibold">Soporte</h4>
                 <p class="text-sm text-text-muted">Contáctanos para cualquier incidencia.</p>
