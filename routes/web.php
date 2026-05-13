@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessiona
 use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 // Autenticación
@@ -82,6 +83,10 @@ Route::middleware('auth')->group(function () {
     
 // Ruta para el panel de Admin (requiere auth + rol admin)
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+
+    //Resumen
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
     // Listado y creación
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
