@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin GameLink',
             'email' => 'admin@gamelink.com',
             'role' => 'admin',
-            'department' => 'Gerencia',
+            'department' =>'Gerencia',
         ]);
 
         // Usuario normal adicional (con email distinto)
