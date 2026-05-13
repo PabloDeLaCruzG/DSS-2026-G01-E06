@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\GameController as UserGameController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProfessionalProfileController;
 use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessionalProfileController;
@@ -36,6 +37,11 @@ Route::get('/', [GameController::class, 'index'])->name('home');
 
 // Ruta para el detalle del juego (Comparador de precios)
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
+// Ruta para poner y quitar reseñas
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy')->middleware('auth');
+// Ruta para el perfil público de un usuario
+Route::get('/users/{user}', [App\Http\Controllers\User\ProfileController::class, 'show'])->name('users.show');
 // Ruta para la venta de un juego (Creador de GameAd)
 Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
 // Ruta para los juegos favoritos

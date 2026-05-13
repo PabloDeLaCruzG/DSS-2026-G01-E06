@@ -92,7 +92,7 @@
                             @endif
 
                             <!-- Opciones de usuario -->
-                            <a href="{{ route('profile.index') }}"
+                            <a href="{{ route('users.show', auth()->user()) }}"
                                class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
                                 👤 Mi perfil
                             </a>
