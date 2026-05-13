@@ -479,9 +479,11 @@ function toggleFavorite(btn) {
         if (wrapper) {
             const paginationLink = e.target.closest('a[href]');
             if (paginationLink && wrapper.contains(paginationLink)) {
-                e.preventDefault();
-                const newParams = new URL(paginationLink.href, window.location.origin).searchParams;
-                loadFiltered(newParams);
+                const linkUrl = new URL(paginationLink.href, window.location.origin);
+                if (linkUrl.searchParams.has('page')) {
+                    e.preventDefault();
+                    loadFiltered(linkUrl.searchParams);
+                }
             }
         }
     });
