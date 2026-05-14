@@ -87,6 +87,13 @@
                                     <p class="text-xs text-text-muted mt-0.5">€{{ number_format($item->unit_price, 2) }}</p>
                                 </div>
 
+                                @if($item->gameAd && $item->gameAd->game && auth()->id() !== $item->gameAd->user_id)
+                                    <a href="{{ route('reports.create', $item->gameAd) }}"
+                                       class="px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition shrink-0">
+                                        Reportar
+                                    </a>
+                                @endif
+
                             </div>
 
                             {{-- Clave digital destacada --}}
