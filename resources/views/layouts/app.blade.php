@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'GameLink')</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        /* Neutralizar estilos de Bootstrap que rompen Tailwind */
+        a { text-decoration: none !important; color: inherit !important; }
+        a:hover { color: inherit !important; }
+        *, *::before, *::after { box-sizing: border-box; }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -31,14 +38,12 @@
 <body class="bg-background text-text-main min-h-screen flex flex-col">
 
     <!-- NAVBAR -->
-    <nav class="bg-surface border-b border-border sticky top-0 z-50">
+    <nav class="bg-surface border-b border-border sticky top-0 z-50" x-data="{ mobileOpen: false }">
         <div class="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
 
-            <!-- Izquierda -->
-            <div class="flex items-center gap-6">
-                <a href="{{ route('home') }}" class="flex items-center gap-2 group flex-shrink-0">
-                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
-                    
+            <!-- Logo -->
+            <a href="{{ route('home') }}" class="flex items-center gap-2 group flex-shrink-0 no-underline">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="6" y1="12" x2="10" y2="12"/>
@@ -47,15 +52,11 @@
                         <line x1="18" y1="11" x2="18.01" y2="11"/>
                         <rect x="2" y="6" width="20" height="12" rx="2"/>
                     </svg>
+                </div>
+                <span class="text-xl font-bold text-text-main">GameLink</span>
+            </a>
 
-                    </div>
-                    <span class="text-xl font-bold">GameLink</span>
-                </a>
-
-            </div>
-
-
-            <!-- Derecha: Carrito + Avatar / Auth -->
+            <!-- Derecha: Avatar / Auth + hamburger para invitados -->
             <div class="flex items-center gap-3">
                 @auth
                     <!-- Dropdown de usuario -->
@@ -85,7 +86,7 @@
                             <!-- Panel Admin (solo admins) -->
                             @if(auth()->user()->isAdmin())
                                 <a href="{{ route('admin.users.index') }}"
-                                   class="flex items-center gap-2 px-4 py-2.5 text-sm text-primary hover:bg-background transition-colors">
+                                   class="flex items-center gap-2 px-4 py-2.5 text-sm text-primary hover:bg-background transition-colors no-underline">
                                     ⚙️ Panel Admin
                                 </a>
                                 <div class="border-t border-border my-1"></div>
@@ -93,19 +94,19 @@
 
                             <!-- Opciones de usuario -->
                             <a href="{{ route('users.show', auth()->user()) }}"
-                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors no-underline">
                                 👤 Mi perfil
                             </a>
                             <a href="{{ route('games.index') }}"
-                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors no-underline">
                                 🎮 Mis anuncios
                             </a>
                             <a href="{{ route('orders.index') }}"
-                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors no-underline">
                                 📦 Mis pedidos
                             </a>
                             <a href="{{ route('cart.index') }}"
-                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                               class="flex items-center gap-2 px-4 py-2.5 text-sm text-text-muted hover:text-text-main hover:bg-background transition-colors no-underline">
                                 🛒 Carrito
                             </a>
 
@@ -121,20 +122,55 @@
                         </div>
                     </div>
                 @else
-                    <!-- Guest: links de acceso -->
-                    <a href="{{ route('login') }}"
-                        class="text-sm text-text-muted hover:text-text-main transition-colors font-medium">
-                        Iniciar sesión
-                    </a>
-                    <a href="{{ route('register') }}"
-                        class="text-sm bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg px-4 py-1.5 transition-colors">
-                        Registrarse
-                    </a>
+                    <!-- Guest desktop: links de acceso -->
+                    <div class="hidden md:flex items-center gap-3">
+                        <a href="{{ route('login') }}"
+                            class="text-sm text-text-muted hover:text-text-main transition-colors font-medium">
+                            Iniciar sesión
+                        </a>
+                        <a href="{{ route('register') }}"
+                            class="text-sm bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg px-4 py-1.5 transition-colors">
+                            Registrarse
+                        </a>
+                    </div>
+                    <!-- Guest mobile: hamburger (Alpine.js) -->
+                    <button @click="mobileOpen = !mobileOpen"
+                            class="md:hidden flex items-center justify-center w-8 h-8 rounded-lg hover:bg-background transition-colors"
+                            type="button"
+                            style="color: #9ba4b0; border: none; background: none;">
+                        <svg x-show="!mobileOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        <svg x-show="mobileOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 @endauth
             </div>
 
         </div>
-    </div>
+
+        <!-- Mobile guest nav (Alpine.js) -->
+        @guest
+        <div x-show="mobileOpen"
+             x-transition:enter="transition ease-out duration-150"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="border-t border-border px-4 py-3 flex flex-col gap-2 md:hidden"
+             style="display:none; background-color: #1a2433;">
+            <a href="{{ route('login') }}"
+               class="text-sm text-text-muted font-medium py-2 hover:text-text-main transition-colors">
+                Iniciar sesión
+            </a>
+            <a href="{{ route('register') }}"
+               class="text-sm bg-primary text-white font-semibold rounded-lg px-4 py-2 text-center transition-colors">
+                Registrarse
+            </a>
+        </div>
+        @endguest
     </nav>
 
     <!-- CONTENIDO -->
@@ -214,5 +250,6 @@
 
 @include('partials._confirm-modal')
 @stack('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

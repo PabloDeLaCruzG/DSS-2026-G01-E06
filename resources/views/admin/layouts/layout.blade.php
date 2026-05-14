@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameLink Admin - @yield('title')</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        a { text-decoration: none !important; color: inherit !important; }
+        a:hover { color: inherit !important; }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -106,7 +111,7 @@
 
         {{-- Topbar --}}
         <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
-            {{-- título --}}
+                {{-- título --}}
             <div class="flex items-center gap-2 text-sm text-text-muted">
                 <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Admin</a>
                 <span>›</span>
@@ -185,5 +190,6 @@
 @include('partials._confirm-modal')
 {{-- Scripts apilados por las vistas --}}
     @stack('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

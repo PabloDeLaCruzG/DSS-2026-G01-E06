@@ -6,6 +6,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>GameLink - @yield('title')</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        a { text-decoration: none !important; color: inherit !important; }
+        a:hover { color: inherit !important; }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -127,7 +132,7 @@
 
         {{-- Topbar (copiado de layout.blade.php: breadcrumb, buscador y acciones) --}}
         <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
-            {{-- Breadcrumb / título --}}
+                {{-- Breadcrumb / título --}}
             <div class="flex items-center gap-2 text-sm text-text-muted">
                 <span>User</span>
                 <span>›</span>
@@ -205,5 +210,6 @@
     </div>
 
 @include('partials._confirm-modal')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
