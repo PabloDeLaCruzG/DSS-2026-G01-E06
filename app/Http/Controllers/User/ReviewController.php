@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Review;
 use App\Models\GameAd;
+use App\Models\Review;
+use App\Services\ReviewService;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    public function __construct(private ReviewService $reviewService) {}
+
     public function store(Request $request)
     {
         $request->validate([
@@ -19,28 +22,24 @@ class ReviewController extends Controller
 
         $ad = GameAd::findOrFail($request->game_ad_id);
 
-        // No puedes valorar tu propia oferta
         if ($ad->user_id === auth()->id()) {
             return back()->with('error', 'No puedes valorar tu propia oferta.');
         }
 
-        // Una sola reseña por oferta
         $already = Review::where('user_id', auth()->id())
-                         ->where('game_ad_id', $request->game_ad_id)
-                         ->exists();
+            ->where('game_ad_id', $request->game_ad_id)
+            ->exists();
 
         if ($already) {
             return back()->with('error', 'Ya has valorado esta oferta.');
         }
 
-        Review::create([
-            'user_id'    => auth()->id(),
-            'game_ad_id' => $request->game_ad_id,
-            'rating'     => $request->rating,
-            'comment'    => $request->comment,
-        ]);
-
-        $this->updateReputation($ad->user_id);
+        $this->reviewService->create(
+            auth()->id(),
+            $request->game_ad_id,
+            $request->rating,
+            $request->comment
+        );
 
         return back()->with('success', 'Reseña enviada correctamente.');
     }
@@ -51,21 +50,8 @@ class ReviewController extends Controller
             abort(403);
         }
 
-        $sellerId = $review->gameAd->user_id;
-        $review->delete();
-
-        $this->updateReputation($sellerId);
+        $this->reviewService->delete($review);
 
         return back()->with('success', 'Reseña eliminada correctamente.');
-    }
-
-    private function updateReputation(int $userId): void
-    {
-        $avg = Review::whereHas('gameAd', fn($q) => $q->where('user_id', $userId))
-                    ->avg('rating') ?? 0;
-
-        \App\Models\User::where('id', $userId)->update([
-            'reputation' => round($avg, 2)
-        ]);
     }
 }
