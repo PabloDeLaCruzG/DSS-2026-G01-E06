@@ -49,9 +49,9 @@
                         $game = $ad?->game;
                         $image = $game?->cover_image ?? null;
                     @endphp
-                    <div class="bg-surface border border-border rounded-xl p-5 flex gap-5 relative group">
+                    <div class="bg-surface border border-border rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-5 relative group">
                         {{-- Eliminar --}}
-                        <form action="{{ route('cart.remove', $item) }}" method="POST" class="absolute top-5 right-5"
+                        <form action="{{ route('cart.remove', $item) }}" method="POST" class="absolute top-4 right-4 sm:top-5 sm:right-5"
                               data-confirm="¿Eliminar este artículo del carrito?">
                             @csrf
                             @method('DELETE')
@@ -63,7 +63,7 @@
                         </form>
 
                         {{-- Imagen --}}
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-lg bg-background border border-border overflow-hidden flex-shrink-0 flex items-center justify-center">
+                        <div class="w-full h-44 sm:w-24 sm:h-24 rounded-lg bg-background border border-border overflow-hidden flex-shrink-0 flex items-center justify-center">
                             @if ($image)
                                 <img src="{{ $image }}" alt="{{ $game?->title }}" class="w-full h-full object-cover">
                             @else
@@ -78,9 +78,14 @@
                         </div>
 
                         {{-- Info --}}
-                        <div class="flex-1 min-w-0 pr-8 flex flex-col justify-between py-1">
+                        <div class="flex-1 min-w-0 pr-6 sm:pr-8 flex flex-col justify-between py-1">
                             <div>
-                                <h3 class="font-bold text-text-main text-lg">{{ $game?->title ?? 'Juego desconocido' }}</h3>
+                                <h3 class="font-bold text-text-main text-base sm:text-lg">{{ $game?->title ?? 'Juego desconocido' }}</h3>
+                                @if ($ad?->platforms && count($ad->platforms) > 0)
+                                    <p class="text-xs text-text-muted mt-1">
+                                        Plataforma: <span class="font-semibold text-text-main">{{ implode(', ', $ad->platforms) }}</span>
+                                    </p>
+                                @endif
                                 @if ($ad?->user)
                                     <p class="text-sm text-primary font-medium mt-1">
                                         Vendedor: {{ $ad->user->name }}
@@ -88,7 +93,7 @@
                                 @endif
                             </div>
 
-                            <div class="flex flex-wrap items-end justify-between mt-4">
+                            <div class="flex items-center justify-between mt-3">
                                 {{-- Controles Cantidad --}}
                                 <div class="flex items-center gap-4 text-text-main font-bold">
                                     <button class="text-text-muted hover:text-text-main transition-colors">-</button>
@@ -96,7 +101,7 @@
                                     <button class="text-text-muted hover:text-text-main transition-colors">+</button>
                                 </div>
                                 {{-- Precio --}}
-                                <div class="text-2xl font-black text-text-main mt-2 sm:mt-0">
+                                <div class="text-xl sm:text-2xl font-black text-text-main">
                                     ${{ number_format($item->unit_price, 2) }}
                                 </div>
                             </div>
@@ -109,7 +114,7 @@
                     {{-- Datos de Envío (solo si hay productos físicos) --}}
                     @if($needsShipping)
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
-                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                        <div class="md:w-1/4 flex-shrink-0 flex items-center gap-3 text-text-main font-bold md:pt-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                             </svg>
@@ -135,7 +140,7 @@
                     @else
                     {{-- Solo digitales: el email va aquí --}}
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 mt-6 items-start">
-                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                        <div class="md:w-1/4 flex-shrink-0 flex items-center gap-3 text-text-main font-bold md:pt-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
@@ -152,7 +157,7 @@
 
                     {{-- Método de Pago --}}
                     <div class="bg-surface border border-border rounded-xl p-6 flex flex-col md:flex-row gap-6 items-start mt-4">
-                        <div class="md:w-1/4 flex items-center gap-3 text-text-main font-bold md:pt-4">
+                        <div class="md:w-1/4 flex-shrink-0 flex items-center gap-3 text-text-main font-bold md:pt-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="5" width="18" height="14" rx="2" />
                                 <line x1="3" y1="10" x2="21" y2="10" />
@@ -190,9 +195,9 @@
             </div>
 
             {{-- Columna Derecha (Resumen) --}}
-            <div class="lg:col-span-4 space-y-4">
+            <div class="lg:col-span-4 space-y-4 lg:sticky lg:top-20 lg:self-start">
                 {{-- Resumen de Pedido --}}
-                <div class="bg-surface border border-border rounded-xl p-6 sticky top-20">
+                <div class="bg-surface border border-border rounded-xl p-6">
                     <h2 class="text-base font-bold text-text-main mb-6">Resumen de Pedido</h2>
 
                     @php

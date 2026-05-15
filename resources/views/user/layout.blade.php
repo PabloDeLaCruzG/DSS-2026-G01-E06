@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>GameLink - @yield('title')</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        :root { --bs-primary: #009194; --bs-primary-rgb: 0,145,148; --bs-link-color: #009194; }
+        a { text-decoration: none !important; color: inherit !important; }
+        a:hover { color: inherit !important; }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -30,10 +37,21 @@
         }
     </script>
 </head>
-<body class="bg-background text-text-main min-h-screen flex">
+<body class="bg-background text-text-main min-h-screen flex" x-data="{ sidebarOpen: false }">
+
+    {{-- Overlay oscuro en móvil --}}
+    <div class="fixed inset-0 z-40 bg-black/50 lg:hidden" x-show="sidebarOpen" @click="sidebarOpen = false" style="display:none;"></div>
 
     {{-- ===== SIDEBAR ===== --}}
-    <aside class="w-56 bg-surface border-r border-border flex flex-col shrink-0 min-h-screen sticky top-0">
+    <aside class="fixed inset-y-0 left-0 z-50 w-56 bg-surface border-r border-border flex flex-col shrink-0 min-h-screen transition-transform duration-200 lg:relative lg:translate-x-0"
+           :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
+
+        {{-- Botón cerrar sidebar en móvil --}}
+        <button @click="sidebarOpen = false" class="lg:hidden absolute top-3 right-3 p-1 text-text-muted hover:text-text-main transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
 
         {{-- Logo (igual que layout.blade.php) --}}
         <div class="px-4 py-4 border-b border-border">
@@ -55,34 +73,57 @@
 
         {{-- Navegación (estilo admin, pero con rutas de usuario) --}}
         <nav class="flex-1 px-3 py-4 space-y-1">
-            <p class="text-[10px] text-text-muted uppercase tracking-widest px-3 mb-2">General</p>
+            <p class="text-[10px] text-text-muted uppercase tracking-widest px-3 mb-2">Cuenta</p>
 
             @php
                 $activeClass = 'bg-primary/10 text-primary font-semibold text-sm border-l-2 border-primary';
                 $inactiveClass = 'text-text-muted hover:bg-background hover:text-text-main transition-all text-sm';
             @endphp
 
-            <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('profile.*') ? $activeClass : $inactiveClass }}">
+            @php
+                $isOwnProfile = request()->routeIs('users.show') && 
+                                isset($user) && 
+                                auth()->id() === $user->id;
+            @endphp
+
+            <a href="{{ route('users.show', auth()->user()) }}" 
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ $isOwnProfile ? $activeClass : $inactiveClass }}">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
                 Mi Perfil
             </a>
 
-            <a href="{{ route('games.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('games.*') ? $activeClass : $inactiveClass }}">
+            <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('profile.*') ? $activeClass : $inactiveClass }}">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a1 1 0 001 1h12a1 1 0 001-1V7"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
-                Mis Anuncios
+                Configuración
             </a>
+            <div class="pt-3 mt-3 border-t border-border">
+                <p class="text-[10px] text-text-muted uppercase tracking-widest px-3 mb-2">General</p>
+                <a href="{{ route('games.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('games.*') ? $activeClass : $inactiveClass }}">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7v10a1 1 0 001 1h12a1 1 0 001-1V7"/>
+                    </svg>
+                    Mis Anuncios
+                </a>
 
-            <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('orders.*') ? $activeClass : $inactiveClass }}">
-                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v4H3zM3 7v13a2 2 0 002 2h14a2 2 0 002-2V7"/>
-                </svg>
-                Mis Pedidos
-            </a>
+                <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('orders.*') ? $activeClass : $inactiveClass }}">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v4H3zM3 7v13a2 2 0 002 2h14a2 2 0 002-2V7"/>
+                    </svg>
+                    Mis Pedidos
+                </a>
 
+                <a href="{{ route('favorites.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('favorites.*') ? $activeClass : $inactiveClass }}">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                    Mis Favoritos
+                </a>
+            </div>
         </nav>
 
         {{-- Usuario logueado --}}
@@ -99,25 +140,27 @@
     </aside>
 
     {{-- ===== MAIN ===== --}}
-    <div class="flex-1 flex flex-col min-h-screen">
+    <div class="flex-1 min-w-0 flex flex-col min-h-screen">
 
         {{-- Topbar (copiado de layout.blade.php: breadcrumb, buscador y acciones) --}}
-        <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
-            {{-- Breadcrumb / título --}}
-            <div class="flex items-center gap-2 text-sm text-text-muted">
-                <span>User</span>
-                <span>›</span>
-                <span class="text-text-main font-medium">@yield('title', 'Panel')</span>
+        <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-4 sm:px-6 sticky top-0 z-40">
+            {{-- Hamburger en móvil --}}
+            <div class="flex items-center gap-3">
+                <button @click="sidebarOpen = true" class="lg:hidden p-2 text-text-muted hover:text-text-main hover:bg-background rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                {{-- Breadcrumb / título --}}
+                <div class="flex items-center gap-2 text-sm text-text-muted">
+                    <span>User</span>
+                    <span>›</span>
+                    <span class="text-text-main font-medium">@yield('title', 'Panel')</span>
+                </div>
             </div>
 
             {{-- Acciones --}}
             <div class="flex items-center gap-3">
-                <button class="relative p-2 text-text-muted hover:text-text-main hover:bg-background rounded-lg transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                    </svg>
-                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface"></span>
-                </button>
 
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 focus:outline-none">
@@ -175,11 +218,12 @@
         </header>
 
         {{-- Contenido --}}
-        <main class="flex-1 p-6 bg-background overflow-y-auto">
+        <main class="flex-1 p-6 bg-background overflow-y-auto overflow-x-hidden">
             @yield('content')
         </main>
     </div>
 
 @include('partials._confirm-modal')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

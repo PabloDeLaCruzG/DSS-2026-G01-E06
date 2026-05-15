@@ -4,14 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameAdController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\GameController as UserGameController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProfessionalProfileController;
 use App\Http\Controllers\Admin\ProfessionalProfileController as AdminProfessionalProfileController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 // Autenticación
@@ -33,8 +38,16 @@ Route::get('/', [GameController::class, 'index'])->name('home');
 
 // Ruta para el detalle del juego (Comparador de precios)
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
+// Ruta para poner y quitar reseñas
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy')->middleware('auth');
+// Ruta para el perfil público de un usuario
+Route::get('/users/{user}', [App\Http\Controllers\User\ProfileController::class, 'show'])->name('users.show');
 // Ruta para la venta de un juego (Creador de GameAd)
 Route::get('/sell', [GameAdController::class, 'create'])->name('games.sell');
+// Ruta para los juegos favoritos
+Route::get('/mis-favoritos', [FavoriteController::class, 'index'])->name('favorites.index');
+Route::post('/favorites/{game}/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
 // Rutas del Carrito (requieren autenticación)
 Route::middleware('auth')->group(function () {
@@ -62,11 +75,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/mis-pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/perfil/profesional', [ProfessionalProfileController::class, 'create'])->name('professional.create');
     Route::post('/perfil/profesional', [ProfessionalProfileController::class, 'store'])->name('professional.store');
+
+    Route::get('/reports/{gameAd}/create', [ReportController::class, 'create'])->name('reports.create');
+    Route::post('/reports/{gameAd}', [ReportController::class, 'store'])->name('reports.store');
 });
 
     
 // Ruta para el panel de Admin (requiere auth + rol admin)
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+
+    //Resumen
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
     // Listado y creación
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -98,4 +118,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::put('/games/{game}', [AdminGameController::class, 'update'])->name('admin.games.update');
     Route::delete('/games/{game}', [AdminGameController::class, 'destroy'])->name('admin.games.destroy');
     Route::post('/games/{game}/toggle-publish', [AdminGameController::class, 'togglePublish'])->name('admin.games.toggle-publish');
+
+    Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('/reports/{report}', [AdminReportController::class, 'show'])->name('admin.reports.show');
+    Route::post('/reports/{report}/resolve', [AdminReportController::class, 'resolve'])->name('admin.reports.resolve');
 });

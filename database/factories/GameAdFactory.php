@@ -25,6 +25,7 @@ class GameAdFactory extends Factory
             'description' => fake()->paragraph(),
             'condition'   => fake()->randomElement(['NEW', 'USED', 'DIGITAL']),
             'format'      => fake()->randomElement(['PHYSICAL', 'DIGITAL_KEY']),
+            'platforms'   => [fake()->randomElement(['PC', 'PS5', 'Xbox', 'Nintendo Switch'])],
             'digital_key' => fake()->boolean(30) ? fake()->uuid() : null,
             'images'      => fake()->imageUrl(640, 480),
             'status'      => 'ACTIVE',

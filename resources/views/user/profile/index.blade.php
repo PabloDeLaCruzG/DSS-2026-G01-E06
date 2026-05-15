@@ -12,7 +12,7 @@
     </div>
 @endif
 
-<div class="grid grid-cols-3 gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
     <!-- PERFIL -->
     <div class="bg-surface p-6 rounded-xl text-center">
@@ -56,14 +56,14 @@
     </div>
 
     <!-- INFO PERSONAL -->
-    <div class="col-span-2 bg-surface p-6 rounded-xl">
+    <div class="lg:col-span-2 bg-surface p-6 rounded-xl">
 
         <h2 class="mb-4 font-semibold">Información Personal</h2>
 
         <form method="POST" action="{{ route('profile.update') }}">
             @csrf
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                 <div>
                     <label class="text-xs text-text-muted">Nombre completo</label>

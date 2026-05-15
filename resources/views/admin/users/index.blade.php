@@ -85,88 +85,87 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="border-b border-border text-xs text-text-muted uppercase tracking-wide">
-                    <th class="text-left px-5 py-3">ID</th>
-                    <th class="text-left px-5 py-3">Nombre / Usuario</th>
-                    <th class="text-left px-5 py-3">Rol</th>
-                    <th class="text-left px-5 py-3">Estado</th>
-                    <th class="text-left px-5 py-3">Última Actividad</th>
-                    <th class="text-right px-5 py-3">Acciones</th>
+                    <th class="text-left px-4 py-3">ID</th>
+                    <th class="text-left px-4 py-3">Usuario</th>
+                    <th class="text-left px-3 py-3">Rol</th>
+                    <th class="text-left px-3 py-3">Estado</th>
+                    <th class="text-left px-3 py-3">Actividad</th>
+                    <th class="text-right px-4 py-3">Acciones</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-border">
                 @forelse($users as $user)
                 <tr class="hover:bg-background/50 transition">
-                    <td class="px-5 py-4 text-text-muted font-mono text-xs">#GL-{{ str_pad($user->id, 4, '0', STR_PAD_LEFT) }}</td>
-                    <td class="px-5 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white shrink-0">
+                    <td class="px-4 py-3 text-text-muted font-mono text-xs">#{{ str_pad($user->id, 4, '0', STR_PAD_LEFT) }}</td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white shrink-0">
                                 {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
-                            <div>
-                                <div class="flex items-center gap-1.5">
-                                    <p class="font-medium text-text-main text-sm">{{ $user->name }}</p>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1">
+                                    <p class="font-medium text-text-main text-sm truncate max-w-[140px]">{{ $user->name }}</p>
                                     @if($user->isProfessional())
-                                        <span title="Socio Verificado" class="text-blue-400 text-xs font-bold">✔</span>
+                                        <span title="Verificado" class="text-blue-400 text-xs font-bold shrink-0">✔</span>
                                     @endif
                                 </div>
-                                <p class="text-xs text-text-muted">{{ $user->email }}</p>
+                                <p class="text-xs text-text-muted truncate max-w-[140px]">{{ $user->email }}</p>
                             </div>
                         </div>
                     </td>
-                    <td class="px-5 py-4">
+                    <td class="px-3 py-3">
                         @if($user->role === 'admin')
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">admin</span>
+                            <span class="px-1.5 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">admin</span>
                         @elseif($user->role === 'moderator')
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-accent/10 text-accent border border-accent/20">moderador</span>
+                            <span class="px-1.5 py-0.5 rounded text-xs font-medium bg-accent/10 text-accent border border-accent/20">mod</span>
                         @else
-                            <span class="px-2 py-0.5 rounded text-xs font-medium bg-border text-text-muted border border-border">usuario</span>
+                            <span class="px-1.5 py-0.5 rounded text-xs font-medium bg-border text-text-muted border border-border">user</span>
                         @endif
                     </td>
-                    <td class="px-5 py-4">
+                    <td class="px-3 py-3">
                         @if($user->is_banned)
-                            <span class="flex items-center gap-1.5 text-xs text-red-400">
-                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                BANEADO
+                            <span class="flex items-center gap-1 text-xs text-red-400">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>Baneado
                             </span>
                         @else
-                            <span class="flex items-center gap-1.5 text-xs text-accent">
-                                <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                                ACTIVO
+                            <span class="flex items-center gap-1 text-xs text-accent">
+                                <span class="w-1.5 h-1.5 rounded-full bg-accent shrink-0"></span>Activo
                             </span>
                         @endif
                     </td>
-                    <td class="px-5 py-4 text-xs text-text-muted">
+                    <td class="px-3 py-3 text-xs text-text-muted">
                         {{ $user->updated_at ? $user->updated_at->diffForHumans() : '—' }}
                     </td>
-                    <td class="px-5 py-4 text-right">
-    <div class="flex items-center justify-end gap-2">
-        {{-- Ver perfil --}}
-        <a href="{{ route('admin.users.show', $user) }}" class="px-3 py-1 text-xs rounded bg-surface text-text-muted border border-border hover:text-text-main hover:border-primary/30 transition">
-            VER PERFIL
-        </a>
-
-        {{-- Editar --}}
-        <a href="{{ route('admin.users.edit', $user) }}" class="px-3 py-1 text-xs rounded bg-surface text-text-muted border border-border hover:text-text-main transition">
-            EDITAR
-        </a>
-
-        {{-- Eliminar --}}
-        @if (! $user->isAdmin()) {{-- evita eliminar admins --}}
-            <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
-                  data-confirm="¿Eliminar a {{ addslashes($user->name) }}? Esta acción no se puede deshacer.">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="px-3 py-1 text-xs rounded bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">
-                    ELIMINAR
-                </button>
-            </form>
-        @endif
-    </div>
-</td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center justify-end gap-1">
+                            {{-- Ver perfil --}}
+                            <a href="{{ route('admin.users.show', $user) }}" title="Ver perfil"
+                               class="p-1.5 rounded text-text-muted hover:text-primary hover:bg-background transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            </a>
+                            {{-- Editar --}}
+                            <a href="{{ route('admin.users.edit', $user) }}" title="Editar"
+                               class="p-1.5 rounded text-text-muted hover:text-text-main hover:bg-background transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            </a>
+                            {{-- Eliminar --}}
+                            @if(! $user->isAdmin())
+                                <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
+                                      data-confirm="¿Eliminar a {{ addslashes($user->name) }}? Esta acción no se puede deshacer.">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="Eliminar"
+                                            class="p-1.5 rounded text-text-muted hover:text-red-400 hover:bg-background transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-5 py-10 text-center text-text-muted text-sm">No se encontraron usuarios.</td>
+                    <td colspan="6" class="px-4 py-10 text-center text-text-muted text-sm">No se encontraron usuarios.</td>
                 </tr>
                 @endforelse
             </tbody>

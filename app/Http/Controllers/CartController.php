@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\GameAd;
-use App\Enums\OrderStatus;
-use App\Notifications\OrderConfirmedNotification;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +13,8 @@ class CartController extends Controller
 {
     const COUPON_CODE     = 'GAMELINK20';
     const COUPON_DISCOUNT = 0.20;
+
+    public function __construct(private CartService $cartService) {}
 
     /**
      * Muestra el carrito del usuario autenticado.
@@ -39,15 +40,9 @@ class CartController extends Controller
      */
     public function remove(OrderItem $orderItem)
     {
-        // Seguridad: solo el dueño del pedido puede borrar sus items
         abort_if($orderItem->order->user_id !== Auth::id(), 403);
 
-        $order = $orderItem->order;
-        $orderItem->delete();
-
-        // Recalcular total del pedido
-        $order->total_amount = $order->orderItems()->sum('unit_price');
-        $order->save();
+        $this->cartService->removeItem($orderItem);
 
         return back()->with('success', 'Artículo eliminado del carrito.');
     }
@@ -61,37 +56,7 @@ class CartController extends Controller
             'game_ad_id' => 'required|exists:game_ads,id',
         ]);
 
-        $ad = GameAd::findOrFail($request->game_ad_id);
-
-        // 1. Obtener o crear el pedido PENDING
-        $order = Order::firstOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'status' => OrderStatus::PENDING,
-            ],
-            [
-                'total_amount' => 0,
-            ]
-        );
-
-        // 2. Crear el OrderItem
-        // Nota: seller_fee es el 2% según el diseño
-        $sellerFee = $ad->price * 0.02;
-        
-        OrderItem::create([
-            'order_id' => $order->id,
-            'game_ad_id' => $ad->id,
-            'unit_price' => $ad->price,
-            'seller_fee' => $sellerFee,
-            'net_income' => $ad->price - $sellerFee,
-            'shipping_status' => $ad->format === \App\Models\GameAd::FORMAT_DIGITAL_KEY
-                ? \App\Enums\ShippingStatus::INSTANT
-                : \App\Enums\ShippingStatus::PENDING,
-        ]);
-
-        // 3. Recalcular total del pedido
-        $order->total_amount = $order->orderItems()->sum('unit_price');
-        $order->save();
+        $this->cartService->addItem(Auth::id(), $request->game_ad_id);
 
         return redirect()->route('cart.index')->with('success', '¡Artículo añadido al carrito!');
     }
@@ -159,27 +124,9 @@ class CartController extends Controller
             return back()->withErrors(['cart' => 'El carrito está vacío o no se encontró la orden.']);
         }
 
-        // Aplicar cupón de descuento si existe en sesión
-        if ($coupon = session('coupon')) {
-            $order->total_amount = round($order->total_amount * (1 - $coupon['rate']), 2);
-        }
-
-        // Marcar la orden como pagada
-        $order->status = OrderStatus::PAID;
-        $order->save();
-
-        // Decrementar stock de cada anuncio; marcar como SOLD si quantity llega a 0
-        foreach ($order->orderItems as $item) {
-            $ad = $item->gameAd;
-            $ad->decrement('quantity');
-            if ($ad->fresh()->quantity <= 0) {
-                $ad->markAsSold();
-            }
-        }
+        $this->cartService->checkout($order, session('coupon'));
 
         session()->forget('coupon');
-
-        $order->user->notify(new OrderConfirmedNotification($order));
 
         return redirect()->route('orders.index')->with('success', '¡Pago realizado con éxito! Consulta tus claves digitales en Mis Pedidos.');
     }

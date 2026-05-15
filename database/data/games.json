@@ -6,8 +6,8 @@
         "cover_image": "https://img.gamebrain.co/games/155/baldurs_gate_3_larian_2020_66.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/FXyldfVAF9A",
         "rating": 4.79,
-        "genres": "[\"Tactical Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Tactical Role Playing\", \"RPG\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\"]"
     },
     {
         "title": "Elden Ring",
@@ -16,8 +16,8 @@
         "cover_image": "https://img.gamebrain.co/games/956/elden_ring_fromsoftware_2022_83.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/bg8i4CvE74M",
         "rating": 4.71,
-        "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Clair Obscur: Expedition 33",
@@ -26,8 +26,8 @@
         "cover_image": "https://img.gamebrain.co/games/539/clair_obscur_expedition_33_sandfall_2025_4.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/YJnjReKXrvk",
         "rating": 4.85,
-        "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Role Playing\", \"RPG\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Tank Stars",
@@ -36,7 +36,7 @@
         "cover_image": "https://img.gamebrain.co/games/108/tank_stars_storerider_2.png",
         "trailer_url": "https://videos.crazygames.com/tank-stars-online/1/tank-stars-online.mp4",
         "rating": 4.45,
-        "genres": "[\"Casual Shooter\"]",
+        "genres": "[\"Casual Shooter\", \"ACTION\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -46,7 +46,7 @@
         "cover_image": "https://img.gamebrain.co/games/890/schedule_i_tvgs_2024_1.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/257080424/microtrailer.webm",
         "rating": 4.9,
-        "genres": "[\"Open World Strategy\"]",
+        "genres": "[\"Open World Strategy\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -56,7 +56,7 @@
         "cover_image": "https://img.gamebrain.co/games/666/people_playground_mestiez_2019_5.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/j98IrTsoJig",
         "rating": 4.94,
-        "genres": "[\"Simulation\"]",
+        "genres": "[\"Simulation\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -66,8 +66,8 @@
         "cover_image": "https://img.gamebrain.co/games/159/game_kinguin_130060_1.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/IAMPr9kytfk",
         "rating": 4.66,
-        "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"Xbox\"]"
     },
     {
         "title": "R.E.P.O.",
@@ -76,7 +76,7 @@
         "cover_image": "https://img.gamebrain.co/games/461/r_e_p_o_semiwork_2025_6.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/3241660/1884287699/bbab6854a8bc66274a77234cd49bf83f2d68076d/1761829575/dash_h264.mpd",
         "rating": 4.84,
-        "genres": "[\"Survival Strategy\"]",
+        "genres": "[\"Survival Strategy\", \"ACTION\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -86,8 +86,8 @@
         "cover_image": "https://img.gamebrain.co/games/422/portal_2_valve_2011_4.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/A0K5EXfgJnk",
         "rating": 4.8,
-        "genres": "[\"Platformer\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Platformer\", \"ACTION\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"Retro\"]"
     },
     {
         "title": "Hades",
@@ -96,8 +96,8 @@
         "cover_image": "https://img.gamebrain.co/games/611/hades_ablex_2019_1.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/Yps6NnS2sdI",
         "rating": 4.79,
-        "genres": "[\"Hack and Slash\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Hack and Slash\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "The Witcher 3: Wild Hunt",
@@ -106,8 +106,8 @@
         "cover_image": "https://img.gamebrain.co/games/259/the_witcher_3_wild_hunt_cdprojektred_2016_4.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/xx8kQ4s5hCY",
         "rating": 4.65,
-        "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Tigery App Version",
@@ -126,8 +126,8 @@
         "cover_image": "https://img.gamebrain.co/games/193/game_itchio_deltarune_1.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/KOj87_Bte7g",
         "rating": 4.93,
-        "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Role Playing\", \"RPG\", \"ACTION\"]",
+        "platforms": "[\"PC\", \"Nintendo Switch\"]"
     },
     {
         "title": "Phasmophobia",
@@ -136,7 +136,7 @@
         "cover_image": "https://img.gamebrain.co/games/681/phasmophobia_kinetic_2020_4731.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/257162354/microtrailer.webm",
         "rating": 4.8,
-        "genres": "[\"Puzzle\"]",
+        "genres": "[\"Puzzle\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -146,7 +146,7 @@
         "cover_image": "https://img.gamebrain.co/games/40/happy_color_by_numbers_game_x_flow_2018_61.png",
         "trailer_url": null,
         "rating": 4.56,
-        "genres": "[\"Action\"]",
+        "genres": "[\"Action\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -156,8 +156,8 @@
         "cover_image": "https://img.gamebrain.co/games/847/deep_rock_galactic_ghostship_2020_312.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/L04f8-kmC10",
         "rating": 4.56,
-        "genres": "[\"Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Shooter\", \"ACTION\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Satisfactory",
@@ -166,8 +166,8 @@
         "cover_image": "https://img.gamebrain.co/games/651/satisfactory_coffeestain_2019_101.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/UxA0JJJ5LTI",
         "rating": 4.74,
-        "genres": "[\"Open World Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Shooter\", \"ACTION\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Terra - A Terraria Demake",
@@ -176,7 +176,7 @@
         "cover_image": "https://img.gamebrain.co/games/626/game_itchio_terra_a_terraria_demake_1.png",
         "trailer_url": null,
         "rating": 4.9,
-        "genres": "[\"Action Adventure\"]",
+        "genres": "[\"Action Adventure\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -186,7 +186,7 @@
         "cover_image": "https://img.gamebrain.co/games/428/blade_and_sorcery_warpfrog_2018_4.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/02ZevA1atu4",
         "rating": 4.86,
-        "genres": "[\"Role Playing\"]",
+        "genres": "[\"Role Playing\", \"ACTION\", \"RPG\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -196,8 +196,8 @@
         "cover_image": "https://img.gamebrain.co/games/864/rust_facepunch_2018_1.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/IQZ5HW-9WjA",
         "rating": 4.13,
-        "genres": "[\"Open World Role Playing Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing Shooter\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "WEBFISHING",
@@ -210,14 +210,14 @@
         "platforms": "[\"PC\"]"
     },
     {
-        "title": "Slay The Spire",
+        "title": "Slay The Spire",
         "description": "\"Slay the Spire\" is a single-player deckbuilder that combines elements of card games and roguelikes. Each attempt at climbing the Spire offers a unique experience, with dynamic deck building, an ever-changing layout, and powerful relics to discover. Fight bizarre creatures, choose from hundreds of cards, and face different enemies and bosses each time, striving to reach the top of the Spire.",
         "year": 2019,
         "cover_image": "https://img.gamebrain.co/games/325/slay_the_spire_megacrit_2019_6.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/zOUJjeynZWE",
         "rating": 4.64,
-        "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Role Playing\", \"RPG\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Hollow Knight",
@@ -226,8 +226,8 @@
         "cover_image": "https://img.gamebrain.co/games/746/hollow_knight_teamcherry_2017_46.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/367520/80716/a0e87f2b9a544cb8bdce9397b63bc8267e41ce06/1750517667/dash_h264.mpd",
         "rating": 4.77,
-        "genres": "[\"Hack and Slash\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Hack and Slash\", \"ACTION\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Red Dead Redemption 2",
@@ -236,8 +236,8 @@
         "cover_image": "https://img.gamebrain.co/games/549/red_dead_redemption_2_rockstar_2018_18.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/0d-U2QL2Qvc",
         "rating": 4.61,
-        "genres": "[\"Open World Role Playing Shooter\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing Shooter\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Block Puzzle - Brain Test Game",
@@ -246,7 +246,7 @@
         "cover_image": "https://img.gamebrain.co/games/653/block_puzzle_brain_test_game_doodlemobile_2020_14.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/gAoVtF3t8SM",
         "rating": 4.46,
-        "genres": "[\"Puzzle\"]",
+        "genres": "[\"Puzzle\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -256,8 +256,8 @@
         "cover_image": "https://img.gamebrain.co/games/420/subnautica_unknownworlds_2018_1.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/WS54qL3GeaI",
         "rating": 4.53,
-        "genres": "[\"Open World Action Adventure\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Action Adventure\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Totally Accurate Battle Simulator",
@@ -266,8 +266,8 @@
         "cover_image": "https://img.gamebrain.co/games/728/totally_accurate_battle_simulator_landfall_2019_1.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/jP9vYpTUOq8",
         "rating": 4.9,
-        "genres": "[\"Strategy\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Strategy\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Balatro",
@@ -276,8 +276,8 @@
         "cover_image": "https://img.gamebrain.co/games/219/balatro_localthunk_2024_26.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/d9qb_b6bErw",
         "rating": 4.68,
-        "genres": "[\"Casual Strategy\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Casual Strategy\", \"STRATEGY\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Cookie Clicker",
@@ -286,7 +286,7 @@
         "cover_image": "https://img.gamebrain.co/games/547/cookie_clicker_dashnet_2021_4.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/EuPIOF0LG70",
         "rating": 4.77,
-        "genres": "[\"Casual Strategy\"]",
+        "genres": "[\"Casual Strategy\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -296,8 +296,8 @@
         "cover_image": "https://img.gamebrain.co/games/547/madden_nfl_24_mobile_football_electronicarts_2020_1.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/4CptKlpe1U0",
         "rating": 4.46,
-        "genres": "[\"Sport\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Sport\", \"SPORTS\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Discord - Talk, Play, Hang Out",
@@ -306,7 +306,7 @@
         "cover_image": "https://img.gamebrain.co/games/508/discord_talk_play_hang_out_discord_2015_44.png",
         "trailer_url": null,
         "rating": 4.46,
-        "genres": "[\"Action\"]",
+        "genres": "[\"Action\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -316,7 +316,7 @@
         "cover_image": "https://img.gamebrain.co/games/21/peak_landcrab_2025_1.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/3527290/363268313/a99c1275fc3066ce7b8e634df8e47f4ec39edb3d/1754929324/dash_h264.mpd",
         "rating": 4.77,
-        "genres": "[\"Open World Action Adventure\"]",
+        "genres": "[\"Open World Action Adventure\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -326,8 +326,8 @@
         "cover_image": "https://img.gamebrain.co/games/953/divinity_original_sin_ii_elverils_2017_2.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/vJ4SVSm1ARQ",
         "rating": 4.67,
-        "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Role Playing\", \"RPG\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Xbox",
@@ -336,8 +336,8 @@
         "cover_image": "https://img.gamebrain.co/games/320/xbox_microsoftcorporation_2013_11.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/y-sKYLhhtoc",
         "rating": 4.46,
-        "genres": "[\"Action\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Action\", \"ACTION\"]",
+        "platforms": "[\"PC\", \"Xbox\"]"
     },
     {
         "title": "Bloons TD 6",
@@ -346,8 +346,8 @@
         "cover_image": "https://img.gamebrain.co/games/814/bloons_td_6_ninjakiwi_2018_7.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/256939310/microtrailer.webm",
         "rating": 4.87,
-        "genres": "[\"Casual Strategy\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Casual Strategy\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "Sniper 3D: Gun Shooting Games",
@@ -356,7 +356,7 @@
         "cover_image": "https://img.gamebrain.co/games/319/sniper_3d_gun_shooting_games_wildlife_2014_36.png",
         "trailer_url": null,
         "rating": 4.46,
-        "genres": "[\"Action\"]",
+        "genres": "[\"Action\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -366,7 +366,7 @@
         "cover_image": "https://img.gamebrain.co/games/195/stack_ball_3d_azur_2019_22.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/2AEdOK5ULlY",
         "rating": 4.46,
-        "genres": "[\"Action\"]",
+        "genres": "[\"Action\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -376,7 +376,7 @@
         "cover_image": "https://img.gamebrain.co/games/475/crazy_kick_fun_football_game_voodoo_2019_14.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/TWzdk0ddwbo",
         "rating": 4.46,
-        "genres": "[\"Sport\"]",
+        "genres": "[\"Sport\", \"SPORTS\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -386,8 +386,8 @@
         "cover_image": "https://img.gamebrain.co/games/205/black_myth_wukong_gamescience_2024_4.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/AlU0OW7wjpQ",
         "rating": 4.45,
-        "genres": "[\"Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Role Playing\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\"]"
     },
     {
         "title": "Terraria",
@@ -396,8 +396,8 @@
         "cover_image": "https://img.gamebrain.co/games/472/terraria_re_logic_2011_50.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/zLfYD2OOtsc",
         "rating": 4.18,
-        "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\", \"Retro\"]"
     },
     {
         "title": "Woodoku - Wood Block Puzzles",
@@ -406,7 +406,7 @@
         "cover_image": "https://placehold.co/600x800?text=Woodoku",
         "trailer_url": "https://www.youtube-nocookie.com/embed/VeL363S2h4U",
         "rating": 4.46,
-        "genres": "[\"Puzzle\"]",
+        "genres": "[\"Puzzle\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -416,7 +416,7 @@
         "cover_image": "https://img.gamebrain.co/games/643/yahoo_fantasy_football_sports_yahoo_2022_1.png",
         "trailer_url": null,
         "rating": 4.56,
-        "genres": "[\"Sport\"]",
+        "genres": "[\"Sport\", \"SPORTS\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -426,7 +426,7 @@
         "cover_image": "https://img.gamebrain.co/games/101/barotrauma_fakefish_2019_30.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/6WDjQinZOoo",
         "rating": 4.74,
-        "genres": "[\"Survival Simulation\"]",
+        "genres": "[\"Survival Simulation\", \"ACTION\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -436,7 +436,7 @@
         "cover_image": "https://img.gamebrain.co/games/579/bowmasters_multiplayer_game_playgendary_2016_13.png",
         "trailer_url": "https://www.youtube-nocookie.com/embed/tIuWMxZ8dag",
         "rating": 4.28,
-        "genres": "[\"Action\"]",
+        "genres": "[\"Action\", \"ACTION\", \"SPORTS\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -446,7 +446,7 @@
         "cover_image": "https://img.gamebrain.co/games/264/match_3d_lionplus_2020_23.png",
         "trailer_url": null,
         "rating": 4.56,
-        "genres": "[\"Puzzle\"]",
+        "genres": "[\"Puzzle\", \"STRATEGY\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -456,8 +456,8 @@
         "cover_image": "https://img.gamebrain.co/games/442/it_takes_two_friends_pass_ittakestwofriendspass_2021_20.jpg",
         "trailer_url": "https://video.akamai.steamstatic.com/store_trailers/256827093/microtrailer.webm",
         "rating": 4.79,
-        "genres": "[\"Platformer\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Platformer\", \"ACTION\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Completing the Mission",
@@ -466,7 +466,7 @@
         "cover_image": "https://img.gamebrain.co/games/578/the_henry_stickmin_collection_puffballsunited_2020_1.png",
         "trailer_url": "https://videos.crazygames.com/completing-the-mission/1/completing-the-mission.mp4",
         "rating": 4.93,
-        "genres": "[\"Casual Action Adventure\"]",
+        "genres": "[\"Casual Action Adventure\", \"ACTION\"]",
         "platforms": "[\"PC\"]"
     },
     {
@@ -476,8 +476,8 @@
         "cover_image": "https://img.gamebrain.co/games/487/kingdom_come_deliverance_2_warhorse_2025_3.jpg",
         "trailer_url": "https://cdn.akamai.steamstatic.com/steam/apps/257029338/microtrailer.webm",
         "rating": 4.68,
-        "genres": "[\"Open World Role Playing\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Open World Role Playing\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\"]"
     },
     {
         "title": "Dead Cells",
@@ -486,8 +486,8 @@
         "cover_image": "https://img.gamebrain.co/games/619/dead_cells_motiontwin_2018_38.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/fpCX5TzsGQU",
         "rating": 4.72,
-        "genres": "[\"Hack and Slash\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Hack and Slash\", \"ACTION\", \"RPG\"]",
+        "platforms": "[\"PC\", \"PS5\", \"Xbox\", \"Nintendo Switch\"]"
     },
     {
         "title": "The Planet Crafter",
@@ -496,7 +496,7 @@
         "cover_image": "https://img.gamebrain.co/games/139/the_planet_crafter_miju_2024_1.jpg",
         "trailer_url": "https://www.youtube-nocookie.com/embed/CrwSsFUxMRA",
         "rating": 4.8,
-        "genres": "[\"Action Adventure\"]",
-        "platforms": "[\"PC\"]"
+        "genres": "[\"Action Adventure\", \"ACTION\", \"STRATEGY\"]",
+        "platforms": "[\"PC\", \"Xbox\"]"
     }
 ]
