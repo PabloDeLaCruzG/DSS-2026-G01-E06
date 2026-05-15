@@ -9,9 +9,9 @@
         <div class="absolute inset-0 opacity-50" style="background: url('https://plus.unsplash.com/premium_vector-1725298133648-3ab96f885592?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;"></div>
         <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(13,21,32,0.95) 10%, rgba(13,21,32,0.3) 100%);"></div>
 
-        <div class="relative z-10 flex flex-col items-center justify-center text-center px-8 py-20">
-            <h1 class="text-5xl font-bold text-white mb-4 leading-tight">
-                Encuentra tu próximo juego<br>al mejor precio
+        <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-12 sm:py-16 md:py-20">
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                Encuentra tu próximo juego<br class="hidden sm:block">al mejor precio
             </h1>
             <p class="text-gray-400 text-base mb-8 max-w-xl">
                 La mayor comunidad de compra y venta de videojuegos. Únete a miles de jugadores y ahorra en tus títulos favoritos.
@@ -61,10 +61,24 @@
     </section>
 
     {{-- ===== LAYOUT PRINCIPAL: SIDEBAR + CONTENIDO ===== --}}
-    <div class="flex gap-7">
+    <div class="flex gap-7" x-data="{ filtersOpen: false }">
+
+        {{-- Overlay filtros en móvil --}}
+        <div class="fixed inset-0 z-40 bg-black/50 md:hidden" x-show="filtersOpen" @click="filtersOpen = false" style="display:none;"></div>
 
         {{-- ===== SIDEBAR IZQUIERDA ===== --}}
-        <aside class="hidden md:flex flex-col gap-6 w-52 flex-shrink-0 sticky top-4 self-start h-fit max-h-screen overflow-y-auto">
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-background border-r border-gray-700 p-5 flex flex-col gap-6 overflow-y-auto transition-transform duration-200 md:sticky md:inset-auto md:top-4 md:left-auto md:z-auto md:w-52 md:bg-transparent md:border-0 md:p-0 md:self-start md:h-fit md:max-h-screen"
+               :class="filtersOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'">
+
+            {{-- Cabecera del drawer (solo visible en móvil) --}}
+            <div class="flex items-center justify-between md:hidden">
+                <span class="text-sm font-semibold text-white">Filtros</span>
+                <button @click="filtersOpen = false" class="p-1 text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
 
             {{-- Plataforma --}}
             <div>
@@ -224,6 +238,19 @@
         {{-- ===== CONTENIDO PRINCIPAL ===== --}}
         <div id="game-grid-wrapper" class="flex-1 min-w-0">
 
+            {{-- Botón filtros (solo móvil) --}}
+            <div class="flex items-center gap-2 mb-4 md:hidden">
+                <button @click="filtersOpen = true" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:text-white hover:border-gray-500 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/>
+                    </svg>
+                    Filtros
+                    @if(request('platform') || request('genre') || request('max_price') || request('rating'))
+                        <span class="w-2 h-2 rounded-full bg-[#009194]"></span>
+                    @endif
+                </button>
+            </div>
+
             {{-- Cabecera sección --}}
             <div class="flex items-center justify-between mb-6">
     <h2 class="text-white font-bold text-lg">Explorar Juegos</h2>
@@ -240,7 +267,7 @@
             @endif
         @endforeach
 
-        <label class="text-sm text-gray-400 mr-2">Ordenar por:</label>
+        <label class="hidden sm:inline text-sm text-gray-400 mr-2">Ordenar por:</label>
         <select name="sort" onchange="document.getElementById('sort-form').submit()"
                 class="bg-gray-800 border border-gray-700 text-xs text-white px-3 py-2 rounded">
             <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>Más populares</option>

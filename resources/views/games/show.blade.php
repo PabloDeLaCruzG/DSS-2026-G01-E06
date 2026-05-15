@@ -90,9 +90,8 @@
         </div>
 
         <div class="rounded-xl border border-border overflow-hidden bg-surface">
-            {{-- Header de la tabla --}}
-            <div
-                class="grid grid-cols-12 gap-4 px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border">
+            {{-- Header de la tabla (solo desktop) --}}
+            <div class="hidden md:grid grid-cols-12 gap-4 px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border">
                 <div class="col-span-4">Tienda</div>
                 <div class="col-span-3">Plataforma / Región</div>
                 <div class="col-span-2 text-center">Precio</div>
@@ -101,23 +100,24 @@
 
             {{-- Filas --}}
             @forelse($proAds as $ad)
-                <div class="grid grid-cols-12 gap-4 px-5 py-4 items-center border-b border-border hover:bg-white/5 transition">
+                <div class="flex flex-wrap items-center gap-3 px-4 py-4 border-b border-border hover:bg-white/5 transition md:grid md:grid-cols-12 md:gap-4 md:px-5">
                     {{-- Tienda --}}
-                    <div class="col-span-4 flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white bg-primary">
+                    <div class="w-full md:col-span-4 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white bg-primary shrink-0">
                             {{ strtoupper(substr($ad->user->name, 0, 2)) }}
                         </div>
-                        <div class="flex items-center gap-1">
-                            <a href="{{ route('users.show', $ad->user) }}" class="font-semibold text-text-main text-sm hover:text-[#3bb1a5] transition-colors">{{ $ad->user->name }}</a>
+                        <div class="flex items-center gap-1 min-w-0">
+                            <a href="{{ route('users.show', $ad->user) }}" class="font-semibold text-text-main text-sm hover:text-[#3bb1a5] transition-colors truncate">{{ $ad->user->name }}</a>
                             @if($ad->user->isProfessional())
-                                <span title="Socio Verificado" class="text-blue-400 text-xs font-bold">✔</span>
+                                <span title="Socio Verificado" class="text-blue-400 text-xs font-bold shrink-0">✔</span>
                             @endif
                         </div>
+                        {{-- Precio visible solo en móvil --}}
+                        <span class="ml-auto font-bold text-text-main md:hidden">€{{ number_format($ad->price, 2) }}</span>
                     </div>
 
-                    {{-- Plataforma --}}
-                    <div class="col-span-3">
+                    {{-- Plataforma (solo desktop) --}}
+                    <div class="hidden md:block md:col-span-3">
                         <p class="text-sm text-text-main font-medium">
                             @if($ad->platforms && count($ad->platforms) > 0)
                                 {{ implode(' / ', $ad->platforms) }}
@@ -128,32 +128,32 @@
                         <p class="text-xs text-text-muted">Global</p>
                     </div>
 
-                    {{-- Precio --}}
-                    <div class="col-span-2 text-center">
+                    {{-- Precio (solo desktop) --}}
+                    <div class="hidden md:block md:col-span-2 text-center">
                         <span class="text-text-main font-bold text-lg">€{{ number_format($ad->price, 2) }}</span>
                     </div>
 
                     {{-- Acción --}}
-                    <div class="col-span-3 flex items-center justify-end gap-2">
+                    <div class="w-full md:col-span-3 flex items-center gap-2 md:justify-end flex-wrap">
                         @auth
                             @if(auth()->id() !== $ad->user_id)
                                 <button
                                     onclick="openReviewModal({{ $ad->id }}, '{{ addslashes($ad->game->title) }}', '{{ addslashes($ad->user->name) }}', '{{ $ad->user->avatar_url }}')"
-                                    class="px-5 py-2 rounded-lg text-sm font-semibold transition border border-[#009194] text-[#3bb1a5] hover:bg-[#009194]/10">
+                                    class="hidden md:inline-flex px-5 py-2 rounded-lg text-sm font-semibold transition border border-[#009194] text-[#3bb1a5] hover:bg-[#009194]/10">
                                     ★ Valorar
                                 </button>
                                 <a href="{{ route('reports.create', $ad) }}"
-                                   class="px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition">
+                                   class="hidden md:inline-flex px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition">
                                     Reportar
                                 </a>
                             @endif
                         @endauth
 
-                        <form action="{{ route('cart.add') }}" method="POST">
+                        <form action="{{ route('cart.add') }}" method="POST" class="w-full md:w-auto">
                             @csrf
                             <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
                             <button type="submit"
-                                class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
+                                class="w-full md:w-auto px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
                                 Añadir al carrito
                             </button>
                         </form>
@@ -177,9 +177,8 @@
         </div>
 
         <div class="rounded-xl border border-border overflow-hidden bg-surface">
-            {{-- Header de la tabla --}}
-            <div
-                class="grid grid-cols-12 gap-4 px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border">
+            {{-- Header de la tabla (solo desktop) --}}
+            <div class="hidden md:grid grid-cols-12 gap-4 px-5 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border">
                 <div class="col-span-4">Vendedor</div>
                 <div class="col-span-2">Plataforma</div>
                 <div class="col-span-2">Estado</div>
@@ -189,24 +188,32 @@
 
             {{-- Filas --}}
             @forelse($userAds as $ad)
-                <div class="grid grid-cols-12 gap-4 px-5 py-4 items-center border-b border-border hover:bg-white/5 transition">
+                <div class="flex flex-wrap items-center gap-3 px-4 py-4 border-b border-border hover:bg-white/5 transition md:grid md:grid-cols-12 md:gap-4 md:px-5">
                     {{-- Vendedor --}}
-                    <div class="col-span-4 flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden border-2 border-border">
+                    <div class="w-full md:col-span-4 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden border-2 border-border shrink-0">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode($ad->user->name) }}&background=random&size=40"
                                 alt="{{ $ad->user->name }}" class="w-full h-full object-cover">
                         </div>
-                        <div>
-                            <a href="{{ route('users.show', $ad->user) }}" class="font-semibold text-text-main text-sm hover:text-[#3bb1a5] transition-colors">{{ $ad->user->name }}</a>
+                        <div class="min-w-0">
+                            <a href="{{ route('users.show', $ad->user) }}" class="font-semibold text-text-main text-sm hover:text-[#3bb1a5] transition-colors truncate block">{{ $ad->user->name }}</a>
                             <p class="text-xs text-accent">
                                 ★ {{ number_format(rand(40, 50) / 10, 1) }} ({{ rand(5, 30) }} ventas)
                             </p>
                         </div>
+                        {{-- Precio + estado visible solo en móvil --}}
+                        <div class="ml-auto text-right md:hidden">
+                            <span class="font-bold text-text-main block">€{{ number_format($ad->price, 2) }}</span>
+                            @if($ad->condition === 'NEW')
+                                <span class="text-xs font-bold text-accent">Como nuevo</span>
+                            @else
+                                <span class="text-xs font-bold text-yellow-400">Bueno</span>
+                            @endif
+                        </div>
                     </div>
 
-                    {{-- Plataforma --}}
-                    <div class="col-span-2">
+                    {{-- Plataforma (solo desktop) --}}
+                    <div class="hidden md:block md:col-span-2">
                         <p class="text-sm text-text-main font-medium">
                             @if($ad->platforms && count($ad->platforms) > 0)
                                 {{ implode(' / ', $ad->platforms) }}
@@ -216,8 +223,8 @@
                         </p>
                     </div>
 
-                    {{-- Estado --}}
-                    <div class="col-span-2">
+                    {{-- Estado (solo desktop) --}}
+                    <div class="hidden md:block md:col-span-2">
                         @if($ad->condition === 'NEW')
                             <span class="text-xs font-bold px-3 py-1 rounded-full text-accent">Como nuevo</span>
                         @else
@@ -225,32 +232,32 @@
                         @endif
                     </div>
 
-                    {{-- Precio --}}
-                    <div class="col-span-1 text-center">
+                    {{-- Precio (solo desktop) --}}
+                    <div class="hidden md:block md:col-span-1 text-center">
                         <span class="text-text-main font-bold text-lg">€{{ number_format($ad->price, 2) }}</span>
                     </div>
 
                     {{-- Acción --}}
-                    <div class="col-span-3 flex items-center justify-end gap-2">
+                    <div class="w-full md:col-span-3 flex items-center gap-2 md:justify-end flex-wrap">
                         @auth
                             @if(auth()->id() !== $ad->user_id)
                                 <button
                                     onclick="openReviewModal({{ $ad->id }}, '{{ addslashes($ad->game->title) }}', '{{ addslashes($ad->user->name) }}', '{{ $ad->user->avatar_url }}')"
-                                    class="px-5 py-2 rounded-lg text-sm font-semibold transition border border-[#009194] text-[#3bb1a5] hover:bg-[#009194]/10">
+                                    class="hidden md:inline-flex px-5 py-2 rounded-lg text-sm font-semibold transition border border-[#009194] text-[#3bb1a5] hover:bg-[#009194]/10">
                                     ★ Valorar
                                 </button>
                                 <a href="{{ route('reports.create', $ad) }}"
-                                   class="px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition">
+                                   class="hidden md:inline-flex px-3 py-2 rounded-lg text-text-muted text-xs font-semibold border border-border hover:text-text-main transition">
                                     Reportar
                                 </a>
                             @endif
                         @endauth
 
-                        <form action="{{ route('cart.add') }}" method="POST">
+                        <form action="{{ route('cart.add') }}" method="POST" class="w-full md:w-auto">
                             @csrf
                             <input type="hidden" name="game_ad_id" value="{{ $ad->id }}">
                             <button type="submit"
-                                class="px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
+                                class="w-full md:w-auto px-5 py-2 rounded-lg text-white text-sm font-semibold transition bg-primary hover:bg-primary-hover shadow-lg shadow-primary/20">
                                 Añadir al carrito
                             </button>
                         </form>
