@@ -40,7 +40,7 @@
 
     <!-- NAVBAR -->
     <nav class="bg-surface border-b border-border sticky top-0 z-50" x-data="{ mobileOpen: false }">
-        <div class="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        <div class="max-w-screen-2xl w-full mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
 
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-2 group flex-shrink-0 no-underline">
@@ -84,13 +84,13 @@
                                 <p class="text-xs text-text-muted truncate">{{ auth()->user()->email }}</p>
                             </div>
 
-                            <!-- Panel Admin (solo admins) -->
+                            <!-- Panel Admin (solo admins, solo en pantallas grandes) -->
                             @if(auth()->user()->isAdmin())
                                 <a href="{{ route('admin.users.index') }}"
-                                   class="flex items-center gap-2 px-4 py-2.5 text-sm text-primary hover:bg-background transition-colors no-underline">
+                                   class="hidden lg:flex items-center gap-2 px-4 py-2.5 text-sm text-primary hover:bg-background transition-colors no-underline">
                                     ⚙️ Panel Admin
                                 </a>
-                                <div class="border-t border-border my-1"></div>
+                                <div class="hidden lg:block border-t border-border my-1"></div>
                             @endif
 
                             <!-- Opciones de usuario -->
@@ -175,13 +175,13 @@
     </nav>
 
     <!-- CONTENIDO -->
-    <main class="container mx-auto px-4 py-6 flex-1">
+    <main class="max-w-screen-2xl w-full mx-auto px-4 sm:px-6 py-6 flex-1">
         @yield('content')
     </main>
 
    <!-- ==== FOOTER ==== -->
 <footer class="bg-surface border-t border-border mt-auto">
-    <div class="container mx-auto px-6 py-12">
+    <div class="max-w-screen-2xl w-full mx-auto px-4 sm:px-6 py-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
             {{-- Columna 1: GameLink --}}

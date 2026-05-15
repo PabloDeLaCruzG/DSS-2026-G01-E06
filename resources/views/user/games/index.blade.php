@@ -5,14 +5,14 @@
 @section('content')
 
 <!-- HEADER -->
-<div class="flex justify-between items-center mb-6">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
     <div>
         <h1 class="text-2xl font-bold">Mis Anuncios</h1>
         <p class="text-text-muted text-sm">Gestiona tus juegos en venta y revisa su estado</p>
     </div>
 
     <a href="{{ route('games.create') }}"
-       class="bg-primary hover:bg-primary-hover px-4 py-2 rounded-full text-sm">
+       class="shrink-0 bg-primary hover:bg-primary-hover px-4 py-2 rounded-full text-sm">
         Publicar Nuevo Juego
     </a>
 </div>
@@ -52,7 +52,8 @@
 <!-- TABLA -->
 <div class="bg-surface p-6 rounded-xl">
 
-<table class="w-full text-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-sm min-w-[560px]">
 
     <thead class="text-text-muted">
         <tr>
@@ -129,6 +130,7 @@
     </tbody>
 
 </table>
+</div>
 
 <!-- PAGINACIÓN -->
 <div class="mt-4 flex justify-between items-center">

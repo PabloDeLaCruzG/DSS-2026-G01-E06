@@ -31,10 +31,21 @@
         }
     </script>
 </head>
-<body class="bg-background text-text-main min-h-screen flex">
+<body class="bg-background text-text-main min-h-screen flex" x-data="{ sidebarOpen: false }">
+
+    {{-- Overlay oscuro en móvil --}}
+    <div class="fixed inset-0 z-40 bg-black/50 lg:hidden" x-show="sidebarOpen" @click="sidebarOpen = false" style="display:none;"></div>
 
     {{-- ===== SIDEBAR ===== --}}
-    <aside class="w-56 bg-surface border-r border-border flex flex-col shrink-0 min-h-screen sticky top-0">
+    <aside class="fixed inset-y-0 left-0 z-50 w-56 bg-surface border-r border-border flex flex-col shrink-0 min-h-screen transition-transform duration-200 lg:relative lg:translate-x-0"
+           :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
+
+        {{-- Botón cerrar sidebar en móvil --}}
+        <button @click="sidebarOpen = false" class="lg:hidden absolute top-3 right-3 p-1 text-text-muted hover:text-text-main transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
 
         {{-- Logo --}}
         <div class="px-4 py-4 border-b border-border">
@@ -108,32 +119,34 @@
     </aside>
 
     {{-- ===== MAIN ===== --}}
-    <div class="flex-1 flex flex-col min-h-screen">
+    <div class="flex-1 min-w-0 flex flex-col min-h-screen">
 
         {{-- Topbar --}}
-        <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
+        <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-4 sm:px-6 sticky top-0 z-40">
+            {{-- Hamburger + Breadcrumb --}}
+            <div class="flex items-center gap-3">
+                <button @click="sidebarOpen = true" class="lg:hidden p-2 text-text-muted hover:text-text-main hover:bg-background rounded-lg transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
                 {{-- título --}}
-            <div class="flex items-center gap-2 text-sm text-text-muted">
-                <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Admin</a>
-                <span>›</span>
-                @php
-                    $currentAdminBreadcrumbRoute = match (true) {
-                        request()->routeIs('admin.users.*') => route('admin.users.index'),
-                        request()->routeIs('admin.reports.*') => route('admin.reports.index'),
-                        default => url()->current(),
-                    };
-                @endphp
-                <a href="{{ $currentAdminBreadcrumbRoute }}" class="text-text-main font-medium hover:text-primary transition-colors">@yield('title', 'Panel')</a>
+                <div class="flex items-center gap-2 text-sm text-text-muted">
+                    <a href="{{ route('admin.users.index') }}" class="hover:text-text-main transition-colors">Admin</a>
+                    <span>›</span>
+                    @php
+                        $currentAdminBreadcrumbRoute = match (true) {
+                            request()->routeIs('admin.users.*') => route('admin.users.index'),
+                            request()->routeIs('admin.reports.*') => route('admin.reports.index'),
+                            default => url()->current(),
+                        };
+                    @endphp
+                    <a href="{{ $currentAdminBreadcrumbRoute }}" class="text-text-main font-medium hover:text-primary transition-colors">@yield('title', 'Panel')</a>
+                </div>
             </div>
 
             {{-- Acciones --}}
             <div class="flex items-center gap-3">
-                <button class="relative p-2 text-text-muted hover:text-text-main hover:bg-background rounded-lg transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                    </svg>
-                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface"></span>
-                </button>
 
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 focus:outline-none">
@@ -183,7 +196,7 @@
         </header>
 
         {{-- Contenido --}}
-        <main class="flex-1 p-6 bg-background overflow-y-auto">
+        <main class="flex-1 p-6 bg-background overflow-y-auto overflow-x-hidden">
             @yield('content')
         </main>
     </div>

@@ -24,12 +24,12 @@
             <div class="bg-surface rounded-xl border border-border overflow-hidden">
 
                 {{-- Cabecera del pedido --}}
-                <div class="flex items-center justify-between px-5 py-4 border-b border-border bg-background/40">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-5 py-4 border-b border-border bg-background/40">
                     <div>
                         <span class="text-xs text-text-muted font-mono">Pedido #GL-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span>
                         <p class="text-xs text-text-muted mt-0.5">{{ $order->created_at->format('d/m/Y H:i') }}</p>
                     </div>
-                    <div class="text-right">
+                    <div class="sm:text-right">
                         @php
                             $statusClass = match($order->status) {
                                 \App\Enums\OrderStatus::PAID      => 'bg-green-500/20 text-green-400',

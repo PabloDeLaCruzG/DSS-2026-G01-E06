@@ -6,66 +6,65 @@
 
 {{-- ===== HEADER DE PERFIL ===== --}}
 <div class="bg-surface border border-border rounded-xl p-6 mb-6">
-    <div class="flex items-start gap-6">
+
+    {{-- Fila superior: avatar + nombre + denunciar --}}
+    <div class="flex items-start gap-4 mb-4">
 
         {{-- Avatar --}}
         <div class="relative flex-shrink-0">
             <img src="{{ $user->avatar_url }}"
                  alt="Avatar"
-                 class="w-24 h-24 rounded-xl object-cover border-2 border-primary">
+                 class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover border-2 border-primary">
             <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-surface"></span>
         </div>
 
-        {{-- Info principal --}}
-        <div class="flex-1">
-            <div class="flex items-center gap-3 mb-1">
-                <h1 class="text-2xl font-bold text-text-main">{{ $user->name }}</h1>
+        {{-- Nombre + badge + denunciar --}}
+        <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap mb-1">
+                <h1 class="text-xl sm:text-2xl font-bold text-text-main truncate">{{ $user->name }}</h1>
                 @if($user->isProfessional())
-                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-[#009194]/20 text-[#3bb1a5] border border-[#009194]/30 flex items-center gap-1">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-[#009194]/20 text-[#3bb1a5] border border-[#009194]/30 flex items-center gap-1 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                         </svg>
-                        Vendedor Verificado
+                        Verificado
                     </span>
                 @endif
             </div>
-
-            {{-- Stats --}}
-            <div class="flex gap-3">
-                <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
-                    <p class="text-xs text-text-muted uppercase tracking-wide">Reputación</p>
-                    <p class="font-bold text-sm mt-0.5 text-text-main flex items-center justify-center gap-1">
-                        <svg viewBox="0 0 12 12" fill="currentColor" class="w-3 h-3 text-yellow-400">
-                            <path d="M2.23125 11.0833L3.17917 6.98542L0 4.22917L4.2 3.86458L5.83333 0L7.46667 3.86458L11.6667 4.22917L8.4875 6.98542L9.43542 11.0833L5.83333 8.91042L2.23125 11.0833Z"/>
-                        </svg>
-                        {{ number_format($user->reputation ?? 0, 1) }} <span class="text-text-muted font-normal">/5.0</span>
-                    </p>
-                </div>
-                <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
-                    <p class="text-xs text-text-muted uppercase tracking-wide"> Ofertas Activas</p>
-                    <p class="font-bold text-sm mt-0.5 text-text-main">{{ $ads->total() }}</p>
-                </div>
-                <div class="bg-background border border-border rounded-lg px-4 py-2 text-center">
-                    <p class="text-xs text-text-muted uppercase tracking-wide">Miembro desde</p>
-                    <p class="font-bold text-sm mt-0.5 text-text-main">{{ $user->created_at->format('M Y') }}</p>
-                </div>
-            </div>
-        </div>
-
-        {{-- Boton denunciar --}}
-        @if(auth()->id() !== $user->id)
-            <div class="flex flex-col gap-2 flex-shrink-0 w-44">
-                <a class="flex items-center gap-1 text-red-400 text-xs text-right hover:underline cursor-pointer mb-2">
-                    <svg class="w-4 h-4 shrink-0" style="color:#facc15;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            @if(auth()->id() !== $user->id)
+                <a class="flex items-center gap-1 text-red-400 text-xs hover:underline cursor-pointer mt-1">
+                    <svg class="w-3.5 h-3.5 shrink-0" style="color:#facc15;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
                     </svg>
                     Denunciar usuario
                 </a>
-            </div>
-        @endif
+            @endif
+        </div>
 
     </div>
+
+    {{-- Stats: fila completa debajo --}}
+    <div class="grid grid-cols-3 gap-2">
+        <div class="bg-background border border-border rounded-lg px-3 py-2 text-center">
+            <p class="text-xs text-text-muted uppercase tracking-wide">Reputación</p>
+            <p class="font-bold text-sm mt-0.5 text-text-main flex items-center justify-center gap-1">
+                <svg viewBox="0 0 12 12" fill="currentColor" class="w-3 h-3 text-yellow-400 shrink-0">
+                    <path d="M2.23125 11.0833L3.17917 6.98542L0 4.22917L4.2 3.86458L5.83333 0L7.46667 3.86458L11.6667 4.22917L8.4875 6.98542L9.43542 11.0833L5.83333 8.91042L2.23125 11.0833Z"/>
+                </svg>
+                {{ number_format($user->reputation ?? 0, 1) }}<span class="text-text-muted font-normal">/5</span>
+            </p>
+        </div>
+        <div class="bg-background border border-border rounded-lg px-3 py-2 text-center">
+            <p class="text-xs text-text-muted uppercase tracking-wide">Ofertas</p>
+            <p class="font-bold text-sm mt-0.5 text-text-main">{{ $ads->total() }}</p>
+        </div>
+        <div class="bg-background border border-border rounded-lg px-3 py-2 text-center">
+            <p class="text-xs text-text-muted uppercase tracking-wide">Miembro</p>
+            <p class="font-bold text-sm mt-0.5 text-text-main">{{ $user->created_at->format('M Y') }}</p>
+        </div>
+    </div>
+
 </div>
 
 {{-- ===== ACTIVE LISTINGS ===== --}}
