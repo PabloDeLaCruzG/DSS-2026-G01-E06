@@ -27,7 +27,7 @@
             </span>
         </h2>
 
-        <div class="bg-surface rounded-xl border border-border overflow-hidden">
+        <div class="bg-surface rounded-xl border border-border overflow-x-auto">
             @if($pending->isEmpty())
                 <div class="px-5 py-10 text-center text-text-muted text-sm">
                     No hay solicitudes pendientes.
@@ -81,16 +81,16 @@
                                     <form action="{{ route('admin.professionals.verify', $profile) }}" method="POST">
                                         @csrf
                                         <button type="submit"
-                                            class="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 text-green-400 text-xs font-semibold rounded-lg transition">
-                                            ✔ Verificar
+                                            class="px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold rounded-lg transition whitespace-nowrap">
+                                            Verificar
                                         </button>
                                     </form>
                                     <form action="{{ route('admin.professionals.reject', $profile) }}" method="POST"
                                           data-confirm="¿Rechazar y eliminar la solicitud de {{ addslashes($profile->company_name) }}?">
                                         @csrf
                                         <button type="submit"
-                                            class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition">
-                                            ✖ Rechazar
+                                            class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition whitespace-nowrap">
+                                            Descartar
                                         </button>
                                     </form>
                                 </div>
@@ -112,7 +112,7 @@
             </span>
         </h2>
 
-        <div class="bg-surface rounded-xl border border-border overflow-hidden">
+        <div class="bg-surface rounded-xl border border-border overflow-x-auto">
             @if($verified->isEmpty())
                 <div class="px-5 py-10 text-center text-text-muted text-sm">
                     No hay socios verificados todavía.
@@ -147,10 +147,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-5 py-4 text-xs">
+                            <td class="px-5 py-4 text-xs max-w-[160px]">
                                 @if($profile->website)
                                     <a href="{{ $profile->website }}" target="_blank"
-                                       class="text-accent hover:underline">
+                                       class="text-accent hover:underline truncate block">
                                         {{ $profile->website }}
                                     </a>
                                 @else
@@ -160,13 +160,13 @@
                             <td class="px-5 py-4 text-xs text-text-muted">
                                 {{ $profile->updated_at->format('d/m/Y') }}
                             </td>
-                            <td class="px-5 py-4 text-right">
+                            <td class="px-5 py-4 flex justify-end">
                                 <form action="{{ route('admin.professionals.reject', $profile) }}" method="POST"
                                       data-confirm="¿Revocar la verificación de {{ addslashes($profile->company_name) }}?">
                                     @csrf
                                     <button type="submit"
-                                        class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition">
-                                        Revocar
+                                        class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition whitespace-nowrap">
+                                        Descartar
                                     </button>
                                 </form>
                             </td>
